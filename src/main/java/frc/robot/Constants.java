@@ -1,0 +1,89 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot;
+
+/**
+ * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
+ * constants.  This class should not be used for any other purpose.  All constants should be
+ * declared globally (i.e. public static).  Do not put anything functional in this class.
+ *
+ * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * constants are needed, to reduce verbosity.
+ */
+public final class Constants {
+
+    static final int kOperController = 1; // USB
+    static final int kDriverController = 0; // USB
+
+    public static final class DriveConstants {
+        //Motor Mapping
+        public static final int kFrontLeftMotor = 1;
+        public static final int kBackLeftMotor = 15;
+        public static final int kFrontRightMotor = 20;
+        public static final int kBackRightMotor = 14;
+        
+        //Auto Move Constants
+        public static final double kAutoForwardEncoderDistance = 144; //inches?
+        public static final double kAutoBackwardEncoderDistance = 144; 
+        public static final int kTestSwitch = 10;
+
+        //Vision Constants
+        public static final double kVisionAreaTarget = 1.4;
+
+        //Sensor Constants
+        public static final int kOpticalPort = 9; //DIO
+    }
+
+    public static final class ShooterConstants {
+        public static final int kShooterMotor = 13;
+        public static final int kShooterEncoderChannel1 = 0; //Placeholder value DIO
+        public static final int kShooterEncoderChannel2 = 1; //Placeholder value DIO
+        public static final double kShooterStop = 0.0;
+        public static final double kShooterHalf = 0.5;
+        public static final double kShooterFull = 1.0;
+    }
+    public static final class PickupConstants {
+        public static final int kPickupMotorTop = 6; //CAN 6
+        public static final int kPickupMotorBottom = 10; //CAN 10
+    }
+
+    public static final class GateConstants{
+        public static final int gate1Servo = 0; // PWM
+        public static final int gate2Servo = 1; //PWM
+        public static final int ball1sensor = 7; // DIO
+        //Gate 1
+        public static final double gate1Down = 1.0;
+        public static final double gate1Half = 0.75;
+        public static final double gate1Mid = 0.55;
+        public static final double gate1Max = 0.15;
+        //Gate 2
+        public static final double gate2Down = 1.0;
+        public static final double gate2Half = 0.75;
+        public static final double gate2Mid = 0.55;
+        public static final double gate2Max = 0.15;
+
+        //
+        public static final double gateUpTime = 0.5;
+        public static final double gateDownTime = 1.5;
+		public static final double ShooterSpinUpTime = 2.5;
+    }
+
+   
+}
+/*DigitalInput/DigitalOutput Addressing
+NAVX-MXP PORT	MXP PIN NUMBER	ROBORIO CHANNEL ADDRESS
+0	DIO0	10
+1	DIO1	11
+2	DIO2	12
+3	DIO3	13
+4	DIO8	18
+5	DIO9	19
+6	DIO10	20
+7	DIO11	21
+8	DIO12	22
+9	DIO13	23*/
