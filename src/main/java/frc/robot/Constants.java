@@ -22,9 +22,9 @@ public final class Constants {
 
     public static final class DriveConstants {
         //Motor Mapping
-        public static final int kFrontLeftMotor = 1;
-        public static final int kBackLeftMotor = 15;
-        public static final int kFrontRightMotor = 20;
+        public static final int kFrontLeftMotor = 20;
+        public static final int kBackLeftMotor = 1;
+        public static final int kFrontRightMotor = 15;
         public static final int kBackRightMotor = 14;
         
         //Auto Move Constants
@@ -38,6 +38,7 @@ public final class Constants {
         //Sensor Constants
         public static final int kOpticalPort = 9; //DIO
         public static final int kSonarPort = 1;
+        public static final double sonarConversionFactor = 0.009766; //Converts voltage to distance in inches
     }
 
     public static final class ShooterConstants {
