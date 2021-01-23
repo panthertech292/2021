@@ -319,9 +319,10 @@ private final Timer Timer;
       SmartDashboard.putNumber("LimelightY", v_limeLightY);
       SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
      // System.out.println(v_limeLightArea);  
-     //System.out.println(getLeftPosition());
-     System.out.println(!opticalSensor.get());
+     System.out.println(getRightEncoderValue());
+     //System.out.println(!opticalSensor.get());
      //System.out.println(sonarSensor.getAverageVoltage());
      SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
+     SmartDashboard.putNumber("Sonar Distance in Inches", sonarSensor.getAverageVoltage()/DriveConstants.sonarConversionFactor);
     }
   }
