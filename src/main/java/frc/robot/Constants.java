@@ -37,6 +37,7 @@ public final class Constants {
 
         //Sensor Constants
         public static final int kOpticalPort = 9; //DIO
+        public static final int kSonarPort = 1;
     }
 
     public static final class ShooterConstants {
