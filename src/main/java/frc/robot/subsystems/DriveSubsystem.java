@@ -81,8 +81,8 @@ private final Timer Timer;
     FrontRightMotor = new WPI_TalonSRX(DriveConstants.kFrontRightMotor);
     BackLeftMotor = new WPI_TalonSRX(DriveConstants.kBackLeftMotor);
     BackRightMotor = new WPI_TalonSRX(DriveConstants.kBackRightMotor);
-    opticalSensor = new DigitalInput(9);
-    sonarSensor = new AnalogInput(1);
+    opticalSensor = new DigitalInput(DriveConstants.kOpticalPort);
+    sonarSensor = new AnalogInput(DriveConstants.kSonarPort);
   
     LeftSide = new SpeedControllerGroup(FrontLeftMotor,BackLeftMotor);
     RightSide = new SpeedControllerGroup(FrontRightMotor, BackRightMotor);
