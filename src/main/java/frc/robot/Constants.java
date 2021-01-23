@@ -16,19 +16,19 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
+    //Controller Mapping
     static final int kOperController = 1; // USB
     static final int kDriverController = 0; // USB
 
     public static final class DriveConstants {
-        //Motor Mapping
+        //Talon Mapping
         public static final int kFrontLeftMotor = 1;
         public static final int kBackLeftMotor = 15;
         public static final int kFrontRightMotor = 20;
         public static final int kBackRightMotor = 14;
         
         //Auto Move Constants
-        public static final double kAutoForwardEncoderDistance = 144; //inches?
+        public static final double kAutoForwardEncoderDistance = 144; //inches!
         public static final double kAutoBackwardEncoderDistance = 144; 
         public static final int kTestSwitch = 10;
 
@@ -41,19 +41,26 @@ public final class Constants {
     }
 
     public static final class ShooterConstants {
+        //Talon Mapping
         public static final int kShooterMotor = 13;
+
+        //Encoder Constants
         public static final int kShooterEncoderChannel1 = 0; //Placeholder value DIO
         public static final int kShooterEncoderChannel2 = 1; //Placeholder value DIO
+
+        //Shooter Speed Constants
         public static final double kShooterStop = 0.0;
         public static final double kShooterHalf = 0.5;
         public static final double kShooterFull = 1.0;
     }
     public static final class PickupConstants {
+        //Talon Mapping
         public static final int kPickupMotorTop = 6; //CAN 6
         public static final int kPickupMotorBottom = 10; //CAN 10
     }
 
     public static final class GateConstants{
+        //Gate Mapping
         public static final int gate1Servo = 0; // PWM
         public static final int gate2Servo = 1; //PWM
         public static final int ball1sensor = 7; // DIO
@@ -68,7 +75,7 @@ public final class Constants {
         public static final double gate2Mid = 0.55;
         public static final double gate2Max = 0.15;
 
-        //
+        //Gate Timing Constants
         public static final double gateUpTime = 0.5;
         public static final double gateDownTime = 1.5;
 		public static final double ShooterSpinUpTime = 2.5;
