@@ -138,19 +138,20 @@ public class RobotContainer {
     final JoystickButton o_yButton = new JoystickButton(io_opercontroller, Button.kY.value);
     //Driver Button Binds
     d_aButton.whenPressed(z_VisionAlign);
-    d_bButton.whenPressed(z_VisionDistance);
-    o_xButton.whenPressed(z_VisionAll);
+   // d_bButton.whenPressed(z_VisionDistance);
+    //o_xButton.whenPressed(z_VisionAll);
     //d_lbumper.whenPressed(m_driveJogLeft);
     //d_rbumper.whenPressed(m_driveJogRight);
 
-    o_bButton.whenPressed(z_AutoForward);
-   d_xButton.whenPressed(z_AutoSquareRight);
+    //o_bButton.whenPressed(z_AutoForward);
+  // d_xButton.whenPressed(z_AutoSquareRight);
    o_aButton.whileHeld(z_AutoBounce);
   // o_xButton.whenPressed(z_gate1Mid);
     o_yButton.whenPressed(z_gate1Down);
    // o_yButton.whenReleased(z_gate1Up);
 
     o_bButton.whileHeld(z_PickupRunHalf);
+    o_xButton.whileHeld(z_ShooterFireHalf);
     
   }
 

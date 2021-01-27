@@ -21,12 +21,15 @@ public class PickupSubsystem extends SubsystemBase {
    */
   private final WPI_TalonSRX pickupMotorTop;
   private final WPI_TalonSRX pickupMotorBottom;
+  private final WPI_TalonSRX pickupMotorArm;
   private double v_pickupSpeedTop;
   private double v_pickupSpeedBottom;
+  private double v_pickupSpeedArm;
   private final Timer Timer;
   public PickupSubsystem() {
     pickupMotorTop = new WPI_TalonSRX(PickupConstants.kPickupMotorTop);
     pickupMotorBottom = new WPI_TalonSRX(PickupConstants.kPickupMotorBottom);
+    pickupMotorArm = new WPI_TalonSRX(PickupConstants.kPickupMotorArm);
 
     pickupMotorTop.setNeutralMode(NeutralMode.Brake);
     pickupMotorBottom.setNeutralMode(NeutralMode.Brake);
@@ -51,6 +54,13 @@ public class PickupSubsystem extends SubsystemBase {
     v_pickupSpeedBottom = -pickupspeed;
 
   }
+  public void ArmDown() {
+    v_pickupSpeedArm = -.5;
+  }
+
+  public void ArmUp(){
+    v_pickupSpeedArm = .5;
+  }
 
 
   @Override
@@ -59,6 +69,7 @@ public class PickupSubsystem extends SubsystemBase {
     //Jeb!
     pickupMotorTop.set(v_pickupSpeedTop);
     pickupMotorBottom.set(v_pickupSpeedBottom);
+    pickupMotorArm.set(v_pickupSpeedArm);
     
   }
 }

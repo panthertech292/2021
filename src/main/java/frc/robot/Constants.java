@@ -60,6 +60,7 @@ public final class Constants {
         //Talon Mapping
         public static final int kPickupMotorTop = 6; //CAN 6
         public static final int kPickupMotorBottom = 10; //CAN 10
+        public static final int kPickupMotorArm = 3;
     }
 
     public static final class GateConstants{
