@@ -23,6 +23,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -243,7 +244,12 @@ private final Timer Timer;
   public void visionAlignLeft(){
     if (v_limeLightX > 1){
       System.out.println("Trying to align!");
-      changePowerSetPoints(0.5, -0.5);
+      if (RobotContainer.getRobotID() == Constants.kBackupBotID){
+        changePowerSetPoints(0.5, -0.5);
+      }
+      else{
+        changePowerSetPoints(0.5, -0.5);
+      }
     }
   }
   public void visionAlignRight(){
@@ -310,7 +316,6 @@ private final Timer Timer;
       } else {
       driveAuto();
       
-      //This is new code probably bad lol
       
      // System.out.println(m_setpointright);
       // This method will be called once per scheduler run
@@ -323,10 +328,13 @@ private final Timer Timer;
      // NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
       //System.out.println(testDio.get());
      // System.out.println(v_limeLightArea);  
-     System.out.println(getRightEncoderValue());
+     //System.out.println(getRightEncoderValue());
+     //System.out.println(RobotContainer.getRobotID());
+     //System.out.println(RobotContainer.io_IDchecker.getVoltage());
      //System.out.println(!opticalSensor.get());
      //System.out.println(sonarSensor.getAverageVoltage());
      SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
      SmartDashboard.putNumber("Sonar Distance in Inches", sonarSensor.getAverageVoltage()/DriveConstants.sonarConversionFactor);
+
     }
   }
