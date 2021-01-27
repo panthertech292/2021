@@ -58,6 +58,7 @@ private final Timer Timer;
     private int v_driveMode = c_modeTeleop;
     private DigitalInput v_testSwitch;
     private DigitalInput opticalSensor;
+    private DigitalInput testDio;
     private AnalogInput sonarSensor;
     private double v_limeLightX;
     private double v_limeLightY;
@@ -83,6 +84,7 @@ private final Timer Timer;
     BackRightMotor = new WPI_TalonSRX(DriveConstants.kBackRightMotor);
     opticalSensor = new DigitalInput(DriveConstants.kOpticalPort);
     sonarSensor = new AnalogInput(DriveConstants.kSonarPort);
+    testDio = new DigitalInput(6);
   
     LeftSide = new SpeedControllerGroup(FrontLeftMotor,BackLeftMotor);
     RightSide = new SpeedControllerGroup(FrontRightMotor, BackRightMotor);
@@ -241,13 +243,13 @@ private final Timer Timer;
   public void visionAlignLeft(){
     if (v_limeLightX > 1){
       System.out.println("Trying to align!");
-      changePowerSetPoints(0.425, -0.425);
+      changePowerSetPoints(0.5, -0.5);
     }
   }
   public void visionAlignRight(){
     if (v_limeLightX < -1){
       System.out.println("Trying to align!");
-      changePowerSetPoints(-0.425, 0.425);
+      changePowerSetPoints(-0.5, 0.5);
     }
   }
   public void visionDistanceArea(){
@@ -318,6 +320,8 @@ private final Timer Timer;
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
       SmartDashboard.putNumber("LimelightY", v_limeLightY);
       SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
+     // NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+      //System.out.println(testDio.get());
      // System.out.println(v_limeLightArea);  
      System.out.println(getRightEncoderValue());
      //System.out.println(!opticalSensor.get());
