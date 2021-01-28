@@ -183,7 +183,7 @@ public class RobotContainer {
   }
 
   public static int getRobotID() {
-    if (io_IDchecker.getVoltage() > 2.5) {
+    if (io_IDchecker.getVoltage() < 2.5) {
       return Constants.kProductionBotID; //Returns robot ID, production bot, red tape on jumper .1
     }
     else{
