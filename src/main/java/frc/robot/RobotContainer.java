@@ -50,7 +50,7 @@ public class RobotContainer {
   private final DriveSubsystem s_DriveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem s_ShooterSubsystem = new ShooterSubsystem();
   private final PickupSubsystem s_PickupSubsystem = new PickupSubsystem();
-  private final GateSubsystem s_gateSubsystem = new GateSubsystem();
+  private final GateSubsystem s_GateSubsystem = new GateSubsystem();
 
   //Auto Commands
   private final Command z_AutoForward = new AutoForward(s_DriveSubsystem, v_Time, v_LeftSpeed,
@@ -88,9 +88,9 @@ public class RobotContainer {
   //Pickup Commands
   private final Command z_PickupRunHalf = new PickupRunHalf(s_PickupSubsystem);
 
-  private final Command z_gate1Down = new Gate1Down(s_gateSubsystem);
-  private final Command z_gate1Mid = new Gate1Up(s_gateSubsystem);
-  private final Command z_gate1Max = new Gate1Max(s_gateSubsystem);
+  private final Command z_gate1Down = new Gate1Down(s_GateSubsystem);
+  private final Command z_gate1Mid = new Gate1Up(s_GateSubsystem);
+  private final Command z_gate1Max = new Gate1Max(s_GateSubsystem);
   
 
   SendableChooser<Command> o_chooser = new SendableChooser<>();
