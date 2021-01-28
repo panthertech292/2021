@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.GateSubsystem;
@@ -36,7 +36,7 @@ public class ShooterFireGated extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ShooterSubsystem.changeSetSpeed(ShooterConstants.kShooterHalf);
+    ShooterSubsystem.changeSetSpeed((ShooterConstants.kShooterHalf) - 0.2);
     if(ShooterSubsystem.getTimerValue() >= 0.5){
       GateSubsystem.Gate1Down();
     }
