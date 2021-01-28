@@ -241,29 +241,46 @@ private final Timer Timer;
       return false;
     }
   }
+  //Actually turns robot right, aimed too far left
   public void visionAlignLeft(){
     if (v_limeLightX > 1){
-      System.out.println("Trying to align!");
-      if (RobotContainer.getRobotID() == Constants.kBackupBotID){
-        changePowerSetPoints(0.5, -0.5);
+      System.out.println("Trying to align left!");
+      if (RobotContainer.getRobotID() == Constants.kProductionBotID){
+        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault, -DriveConstants.kProdBotVisionAlignSpeedDefault);
       }
       else{
-        changePowerSetPoints(0.5, -0.5);
+        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault, -DriveConstants.kVisionAlignSpeedDefault);
       }
     }
   }
+  //Actually turns robot left, aimed too far right
   public void visionAlignRight(){
     if (v_limeLightX < -1){
-      System.out.println("Trying to align!");
-      changePowerSetPoints(-0.5, 0.5);
+      System.out.println("Trying to align right!");
+      if (RobotContainer.getRobotID() == Constants.kProductionBotID){
+        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kProdBotVisionAlignSpeedDefault);
+      }
+      else{
+        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault);
+      }
     }
   }
   public void visionDistanceArea(){
     if (v_limeLightArea > c_VisionAreaTarget){
-      changePowerSetPoints(-0.425, -0.425);
+      if (RobotContainer.getRobotID() == Constants.kProductionBotID){
+        changePowerSetPoints(-DriveConstants.kProdBotVisionForwardSpeedDefault, -DriveConstants.kProdBotVisionForwardSpeedDefault);
+      }
+      else{
+        changePowerSetPoints(-DriveConstants.kVisionForwardSpeedDefault, -DriveConstants.kVisionForwardSpeedDefault);
+      }
     }
     if (v_limeLightArea < c_VisionAreaTarget){
-      changePowerSetPoints(0.425, 0.425);
+      if (RobotContainer.getRobotID() == Constants.kProductionBotID){
+        changePowerSetPoints(DriveConstants.kProdBotVisionForwardSpeedDefault, DriveConstants.kProdBotVisionForwardSpeedDefault);
+      }
+      else{
+        changePowerSetPoints(DriveConstants.kVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault);
+      }
     }
   }
 
@@ -325,6 +342,5 @@ private final Timer Timer;
       SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
       SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
       SmartDashboard.putNumber("Sonar Distance in Inches", sonarSensor.getAverageVoltage()/DriveConstants.sonarConversionFactor);
-
     }
   }
