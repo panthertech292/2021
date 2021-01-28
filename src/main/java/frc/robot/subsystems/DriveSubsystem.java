@@ -244,19 +244,25 @@ private final Timer Timer;
     }
   }
   public void visionAlignLeft(){
-    resetTimer();
-    v_alignmentTimeout = 0;
+    double v_loops = 0;
     if (v_limeLightX > 1){
       System.out.println("Trying to align!");
       if (RobotContainer.getRobotID() == Constants.kBackupBotID){
         changePowerSetPoints(0.5, -0.5);
+         v_loops = v_loops+1;
+         System.out.println(v_loops);
       }
       else{
         changePowerSetPoints(0.5, -0.5);
+        v_loops = v_loops+1;
+        System.out.println(v_loops);
+        
       }
     }
-    if(getTimerValue()>1.0){
+    if(v_loops>100){
       v_alignmentTimeout = 1;
+      System.out.println("Timeout");
+      resetTimer();
     }
   }
   public void visionAlignRight(){
@@ -266,8 +272,9 @@ private final Timer Timer;
       System.out.println("Trying to align!");
       changePowerSetPoints(-0.5, 0.5);
     }
-    if(getTimerValue()>1.0){
+    if(getTimerValue()>3.0){
       v_alignmentTimeout = 1;
+      System.out.println("Timeout");
     }
   }
   public void visionDistanceArea(){
