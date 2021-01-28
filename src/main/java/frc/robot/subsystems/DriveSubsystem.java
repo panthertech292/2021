@@ -23,6 +23,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -82,13 +83,13 @@ private final Timer Timer;
     FrontRightMotor = new WPI_TalonSRX(DriveConstants.kFrontRightMotor);
     BackLeftMotor = new WPI_TalonSRX(DriveConstants.kBackLeftMotor);
     BackRightMotor = new WPI_TalonSRX(DriveConstants.kBackRightMotor);
+    v_testSwitch = new DigitalInput(DriveConstants.kTestSwitch);
     opticalSensor = new DigitalInput(DriveConstants.kOpticalPort);
     sonarSensor = new AnalogInput(DriveConstants.kSonarPort);
     testDio = new DigitalInput(6);
   
     LeftSide = new SpeedControllerGroup(FrontLeftMotor,BackLeftMotor);
     RightSide = new SpeedControllerGroup(FrontRightMotor, BackRightMotor);
-    //m_leftDistance = 0.0;
     
     table = NetworkTableInstance.getDefault().getTable("limelight");
     v_TableEntrytx = table.getEntry("tx");
@@ -112,15 +113,15 @@ private final Timer Timer;
       DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
   }
 
-  v_testSwitch = new DigitalInput(DriveConstants.kTestSwitch);
+  
 
     
 
-  BackLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-  BackRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+    BackLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+    BackRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
 
-  v_setPointLeft = 0.0;
-  v_setPointRight = 0.0;
+    v_setPointLeft = 0.0;
+    v_setPointRight = 0.0;
 
     
     Timer = new Timer();
@@ -150,10 +151,10 @@ private final Timer Timer;
     v_rightSpeed = - rightspeed;
     Drive.tankDrive(v_leftSpeed, v_rightSpeed);
   }
-    public void resetTimer() {
-      Timer.reset();
-      Timer.start();
-    }
+  public void resetTimer() {
+    Timer.reset();
+    Timer.start();
+  }
   
   public double getTimerValue() {
     return Math.abs(Timer.get());
@@ -243,7 +244,12 @@ private final Timer Timer;
   public void visionAlignLeft(){
     if (v_limeLightX > 1){
       System.out.println("Trying to align!");
-      changePowerSetPoints(0.5, -0.5);
+      if (RobotContainer.getRobotID() == Constants.kBackupBotID){
+        changePowerSetPoints(0.5, -0.5);
+      }
+      else{
+        changePowerSetPoints(0.5, -0.5);
+      }
     }
   }
   public void visionAlignRight(){
@@ -303,30 +309,22 @@ private final Timer Timer;
 
     @Override
     public void periodic() {
-      //SmartDashboard.putNumber("Drive Encoder Position ", getLeftPosition());
-      //System.out.println(v_testSwitch.get());
+      // This method will be called once per scheduler run
+      
+      //Sets drive mode
       if (v_driveMode == c_modeTeleop) {
        driveTeleop();
       } else {
       driveAuto();
       
-      //This is new code probably bad lol
-      
-     // System.out.println(m_setpointright);
-      // This method will be called once per scheduler run
       }
       updateLimeLight();
       
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
       SmartDashboard.putNumber("LimelightY", v_limeLightY);
       SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
-     // NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
-      //System.out.println(testDio.get());
-     // System.out.println(v_limeLightArea);  
-     System.out.println(getRightEncoderValue());
-     //System.out.println(!opticalSensor.get());
-     //System.out.println(sonarSensor.getAverageVoltage());
-     SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
-     SmartDashboard.putNumber("Sonar Distance in Inches", sonarSensor.getAverageVoltage()/DriveConstants.sonarConversionFactor);
+      SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
+      SmartDashboard.putNumber("Sonar Distance in Inches", sonarSensor.getAverageVoltage()/DriveConstants.sonarConversionFactor);
+
     }
   }

@@ -20,6 +20,11 @@ public final class Constants {
     static final int kOperController = 1; // USB
     static final int kDriverController = 0; // USB
 
+    //Robot ID
+    public static final int kRobotIDChecker = 0; //AIO
+    public static final int kProductionBotID = 0; 
+    public static final int kBackupBotID = 1;
+
     public static final class DriveConstants {
 
         //Motor Mapping
@@ -40,7 +45,7 @@ public final class Constants {
         //Sensor Constants
         public static final int kOpticalPort = 9; //DIO
         public static final int kSonarPort = 1;
-        public static final double sonarConversionFactor = 0.009766; //Converts voltage to distance in inches
+        public static final double sonarConversionFactor = 0.009766; //Converts voltage to distance in inches. MAKE THIS FIT CONVENTIONS
     }
 
     public static final class ShooterConstants {
