@@ -46,6 +46,15 @@ public final class Constants {
         public static final int kOpticalPort = 9; //DIO
         public static final int kSonarPort = 1;
         public static final double sonarConversionFactor = 0.009766; //Converts voltage to distance in inches. MAKE THIS FIT CONVENTIONS
+
+        //Drive Speeds
+        //This is for the backup bot (Default)
+        public static final double kVisionAlignSpeedDefault = .60; 
+        public static final double kVisionForwardSpeedDefault = .60; 
+
+        //This is for the production bot
+        public static final double kProdBotVisionAlignSpeedDefault = .50; //These are placeholder values as the actual bot is not yet built
+        public static final double kProdBotVisionForwardSpeedDefault = .50; //These are placeholder values as the actual bot is not yet built
     }
 
     public static final class ShooterConstants {
