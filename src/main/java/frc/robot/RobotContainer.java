@@ -86,6 +86,7 @@ public class RobotContainer {
   // Shooter Commands
   private final Command z_ShooterFireHalf = new ShooterFireHalf(s_ShooterSubsystem);
   private final Command z_ShooterFireFull = new ShooterFireFull(s_ShooterSubsystem);
+  private final Command z_ShooterFireGated = new ShooterFireGated(s_ShooterSubsystem, s_GateSubsystem);
 
   // Pickup Commands
   private final Command z_PickupRunHalf = new PickupRunHalf(s_PickupSubsystem);
@@ -151,7 +152,7 @@ public class RobotContainer {
 
     // o_bButton.whenPressed(z_AutoForward);
     // d_xButton.whenPressed(z_AutoSquareRight);
-    o_aButton.whileHeld(z_AutoBounce);
+    o_aButton.whenPressed(z_ShooterFireGated);
     // o_xButton.whenPressed(z_gate1Mid);
     o_yButton.whenPressed(z_gate1Down);
     // o_yButton.whenReleased(z_gate1Up);

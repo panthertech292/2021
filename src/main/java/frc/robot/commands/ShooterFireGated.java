@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.GateSubsystem;
@@ -36,23 +36,23 @@ public class ShooterFireGated extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //ShooterSubsystem.changeSetSpeed(ShooterConstants.kShooterHalf);
+    ShooterSubsystem.changeSetSpeed((ShooterConstants.kShooterHalf) - 0.2);
     if(ShooterSubsystem.getTimerValue() >= 0.5){
       GateSubsystem.Gate1Down();
     }
-    if(ShooterSubsystem.getTimerValue() >= 0.8){
+    if(ShooterSubsystem.getTimerValue() >= 1.2){
       GateSubsystem.Gate1Mid();
     }
-    if(ShooterSubsystem.getTimerValue() >= 1.1){
+    if(ShooterSubsystem.getTimerValue() >= 1.9){
       GateSubsystem.Gate1Down();
     }
-    if(ShooterSubsystem.getTimerValue() >= 1.4){
+    if(ShooterSubsystem.getTimerValue() >= 2.6){
       GateSubsystem.Gate1Mid();
     }
-    if(ShooterSubsystem.getTimerValue() >= 1.7){
+    if(ShooterSubsystem.getTimerValue() >= 3.3){
       GateSubsystem.Gate1Down();
     }
-    if(ShooterSubsystem.getTimerValue() >= 2.0){
+    if(ShooterSubsystem.getTimerValue() >= 4.0){
       GateSubsystem.Gate1Mid();
     }
     
@@ -76,6 +76,6 @@ public class ShooterFireGated extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ShooterSubsystem.getTimerValue()>2.2;
+    return ShooterSubsystem.getTimerValue()>4.1;
   }
 }

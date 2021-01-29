@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Timer;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -65,6 +65,7 @@ private final Timer Timer;
     private double v_limeLightY;
     private double v_limeLightArea;
     private double c_VisionAreaTarget;
+    private double v_alignmentTimeout;
 
     private NetworkTableEntry v_TableEntrytx;
     private NetworkTableEntry v_TableEntryty;
@@ -225,10 +226,10 @@ private final Timer Timer;
   }
   //Vision
   public boolean visionFinish(){
-    
+   
     if (- 1 <= v_limeLightX && v_limeLightX <= 1){
-      return true;
-    }
+      return true;}
+    
     else{
       return false;
     }
@@ -243,18 +244,21 @@ private final Timer Timer;
   }
   //Actually turns robot right, aimed too far left
   public void visionAlignLeft(){
+    
     if (v_limeLightX > 1){
+
       System.out.println("Trying to align left!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID){
         changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault, -DriveConstants.kProdBotVisionAlignSpeedDefault);
       }
       else{
         changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault, -DriveConstants.kVisionAlignSpeedDefault);
-      }
-    }
+
+ 
   }
   //Actually turns robot left, aimed too far right
   public void visionAlignRight(){
+    
     if (v_limeLightX < -1){
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID){
