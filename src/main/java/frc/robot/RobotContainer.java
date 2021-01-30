@@ -76,6 +76,8 @@ public class RobotContainer {
 
   private final Command z_AutoReloadFire = new AutoReloadFire(s_ShooterSubsystem, s_DriveSubsystem, s_PickupSubsystem);
 
+  private final Command z_AutoBarrel = new AutoBarrel(s_DriveSubsystem);
+
   // Vision Commands
   private final Command z_VisionAlign = new VisionAlign(s_DriveSubsystem);
   private final Command z_VisionDistance = new VisionDistance(s_DriveSubsystem);
@@ -152,7 +154,7 @@ public class RobotContainer {
 
     // o_bButton.whenPressed(z_AutoForward);
     // d_xButton.whenPressed(z_AutoSquareRight);
-    o_aButton.whenPressed(z_ShooterFireGated);
+    o_aButton.whileHeld(z_AutoBarrel);
     // o_xButton.whenPressed(z_gate1Mid);
     o_yButton.whenPressed(z_gate1Down);
     // o_yButton.whenReleased(z_gate1Up);
