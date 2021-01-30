@@ -210,10 +210,10 @@ private final Timer Timer;
   // System.out.println("Gyro Distance" +  gyroDistance);
   // System.out.println("Encoder Distance" + encoderDistance);
   // System.out.println("Delta Turn Distance" + (gyroDistance - encoderDistance));
-  System.out.println("Gyro Angle" +  v_deltaAngle);
+  /*System.out.println("Gyro Angle" +  v_deltaAngle);
   System.out.println("Encoder Angle" +  encoderAngle);
   System.out.println("Delta Turn Angle" + (v_deltaAngle - encoderAngle));
-
+*/
 
    //return (gyroDistance - encoderDistance);
 
