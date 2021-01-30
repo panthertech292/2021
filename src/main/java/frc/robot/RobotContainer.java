@@ -42,7 +42,9 @@ public class RobotContainer {
   private double v_Time;
   private double v_LeftSpeed;
   private double v_RightSpeed;
-  
+  private double v_productionSpeed;
+  private double v_backupSpeed;
+
 
   final static int io_lefttrigger = 2;
   final static int io_righttrigger = 3;
@@ -151,7 +153,7 @@ public class RobotContainer {
     // d_rbumper.whenPressed(m_driveJogRight);
 
     // o_bButton.whenPressed(z_AutoForward);
-    // d_xButton.whenPressed(z_AutoSquareRight);
+    d_xButton.whenHeld(z_ShooterFireFull);
     o_aButton.whenPressed(z_ShooterFireGated);
     // o_xButton.whenPressed(z_gate1Mid);
     o_yButton.whenPressed(z_gate1Down);
@@ -185,14 +187,22 @@ public class RobotContainer {
 
   public static int getRobotID() {
     if (io_IDchecker.getVoltage() < 2.5) {
-      return Constants.kProductionBotID; //Returns robot ID, production bot, red tape on jumper .1
+      return Constants.kProductionBotID; //Returns robot ID, production bot, red tape on jumper 0
     }
     else{
-      return Constants.kBackupBotID; //Returns robot ID, backup bot, black tape on jumper .0
+      return Constants.kBackupBotID; //Returns robot ID, backup bot, black tape on jumper 1
     }
   }
-  
-
+  /*
+  public static double setMotorSpeed(v_backupSpeed, v_productionSpeed){
+    if (getRobotID() == 0){
+      return v_productionSpeed;
+    }
+    else{
+      return v_backupSpeed;
+    }
+  }
+  */
   public Command getAutonomousCommand() {
      //An ExampleCommand will run in autonomous
     return o_chooser.getSelected();

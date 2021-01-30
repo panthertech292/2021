@@ -31,7 +31,6 @@ public final class Constants {
         public static final int kFrontLeftMotor = 20;
         public static final int kBackLeftMotor = 1;
         public static final int kFrontRightMotor = 15;
-
         public static final int kBackRightMotor = 14;
         
         //Auto Move Constants
