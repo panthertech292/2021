@@ -253,6 +253,8 @@ private final Timer Timer;
       }
       else{
         changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault, -DriveConstants.kVisionAlignSpeedDefault);
+      }
+    }
 
  
   }
