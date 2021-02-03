@@ -253,12 +253,13 @@ private final Timer Timer;
       v_loopCount = v_loopCount+1;
       System.out.println(v_loopCount);
       System.out.println("Trying to align left!");
-      if (RobotContainer.getRobotID() == Constants.kProductionBotID){
-        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault, -DriveConstants.kProdBotVisionAlignSpeedDefault);
-      }
-      else{
-        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault, -DriveConstants.kVisionAlignSpeedDefault);
-      }
+      //if (RobotContainer.getRobotID() == Constants.kProductionBotID){
+      //  changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault, -DriveConstants.kProdBotVisionAlignSpeedDefault);
+      //}
+      //else{
+      //  changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault, -DriveConstants.kVisionAlignSpeedDefault);
+      //}
+      changePowerSetPoints(RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault), -RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault));
       //50 loops = 1 sec?
       if(v_loopCount>=150){
         System.out.println("Alignment Aborted");
@@ -276,12 +277,14 @@ private final Timer Timer;
       v_loopCount = v_loopCount+1;
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
-      if (RobotContainer.getRobotID() == Constants.kProductionBotID){
-        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kProdBotVisionAlignSpeedDefault);
-      }
-      else{
-        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault);
-      }
+      //if (RobotContainer.getRobotID() == Constants.kProductionBotID){
+      //  changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kProdBotVisionAlignSpeedDefault);
+      //}
+      //else{
+      //  changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault);
+      //}
+      
+      changePowerSetPoints(-RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault), RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault));
       if(v_loopCount>=150){
         System.out.println("Alignment Aborted");
         v_loopCount = 0;
@@ -291,20 +294,22 @@ private final Timer Timer;
   }
   public void visionDistanceArea(){
     if (v_limeLightArea > c_VisionAreaTarget){
-      if (RobotContainer.getRobotID() == Constants.kProductionBotID){
-        changePowerSetPoints(-DriveConstants.kProdBotVisionForwardSpeedDefault, -DriveConstants.kProdBotVisionForwardSpeedDefault);
+      //if (RobotContainer.getRobotID() == Constants.kProductionBotID){
+      //  changePowerSetPoints(-DriveConstants.kProdBotVisionForwardSpeedDefault, -DriveConstants.kProdBotVisionForwardSpeedDefault);
+      //}
+      //else{
+      //  changePowerSetPoints(-DriveConstants.kVisionForwardSpeedDefault, -DriveConstants.kVisionForwardSpeedDefault);
+      changePowerSetPoints(-RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault), -RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault));
       }
-      else{
-        changePowerSetPoints(-DriveConstants.kVisionForwardSpeedDefault, -DriveConstants.kVisionForwardSpeedDefault);
-      }
-    }
+    
     if (v_limeLightArea < c_VisionAreaTarget){
-      if (RobotContainer.getRobotID() == Constants.kProductionBotID){
-        changePowerSetPoints(DriveConstants.kProdBotVisionForwardSpeedDefault, DriveConstants.kProdBotVisionForwardSpeedDefault);
-      }
-      else{
-        changePowerSetPoints(DriveConstants.kVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault);
-      }
+      //if (RobotContainer.getRobotID() == Constants.kProductionBotID){
+      //  changePowerSetPoints(DriveConstants.kProdBotVisionForwardSpeedDefault, DriveConstants.kProdBotVisionForwardSpeedDefault);
+      //}
+      //else{
+      //  changePowerSetPoints(DriveConstants.kVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault);
+      //}
+      changePowerSetPoints(RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault), RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault));
     }
   }
 

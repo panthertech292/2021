@@ -44,6 +44,7 @@ public class RobotContainer {
   private double v_RightSpeed;
   
 
+
   final static int io_lefttrigger = 2;
   final static int io_righttrigger = 3;
 
@@ -191,6 +192,15 @@ public class RobotContainer {
     }
     else{
       return Constants.kBackupBotID; //Returns robot ID, backup bot, black tape on jumper .0
+    }
+  }
+  
+  public static double setMotorSpeed(double v_productionSpeed,double v_backupSpeed){
+    if (getRobotID() == 0){
+      return v_productionSpeed;
+    }
+    else{
+      return v_backupSpeed;
     }
   }
   
