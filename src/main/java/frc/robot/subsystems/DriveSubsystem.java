@@ -65,7 +65,8 @@ private final Timer Timer;
     private double v_limeLightY;
     private double v_limeLightArea;
     private double c_VisionAreaTarget;
-    private double v_alignmentTimeout;
+    private int v_loopCount;
+    private int v_visionOverride;
 
     private NetworkTableEntry v_TableEntrytx;
     private NetworkTableEntry v_TableEntryty;
@@ -102,6 +103,8 @@ private final Timer Timer;
     v_limeLightArea = v_TableEntryta.getDouble(0.0);
 
     c_VisionAreaTarget = DriveConstants.kVisionAreaTarget;
+    v_loopCount = 0;
+    v_visionOverride = 0;
 
     Drive = new DifferentialDrive(LeftSide,RightSide);
 
@@ -210,10 +213,10 @@ private final Timer Timer;
   // System.out.println("Gyro Distance" +  gyroDistance);
   // System.out.println("Encoder Distance" + encoderDistance);
   // System.out.println("Delta Turn Distance" + (gyroDistance - encoderDistance));
-  System.out.println("Gyro Angle" +  v_deltaAngle);
+  /*System.out.println("Gyro Angle" +  v_deltaAngle);
   System.out.println("Encoder Angle" +  encoderAngle);
   System.out.println("Delta Turn Angle" + (v_deltaAngle - encoderAngle));
-
+*/
 
    //return (gyroDistance - encoderDistance);
 
@@ -227,7 +230,8 @@ private final Timer Timer;
   //Vision
   public boolean visionFinish(){
    
-    if (- 1 <= v_limeLightX && v_limeLightX <= 1){
+    if (- 1 <= v_limeLightX && v_limeLightX <= 1 || v_visionOverride == 1 ){
+      v_visionOverride = 0;
       return true;}
     
     else{
@@ -246,13 +250,20 @@ private final Timer Timer;
   public void visionAlignLeft(){
     
     if (v_limeLightX > 1){
-
+      v_loopCount = v_loopCount+1;
+      System.out.println(v_loopCount);
       System.out.println("Trying to align left!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID){
         changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault, -DriveConstants.kProdBotVisionAlignSpeedDefault);
       }
       else{
         changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault, -DriveConstants.kVisionAlignSpeedDefault);
+      }
+      //50 loops = 1 sec?
+      if(v_loopCount>=150){
+        System.out.println("Alignment Aborted");
+        v_loopCount = 0;
+        v_visionOverride = 1;
       }
     }
 
@@ -262,12 +273,19 @@ private final Timer Timer;
   public void visionAlignRight(){
     
     if (v_limeLightX < -1){
+      v_loopCount = v_loopCount+1;
+      System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID){
         changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kProdBotVisionAlignSpeedDefault);
       }
       else{
         changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault);
+      }
+      if(v_loopCount>=150){
+        System.out.println("Alignment Aborted");
+        v_loopCount = 0;
+        v_visionOverride = 1;
       }
     }
   }

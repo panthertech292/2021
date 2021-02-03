@@ -42,9 +42,7 @@ public class RobotContainer {
   private double v_Time;
   private double v_LeftSpeed;
   private double v_RightSpeed;
-  private double v_productionSpeed;
-  private double v_backupSpeed;
-
+  
 
   final static int io_lefttrigger = 2;
   final static int io_righttrigger = 3;
@@ -77,6 +75,8 @@ public class RobotContainer {
   private final Command z_AutoPickupTimed = new AutoPickupTimed(s_PickupSubsystem);
 
   private final Command z_AutoReloadFire = new AutoReloadFire(s_ShooterSubsystem, s_DriveSubsystem, s_PickupSubsystem);
+
+  private final Command z_AutoBarrel = new AutoBarrel(s_DriveSubsystem);
 
   // Vision Commands
   private final Command z_VisionAlign = new VisionAlign(s_DriveSubsystem);
@@ -153,14 +153,14 @@ public class RobotContainer {
     // d_rbumper.whenPressed(m_driveJogRight);
 
     // o_bButton.whenPressed(z_AutoForward);
-    d_xButton.whenHeld(z_ShooterFireFull);
-    o_aButton.whenPressed(z_ShooterFireGated);
+    // d_xButton.whenPressed(z_AutoSquareRight);
+    o_aButton.whileHeld(z_AutoBarrel);
     // o_xButton.whenPressed(z_gate1Mid);
     o_yButton.whenPressed(z_gate1Down);
     // o_yButton.whenReleased(z_gate1Up);
 
     o_bButton.whileHeld(z_PickupRunHalf);
-    o_xButton.whileHeld(z_ShooterFireHalf);
+    d_xButton.whileHeld(z_ShooterFireFull);
 
   }
 
@@ -187,12 +187,14 @@ public class RobotContainer {
 
   public static int getRobotID() {
     if (io_IDchecker.getVoltage() < 2.5) {
-      return Constants.kProductionBotID; //Returns robot ID, production bot, red tape on jumper 0
+      return Constants.kProductionBotID; //Returns robot ID, production bot, red tape on jumper .1
     }
     else{
-      return Constants.kBackupBotID; //Returns robot ID, backup bot, black tape on jumper 1
+      return Constants.kBackupBotID; //Returns robot ID, backup bot, black tape on jumper .0
     }
   }
+  
+
   public Command getAutonomousCommand() {
      //An ExampleCommand will run in autonomous
     return o_chooser.getSelected();
