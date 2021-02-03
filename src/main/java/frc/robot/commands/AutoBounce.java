@@ -26,13 +26,13 @@ public class AutoBounce extends SequentialCommandGroup {
    addRequirements(s_DriveSubsystem);
 
    addCommands(
-    new AutoForwardEncoder(s_DriveSubsystem, 48.0, 0.5, 0.5),
+    //new AutoForwardEncoder(s_DriveSubsystem, 48.0, 0.5, 0.5),
 
-    new AutoForward(s_DriveSubsystem, 1.0, 0.0, 0.0),
+    new AutoForwardPID(s_DriveSubsystem, 5.0, 0.5)
 
-    new AutoBackwardEncoder(s_DriveSubsystem, 48.0, 0.5, 0.5),
+    //new AutoBackwardEncoder(s_DriveSubsystem, 48.0, 0.5, 0.5),
 
-    new AutoForward(s_DriveSubsystem, 1.0, 0.0, 0.0)
+    //new AutoForward(s_DriveSubsystem, 1.0, 0.0, 0.0)
 
    );
   }

@@ -288,7 +288,7 @@ if(counter >= 4 && getEncoderRate() >= 250000){
 //Currently Causes Motor to Overheat? BE CAREFUL
 public double PID(double v_RPMTarget){
   double error;
-  double P = .001;
+  double P = 0.001;
   double I = 0.005;
   double D = 0.0;
   double derivative;

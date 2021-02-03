@@ -58,6 +58,7 @@ public class RobotContainer {
 
   // Auto Commands
   private final Command z_AutoForward = new AutoForward(s_DriveSubsystem, v_Time, v_LeftSpeed, v_RightSpeed);
+  private final Command z_AutoForwardPID = new AutoForwardPID(s_DriveSubsystem, v_Time, v_LeftSpeed);
   private final Command z_AutoForwardEncoder = new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed,
       v_RightSpeed);
   private final Command z_AutoBackwardEncoder = new AutoBackwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed,
@@ -147,6 +148,8 @@ public class RobotContainer {
     final JoystickButton o_yButton = new JoystickButton(io_opercontroller, Button.kY.value);
     // Driver Button Binds
     d_aButton.whenPressed(z_VisionAlign);
+    d_bButton.whenPressed(z_AutoBounce);
+    d_xButton.whileHeld(z_ShooterFireFull);
     // d_bButton.whenPressed(z_VisionDistance);
     // o_xButton.whenPressed(z_VisionAll);
     // d_lbumper.whenPressed(m_driveJogLeft);
@@ -160,7 +163,7 @@ public class RobotContainer {
     // o_yButton.whenReleased(z_gate1Up);
 
     o_bButton.whileHeld(z_PickupRunHalf);
-    d_xButton.whileHeld(z_ShooterFireFull);
+    
 
   }
 
