@@ -53,6 +53,10 @@ private final Timer Timer;
     //private double m_leftDistance;
     private double v_deltaAngle;
     private double c_encoderConversion;
+    private double v_integral;
+    private double v_previousError;
+    private int v_pidEnabler = 0;
+    private double v_targetPower;
      //Put this into constants.java
     private int c_modeTeleop = 0;
     private int c_modeSetPoint = 1;
@@ -347,6 +351,40 @@ private final Timer Timer;
     differentialDrive((RobotContainer.getLeftSpeed()*RobotContainer.getDriveSpeedAdjust()), (RobotContainer.getRightSpeed()*RobotContainer.getDriveSpeedAdjust()));
   }
 
+//Changes Right Side based on Left Side
+  public double LeftPID(double v_targetPower){
+    double error;
+    double P = 0.0001;
+    double I = 0.00812;
+    double D = 0.0;
+    double derivative;
+    double rcw;
+    error = Math.abs(BackLeftMotor.getSelectedSensorVelocity()) - Math.abs(BackRightMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+    v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+    derivative = (error - v_previousError) / .02;
+    v_previousError = error;
+    rcw = P*error + I*v_integral + D*derivative;
+   // System.out.println(rcw);
+    v_rightSpeed = v_targetPower + rcw;
+    return v_rightSpeed;
+    }
+    public double RightPID(double v_targetPower){
+      double error;
+      double P = 0.0001;
+      double I = 0.00812;
+      double D = 0.0;
+      double derivative;
+      double rcw;
+      error = Math.abs(BackRightMotor.getSelectedSensorVelocity()) - Math.abs(BackLeftMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+      v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+      derivative = (error - v_previousError) / .02;
+      v_previousError = error;
+      rcw = P*error + I*v_integral + D*derivative;
+     // System.out.println(rcw);
+      v_leftSpeed = v_targetPower + rcw;
+      return v_leftSpeed;
+      }
+  
 
     @Override
     public void periodic() {
@@ -357,8 +395,8 @@ private final Timer Timer;
        driveTeleop();
       } else {
       driveAuto();
-      
       }
+      
       updateLimeLight();
       
       SmartDashboard.putNumber("LimelightX", v_limeLightX);

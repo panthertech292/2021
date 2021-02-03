@@ -7,24 +7,24 @@
 
 package frc.robot.commands;
 
+
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class AutoForward extends CommandBase {
+public class AutoForwardPID extends CommandBase {
   private final DriveSubsystem DriveSubsystem;
   private final double Time;
-  private final double LeftSpeed;
-  private final double RightSpeed;
+  private final double TargetSpeed;
   /**
    * Creates a new AutoForward.
    */
-  public AutoForward(DriveSubsystem s_DriveSubsystem, double v_Time, double v_LeftSpeed, double v_RightSpeed) {
+  public AutoForwardPID(DriveSubsystem s_DriveSubsystem, double v_Time, double v_TargetSpeed) {
     DriveSubsystem = s_DriveSubsystem;
     addRequirements(s_DriveSubsystem);
 
     Time = v_Time;
-    LeftSpeed = v_LeftSpeed;
-    RightSpeed = v_RightSpeed;
+    TargetSpeed = v_TargetSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -34,7 +34,7 @@ public class AutoForward extends CommandBase {
     DriveSubsystem.resetTimer();
     DriveSubsystem.zeroDistanceSensors();
     
-    System.out.println(LeftSpeed  +  RightSpeed  +  Time);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +42,7 @@ public class AutoForward extends CommandBase {
   public void execute() {
     
     DriveSubsystem.driveModePowerSetPoint();
-    DriveSubsystem.changePowerSetPoints(LeftSpeed,RightSpeed);
+    DriveSubsystem.changePowerSetPoints(DriveSubsystem.RightPID(TargetSpeed),DriveSubsystem.LeftPID(TargetSpeed));
   }
 
   // Called once the command ends or is interrupted.
