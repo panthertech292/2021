@@ -65,6 +65,7 @@ public class ShooterSubsystem extends SubsystemBase {
     Timer = new Timer();
     PDP = new PowerDistributionPanel();
     v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
+    SmartDashboard.putNumber("v_RPMTarget", 0.0);
     
 
     v_shooterSpeed = 0.0;
@@ -237,9 +238,7 @@ if(m_shooterFloor == 10){
 return encoderValue;
 }
 
-public void UpdateTargetRPM(){
-  v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
-}
+
 
 /*public void initCloseEnough(){
   double set = getEncoderRate();
@@ -286,13 +285,15 @@ if(counter >= 4 && getEncoderRate() >= 250000){
 }
 }
 */
+//Currently Causes Motor to Overheat? BE CAREFUL
 public double PID(double v_RPMTarget){
   double error;
-  double P = .0009;
-  double I = 0.0;
+  double P = .001;
+  double I = 0.005;
   double D = 0.0;
   double derivative;
   double rcw;
+  if (v_RPMTarget > 50000){
   error = v_RPMTarget - getEncoderRate(); // Error = Target - Actual
   v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
   derivative = (error - v_previousError) / .02;
@@ -300,17 +301,28 @@ public double PID(double v_RPMTarget){
   rcw = P*error + I*v_integral + D*derivative;
  // System.out.println(rcw);
   return rcw;
-  
-  
+  }
+  else{
+    return 0.0;
+  }
 }
-
+public void UpdateTargetRPM(){
+  v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
+}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //ShooterMotor.set(.9/*+RobotContainer.getShooterSpeedAdjust()*/);
+    UpdateTargetRPM();
+    if(v_RPMTarget<=50000){
+      ShooterMotor.set(v_shooterSpeed/*+RobotContainer.getShooterSpeedAdjust()*/);
+    }
+    else{
+      ShooterMotor.set(PID(v_RPMTarget));
+    }
+    
    // System.out.println(getEncoderAverageRateArray());
-   //ShooterMotor.set(PID(v_RPMTarget));
+   
    //ShooterMotor.set(PID(120000));
    // SmartDashboard.putNumber("ShooterSpeed", v_shooterSpeed);
    // SmartDashboard.putNumber("ShooterEncoderRateSet", v_encoderSetPointShooter);
@@ -320,7 +332,7 @@ public double PID(double v_RPMTarget){
     //System.out.println(getEncoderAverageRateArray());
     //System.out.println(getEncoderRate());
     
-   // UpdateTargetRPM();
+    
   }
 }
 

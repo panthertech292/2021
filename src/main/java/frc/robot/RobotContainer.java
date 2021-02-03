@@ -160,7 +160,7 @@ public class RobotContainer {
     // o_yButton.whenReleased(z_gate1Up);
 
     o_bButton.whileHeld(z_PickupRunHalf);
-    o_xButton.whileHeld(z_ShooterFireHalf);
+    d_xButton.whileHeld(z_ShooterFireFull);
 
   }
 
