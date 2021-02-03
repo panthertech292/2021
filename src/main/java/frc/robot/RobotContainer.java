@@ -193,16 +193,6 @@ public class RobotContainer {
       return Constants.kBackupBotID; //Returns robot ID, backup bot, black tape on jumper 1
     }
   }
-  /*
-  public static double setMotorSpeed(v_backupSpeed, v_productionSpeed){
-    if (getRobotID() == 0){
-      return v_productionSpeed;
-    }
-    else{
-      return v_backupSpeed;
-    }
-  }
-  */
   public Command getAutonomousCommand() {
      //An ExampleCommand will run in autonomous
     return o_chooser.getSelected();
