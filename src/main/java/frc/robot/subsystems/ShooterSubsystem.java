@@ -29,6 +29,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private Encoder ShooterEncoder;
   private double v_encoderSetPointShooter;
   private double v_RPMTarget;
+  private int v_loops;
+  public int v_shooterSpinIndicator;
 
   //Average Variables
   //TO DO MAKE FIT STANDARS
@@ -310,6 +312,21 @@ public void UpdateTargetRPM(){
   v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
 }
 
+public void MotorSpinUp(double TargetRPM){
+  if(v_loops<500){
+    v_loops = v_loops +1;
+  if (getEncoderRate()>=(TargetRPM-(TargetRPM*.1)) && (TargetRPM+(TargetRPM*.1))>=getEncoderRate()){
+    v_shooterSpinIndicator = 1;
+    v_loops = 0;
+  }
+  else{
+    v_shooterSpinIndicator = 0;}
+}
+else{
+  v_shooterSpinIndicator = 2;
+}
+//1 = ready to shoot, 0 = not ready to shoot, 2 = timed out/shoot aborted
+}
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
