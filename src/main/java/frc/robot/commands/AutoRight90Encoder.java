@@ -37,11 +37,12 @@ public class AutoRight90Encoder extends CommandBase {
   public void end(boolean interrupted) {
     DriveSubsystem.changePowerSetPoints(0,0);
     DriveSubsystem.deltaTurn();
+  System.out.println(DriveSubsystem.PerceivedAngle(DriveSubsystem.getLeftPosition()));
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return  DriveSubsystem.encoderFinish(DriveSubsystem.rotateRobot(90));
+    return  DriveSubsystem.encoderFinish(DriveSubsystem.rotateRobot(93));
   }
 }

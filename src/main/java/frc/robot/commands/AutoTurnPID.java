@@ -12,22 +12,24 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class AutoForwardPID extends CommandBase {
+public class AutoTurnPID extends CommandBase {
   private final DriveSubsystem DriveSubsystem;
-  private final double Time;
+  
   private final double TargetSpeedLeft;
   private final double TargetSpeedRight;
+  private double Angle;
 
   /**
    * Creates a new AutoForward.
    */
-  public AutoForwardPID(DriveSubsystem s_DriveSubsystem, double v_Time, double v_TargetSpeedLeft, double v_TargetSpeedRight) {
+  public AutoTurnPID(DriveSubsystem s_DriveSubsystem, double v_TargetSpeedLeft, double v_TargetSpeedRight, double m_angle) {
     DriveSubsystem = s_DriveSubsystem;
     addRequirements(s_DriveSubsystem);
 
-    Time = v_Time;
+    
     TargetSpeedLeft = v_TargetSpeedLeft;
     TargetSpeedRight = v_TargetSpeedRight;
+    Angle = m_angle;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -60,6 +62,6 @@ public class AutoForwardPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return DriveSubsystem.getTimerValue()>Time;
+    return DriveSubsystem.gyroFinish(Angle);
   }
 }

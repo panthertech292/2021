@@ -49,8 +49,8 @@ public final class Constants {
 
         //Drive Speeds
         //This is for the backup bot (Default)
-        public static final double kVisionAlignSpeedDefault = .50; 
-        public static final double kVisionForwardSpeedDefault = .50; 
+        public static final double kVisionAlignSpeedDefault = .60; 
+        public static final double kVisionForwardSpeedDefault = .60; 
 
         //This is for the production bot
         public static final double kProdBotVisionAlignSpeedDefault = .50; //These are placeholder values as the actual bot is not yet built

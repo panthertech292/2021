@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
@@ -24,6 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new ShooterSubsystem.
    */
   private final WPI_TalonSRX ShooterMotor;
+  private DigitalInput BallSensor;
   private double v_shooterSpeed = 0;
   private final Timer Timer;
   private Encoder ShooterEncoder;
@@ -68,6 +71,7 @@ public class ShooterSubsystem extends SubsystemBase {
     PDP = new PowerDistributionPanel();
     v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
     SmartDashboard.putNumber("v_RPMTarget", 0.0);
+    BallSensor = new DigitalInput(5);
     
 
     v_shooterSpeed = 0.0;
@@ -312,18 +316,23 @@ public void UpdateTargetRPM(){
   v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
 }
 
-public void MotorSpinUp(double TargetRPM){
+public int MotorSpinUp(double TargetRPM){
   if(v_loops<500){
     v_loops = v_loops +1;
-  if (getEncoderRate()>=(TargetRPM-(TargetRPM*.1)) && (TargetRPM+(TargetRPM*.1))>=getEncoderRate()){
-    v_shooterSpinIndicator = 1;
+  if (getEncoderRate()>(TargetRPM-(TargetRPM*.1)) && (TargetRPM+(TargetRPM*.1))>getEncoderRate()){
+    
     v_loops = 0;
+    System.out.println("Motor Spun Up");
+    return 1;
   }
   else{
-    v_shooterSpinIndicator = 0;}
+    return 0;}
 }
 else{
-  v_shooterSpinIndicator = 2;
+  System.out.println("Motor Timed Out");
+  v_loops = 0;
+  return 2;
+  
 }
 //1 = ready to shoot, 0 = not ready to shoot, 2 = timed out/shoot aborted
 }
@@ -337,7 +346,7 @@ else{
     else{
       ShooterMotor.set(PID(v_RPMTarget));
     }
-    
+    System.out.println(!BallSensor.get());
    // System.out.println(getEncoderAverageRateArray());
    
    //ShooterMotor.set(PID(120000));
@@ -347,7 +356,7 @@ else{
     SmartDashboard.putNumber("Motor Percentages", ShooterMotor.getMotorOutputPercent());
     SmartDashboard.getNumber("v_RPMTarget", v_RPMTarget);
     //System.out.println(getEncoderAverageRateArray());
-    //System.out.println(getEncoderRate());
+    
     
     
   }

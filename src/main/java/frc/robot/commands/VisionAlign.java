@@ -28,6 +28,7 @@ public class VisionAlign extends CommandBase {
   @Override
   public void initialize() {
     DriveSubsystem.changePowerSetPoints(0,0);
+    DriveSubsystem.zeroDistanceSensors();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,6 +46,10 @@ public class VisionAlign extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     DriveSubsystem.changePowerSetPoints(0,0);
+    System.out.println("Left Encoder Value"  +   DriveSubsystem.getLeftPosition());
+    System.out.println("Right Encoder Value"  +   DriveSubsystem.getRightPosition());
+
+    System.out.println("Perceived Angle"   +  DriveSubsystem.PerceivedAngle(DriveSubsystem.getLeftPosition()));
   }
 
   // Returns true when the command should end.

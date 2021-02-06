@@ -384,6 +384,10 @@ private final Timer Timer;
       v_leftSpeed = v_targetPower + rcw;
       return v_leftSpeed;
       }
+
+      public double PerceivedAngle(double distance){
+        return (360*distance)/(Math.PI*21);
+      }
   
 
     @Override
