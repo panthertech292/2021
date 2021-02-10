@@ -371,5 +371,6 @@ private final Timer Timer;
       SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
       SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
       SmartDashboard.putNumber("Sonar Distance in Inches", sonarSensor.getAverageVoltage()/DriveConstants.sonarConversionFactor);
+      System.out.println(RobotContainer.setMotorSpeed(DriveConstants.kProdBotVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault));
     }
   }
