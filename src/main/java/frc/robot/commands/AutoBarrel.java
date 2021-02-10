@@ -33,35 +33,22 @@ public class AutoBarrel extends SequentialCommandGroup {
      //Template Commands
     //new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed),
     //new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(75), 1.0, -.35),
-    new AutoForwardEncoder(s_DriveSubsystem, 120.0 - 36.0, v_driveSpeed, v_driveSpeed),
-   /*right*/ new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor-20), 1.0, -.35),
-    new AutoForwardEncoder(s_DriveSubsystem, v_standardForward, v_driveSpeed, v_driveSpeed),
-    new AutoForward(s_DriveSubsystem, 100000000.0, 0.0, 0.0),
-    new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), 1.0, -.35),
-    new AutoForwardEncoder(s_DriveSubsystem, v_standardForward, v_driveSpeed, v_driveSpeed),
-
-    
-
-    new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), 1.0, -.35),
-    new AutoForwardEncoder(s_DriveSubsystem, v_standardForward, v_driveSpeed, v_driveSpeed),
-    new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), 1.0, -.35),
-    new AutoForwardEncoder(s_DriveSubsystem, 114.0, v_driveSpeed, v_driveSpeed),
-   /*left*/ new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), -.35, 1.0),
-   new AutoForwardEncoder(s_DriveSubsystem, v_standardForward, v_driveSpeed, v_driveSpeed),
-   new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), -.35, 1.0),
-   new AutoForwardEncoder(s_DriveSubsystem, v_standardForward, v_driveSpeed, v_driveSpeed),
-   new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), -.35, 1.0),
-   new AutoForwardEncoder(s_DriveSubsystem, 84.0, v_driveSpeed, v_driveSpeed),
-   new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), -.35, 1.0),
-   new AutoForwardEncoder(s_DriveSubsystem, 84.0, v_driveSpeed, v_driveSpeed),
-   new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), -.35, 1.0),
-   new AutoForwardEncoder(s_DriveSubsystem, v_standardForward, v_driveSpeed, v_driveSpeed),
-   new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(90+v_fudgeFactor), -.35, 1.0),
-   //new AutoForwardEncoder(s_DriveSubsystem, 280.0, v_driveSpeed, v_driveSpeed),
-   new AutoForwardEncoder(s_DriveSubsystem, 60.0, v_driveSpeed, v_driveSpeed)
-
-
-
+    new AutoForwardPID(s_DriveSubsystem, .8, .8, 106.0),
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
+    new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
+    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
+    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
+    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
+    new AutoForwardPID(s_DriveSubsystem, .8, .8, 60.0),
+    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
+    new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
+    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
+    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
+    new AutoForwardPID(s_DriveSubsystem, .8, .8, 270.0),
+    new AutoDead(s_DriveSubsystem)
    );
 
   }

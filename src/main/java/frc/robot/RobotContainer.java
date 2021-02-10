@@ -60,7 +60,7 @@ public class RobotContainer {
 
   // Auto Commands
   private final Command z_AutoForward = new AutoForward(s_DriveSubsystem, v_Time, v_LeftSpeed, v_RightSpeed);
-  private final Command z_AutoForwardPID = new AutoForwardPID(s_DriveSubsystem, v_Time, v_LeftSpeed, v_RightSpeed);
+  private final Command z_AutoForwardPID = new AutoForwardPID(s_DriveSubsystem, v_LeftSpeed, v_RightSpeed, v_AutoDistance);
   private final Command z_AutoForwardEncoder = new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed,
       v_RightSpeed);
   private final Command z_AutoBackwardEncoder = new AutoBackwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed,
@@ -81,7 +81,7 @@ public class RobotContainer {
 
   private final Command z_AutoBarrel = new AutoBarrel(s_DriveSubsystem);
 
-  private final Command z_AutoDriveWithVisionCorrection = new AutoDriveWithVisionCorrection(s_DriveSubsystem, v_Time, v_TargetSpeed);
+  private final Command z_AutoDriveVisionCorrection = new AutoDriveVisionCorrection(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed);
 
   // Vision Commands
   private final Command z_VisionAlign = new VisionAlign(s_DriveSubsystem);

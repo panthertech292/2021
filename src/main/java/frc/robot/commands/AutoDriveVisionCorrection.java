@@ -7,60 +7,55 @@
 
 package frc.robot.commands;
 
-
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
-
-public class AutoForwardPID extends CommandBase {
+import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
+public class AutoDriveVisionCorrection extends CommandBase {
   private final DriveSubsystem DriveSubsystem;
-  private final double TargetSpeedLeft;
-  private final double TargetSpeedRight;
-  private double EncoderDistance;
-
+  private double AutoDistance;
+  private double LeftSpeed;
+  private double RightSpeed;
   /**
-   * Creates a new AutoForward.
+   * Creates a new AutoDriveVisionCorrection.
    */
-  public AutoForwardPID(DriveSubsystem s_DriveSubsystem, double v_TargetSpeedLeft, double v_TargetSpeedRight, double v_encoderDistance) {
+  public AutoDriveVisionCorrection(DriveSubsystem s_DriveSubsystem, double v_AutoDistance, double v_LeftSpeed, double v_RightSpeed) {
     DriveSubsystem = s_DriveSubsystem;
+    AutoDistance = v_AutoDistance;
+    LeftSpeed = v_LeftSpeed;
+    RightSpeed = v_RightSpeed;
     addRequirements(s_DriveSubsystem);
-
-    
-    TargetSpeedLeft = v_TargetSpeedLeft;
-    TargetSpeedRight = v_TargetSpeedRight;
-    EncoderDistance = v_encoderDistance;
-    // Use addRequirements() here to declare subsystem dependencies.
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    DriveSubsystem.resetTimer();
+    System.out.println("Forward Before Reset");
+    System.out.println(DriveSubsystem.getLeftPosition());
+    System.out.println(DriveSubsystem.getRightPosition());
     DriveSubsystem.zeroDistanceSensors();
-    
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
     DriveSubsystem.driveModePowerSetPoint();
-    DriveSubsystem.changePowerSetPoints(DriveSubsystem.RightPID(TargetSpeedLeft),DriveSubsystem.LeftPID(TargetSpeedRight));
+    DriveSubsystem.changePowerSetPoints(LeftSpeed,DriveSubsystem.AnglePID(0.0, RightSpeed));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
     DriveSubsystem.changePowerSetPoints(0,0);
+   /* System.out.println("Forward Done");
     System.out.println(DriveSubsystem.getLeftPosition());
     System.out.println(DriveSubsystem.getRightPosition());
+    */
+    DriveSubsystem.deltaTurn();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return DriveSubsystem.encoderFinish(EncoderDistance);
+    return DriveSubsystem.encoderFinish(AutoDistance);
   }
 }

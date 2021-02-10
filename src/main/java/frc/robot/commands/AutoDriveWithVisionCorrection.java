@@ -16,37 +16,38 @@ public class AutoDriveWithVisionCorrection extends SequentialCommandGroup {
   private double TargetSpeed;
   private double Time;
   private final DriveSubsystem DriveSubsystem;
-  private int v_Instances;
+  private int c_Implementations;
   public AutoDriveWithVisionCorrection( DriveSubsystem s_DriveSubsystem, double v_Time, double v_TargetSpeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     DriveSubsystem = s_DriveSubsystem;
     TargetSpeed = v_TargetSpeed;
     Time = v_Time;
-    v_Instances = 10;
+    c_Implementations = 10;
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+      //Deprecated
+    /*  new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
 
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
 
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed),
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed),
      new VisionAlign(s_DriveSubsystem),
-     new AutoForwardPID(s_DriveSubsystem, v_Time/v_Instances, v_TargetSpeed, v_TargetSpeed)
+     new AutoForwardPID(s_DriveSubsystem, v_Time/c_Implementations, v_TargetSpeed, v_TargetSpeed) */
     );
   }
 }

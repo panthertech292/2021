@@ -203,6 +203,7 @@ private final Timer Timer;
     else{
       return false;
     }
+    //Depends on Direction: Right is Positive Angles, Left is Negative Angles
   }
 
   public boolean totalFinish(double angle){
@@ -388,6 +389,31 @@ private final Timer Timer;
       public double PerceivedAngle(double distance){
         return (360*distance)/(Math.PI*21);
       }
+
+      public double AnglePID(double v_targetAngle, double v_rightSpeedBase){
+        double error;
+      double P = 0.0001;
+      double I = 0.00812;
+      double D = 0.0;
+      double derivative;
+      double rcw;
+      error = v_limeLightX - v_targetAngle;
+      v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+      derivative = (error - v_previousError) / .02;
+      v_previousError = error;
+      rcw = P*error + I*v_integral + D*derivative;
+      if (error <= 0){
+        
+        v_rightSpeed = v_rightSpeedBase - rcw;
+
+      }
+      if (error > 0){
+        
+        v_rightSpeed = v_rightSpeedBase + rcw;
+      }
+      return v_rightSpeed;
+      }
+      
   
 
     @Override
