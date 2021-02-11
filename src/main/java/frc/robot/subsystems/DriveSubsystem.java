@@ -196,7 +196,7 @@ private final Timer Timer;
     v_zeroRightPosition = BackRightMotor.getSelectedSensorPosition();
   }
   public boolean gyroFinish( double angle){
-    v_deltaAngle = (getCurrentAngle() - getZeroAngle());
+    v_deltaAngle = Math.abs((getCurrentAngle() - getZeroAngle()));
     if (angle <= v_deltaAngle){
       return true;
     }
@@ -383,8 +383,43 @@ private final Timer Timer;
       rcw = P*error + I*v_integral + D*derivative;
      // System.out.println(rcw);
       v_leftSpeed = v_targetPower + rcw;
+
       return v_leftSpeed;
+
       }
+    public double RatioLeftPID(double v_desiredRatio, double v_targetPower){
+    double error;
+      double P = 0.000;
+      double I = 0.00;
+      double D = 0.0;
+      double derivative;
+      double rcw;
+      error = v_desiredRatio - Math.abs(BackRightMotor.getSelectedSensorVelocity())/Math.abs(BackLeftMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+      v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+      derivative = (error - v_previousError) / .02;
+      v_previousError = error;
+      rcw = P*error + I*v_integral + D*derivative;
+     // System.out.println(rcw);
+      v_leftSpeed = v_targetPower + rcw;
+      return v_leftSpeed;}
+
+      public double RatioRightPID(double v_desiredRatio, double v_targetPower){
+        double error;
+          double P = 0.0001;
+          double I = 0.00812;
+          double D = 0.0;
+          double derivative;
+          double rcw;
+          error = v_desiredRatio - Math.abs(BackLeftMotor.getSelectedSensorVelocity())/Math.abs(BackRightMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+          v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+          derivative = (error - v_previousError) / .02;
+          v_previousError = error;
+          rcw = P*error + I*v_integral + D*derivative;
+         // System.out.println(rcw);
+          v_rightSpeed = v_targetPower + rcw;
+          return v_rightSpeed;}
+
+
 
       public double PerceivedAngle(double distance){
         return (360*distance)/(Math.PI*21);
@@ -419,7 +454,8 @@ private final Timer Timer;
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
-      
+      System.out.println("Current Angle"   +   getCurrentAngle()   +   "ZeroAngle"  +  getZeroAngle());
+     
       //Sets drive mode
       if (v_driveMode == c_modeTeleop) {
        driveTeleop();

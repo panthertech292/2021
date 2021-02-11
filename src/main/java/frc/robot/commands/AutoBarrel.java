@@ -33,21 +33,28 @@ public class AutoBarrel extends SequentialCommandGroup {
      //Template Commands
     //new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed),
     //new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(75), 1.0, -.35),
-    new AutoForwardPID(s_DriveSubsystem, .8, .8, 106.0),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
-    new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
+    //new AutoForwardPID(s_DriveSubsystem, .8, .8, 106.0),
+   /* new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 86), */
+
+    new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
+    new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
+    new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
+    new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
+
+    /*new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
+    new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634),
+    new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634),
+    new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634),
+    
     new AutoForwardPID(s_DriveSubsystem, .8, .8, 60.0),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
+    //new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634),
     new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoForwardPID(s_DriveSubsystem, .8, .8, 270.0),
+   new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634),
+    new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634), 
+    new AutoForwardPID(s_DriveSubsystem, .8, .8, 270.0), */
     new AutoDead(s_DriveSubsystem)
    );
 

@@ -39,7 +39,7 @@ public class AutoSquareRight extends SequentialCommandGroup {
 
 
 //new AutoTurnPID(s_DriveSubsystem, .85, .00, 78.99704244)
-new AutoDriveVisionCorrection(s_DriveSubsystem, 72.0, .5, .5)
+new AutoBarrel(s_DriveSubsystem)
    /* new AutoForward(s_DriveSubsystem, 0.25, 0.0, 0.0),
     //new AutoRight90Gyro(s_DriveSubsystem, 87, 0.5, -.25),
     new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(81.3), 1.0, -.25),

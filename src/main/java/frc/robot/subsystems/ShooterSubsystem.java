@@ -346,7 +346,7 @@ else{
     else{
       ShooterMotor.set(PID(v_RPMTarget));
     }
-    System.out.println(!BallSensor.get());
+   // System.out.println(!BallSensor.get());
    // System.out.println(getEncoderAverageRateArray());
    
    //ShooterMotor.set(PID(120000));
