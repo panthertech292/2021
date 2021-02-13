@@ -33,18 +33,34 @@ public class AutoBarrel extends SequentialCommandGroup {
      //Template Commands
     //new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed),
     //new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(75), 1.0, -.35),
-    //new AutoForwardPID(s_DriveSubsystem, .8, .8, 106.0),
+    new AutoForwardPID(s_DriveSubsystem, .65, .65, 106.0-20.0),
    /* new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
     new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
     new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 86), */
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),0.4346 */
 
-    new AutoTurnPID(s_DriveSubsystem, .65, .65, 86),
+    /*new AutoTurnPID(s_DriveSubsystem, .2, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    new AutoTurnPID(s_DriveSubsystem, .275, .65, 90, 0.4346),
+    
+    //new AutoTurnPID(s_DriveSubsystem, .275, .65, 90-1, 0.4346),
+    //new AutoTurnPID(s_DriveSubsystem, .275, .65, 90-1, 0.4346),
+    //new AutoTurnPID(s_DriveSubsystem, .275, .65, 90-1, 0.4346),
+    new AutoForwardPID(s_DriveSubsystem, .65, .65, 36.0),
    /* new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
     new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
     new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
 
-    /*new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
+    new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
     new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634),
     new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634),
     new AutoPIDEncoders(s_DriveSubsystem, .1, .8, 78.99704244, 0.4634),

@@ -55,6 +55,7 @@ private final Timer Timer;
     private double c_encoderConversion;
     private double v_integral;
     private double v_previousError;
+    
     private int v_pidEnabler = 0;
     private double v_targetPower;
      //Put this into constants.java
@@ -355,55 +356,71 @@ private final Timer Timer;
 //Changes Right Side based on Left Side
   public double LeftPID(double v_targetPower){
     double error;
-    double P = 0.0001;
-    double I = 0.00812;
+    double P = 0.0016;
+    double I = //0.00812;
+    0.0;
     double D = 0.0;
     double derivative;
     double rcw;
-    error = Math.abs(BackLeftMotor.getSelectedSensorVelocity()) - Math.abs(BackRightMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+    error = Math.abs(getLeftPosition()) - Math.abs(getRightPosition()); // Error = Target - Actual
     v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
     derivative = (error - v_previousError) / .02;
     v_previousError = error;
     rcw = P*error + I*v_integral + D*derivative;
-   // System.out.println(rcw);
+   System.out.println(rcw);
+   
     v_rightSpeed = v_targetPower + rcw;
     return v_rightSpeed;
     }
+    
     public double RightPID(double v_targetPower){
       double error;
-      double P = 0.0001;
-      double I = 0.00812;
+      double P = 0.0016;
+      double I = //0.00812;
+    0.0;
       double D = 0.0;
       double derivative;
       double rcw;
-      error = Math.abs(BackRightMotor.getSelectedSensorVelocity()) - Math.abs(BackLeftMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+      error = Math.abs(getRightPosition()) - Math.abs(getLeftPosition()); // Error = Target - Actual
       v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
       derivative = (error - v_previousError) / .02;
       v_previousError = error;
       rcw = P*error + I*v_integral + D*derivative;
-     // System.out.println(rcw);
+     System.out.println(rcw);
       v_leftSpeed = v_targetPower + rcw;
 
       return v_leftSpeed;
 
       }
     public double RatioLeftPID(double v_desiredRatio, double v_targetPower){
+      System.out.println(v_integral);
     double error;
-      double P = 0.000;
-      double I = 0.00;
+      double P = 0.0001;
+      double I = 0.0005;
       double D = 0.0;
       double derivative;
       double rcw;
-      error = v_desiredRatio - Math.abs(BackRightMotor.getSelectedSensorVelocity())/Math.abs(BackLeftMotor.getSelectedSensorVelocity()); // Error = Target - Actual
-      v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
-      derivative = (error - v_previousError) / .02;
+      
+      if (Math.abs(BackLeftMotor.getSelectedSensorVelocity()) == 0){ 
+        error = 0;
+      }
+      else{ 
+        error = v_desiredRatio - (Math.abs(BackRightMotor.getSelectedSensorVelocity())/Math.abs(BackLeftMotor.getSelectedSensorVelocity()));
+      }
+       // Error = Target - Actual
+     // System.out.println("error  " + error);
+      //v_integral += (error*0.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+      v_integral = v_integral + (error*0.02);
+      
+      derivative = (error - v_previousError) / 0.02;
+      
       v_previousError = error;
+      
       rcw = P*error + I*v_integral + D*derivative;
-      System.out.println("rcw  "  +  rcw);
-      System.out.println("v_leftSpeed  "  +  v_leftSpeed);
-      System.out.println("Back Right Rate  "  +  Math.abs(BackRightMotor.getSelectedSensorVelocity()));
-      System.out.println("Back Left Rate  "  +  Math.abs(BackLeftMotor.getSelectedSensorVelocity()));
+     // System.out.println("rcw  "  +  rcw);
+      
       v_leftSpeed = v_targetPower + rcw;
+      //System.out.println("v_leftSpeed  "  +  v_leftSpeed);
       return v_leftSpeed;}
 
       public double RatioRightPID(double v_desiredRatio, double v_targetPower){
@@ -413,7 +430,12 @@ private final Timer Timer;
           double D = 0.0;
           double derivative;
           double rcw;
-          error = v_desiredRatio - Math.abs(BackLeftMotor.getSelectedSensorVelocity())/Math.abs(BackRightMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+          if (Math.abs(BackRightMotor.getSelectedSensorVelocity()) == 0){ 
+            error = 0;
+          }
+          else{ 
+            error = v_desiredRatio - (Math.abs(BackLeftMotor.getSelectedSensorVelocity())/Math.abs(BackRightMotor.getSelectedSensorVelocity()));
+          }// Error = Target - Actual
           v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
           derivative = (error - v_previousError) / .02;
           v_previousError = error;
@@ -452,6 +474,11 @@ private final Timer Timer;
       return v_rightSpeed;
       }
       
+      public void initializePID(){
+        v_integral = 0;
+        v_previousError = 0;
+        System.out.println("V_integral    " + v_integral);
+      }
   
 
     @Override
@@ -462,8 +489,10 @@ private final Timer Timer;
       //Sets drive mode
       if (v_driveMode == c_modeTeleop) {
        driveTeleop();
+      // System.out.println("Teleop");
       } else {
       driveAuto();
+     // System.out.println("Auto");
       }
       
       updateLimeLight();
