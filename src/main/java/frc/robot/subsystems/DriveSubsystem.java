@@ -389,7 +389,7 @@ private final Timer Timer;
       }
     public double RatioLeftPID(double v_desiredRatio, double v_targetPower){
     double error;
-      double P = 0.0001;
+      double P = 0.000;
       double I = 0.00;
       double D = 0.0;
       double derivative;
