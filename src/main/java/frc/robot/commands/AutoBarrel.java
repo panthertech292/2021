@@ -39,8 +39,8 @@ public class AutoBarrel extends SequentialCommandGroup {
     new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
     new AutoTurnPID(s_DriveSubsystem, .8, .1, 86), */
 
-    new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
-    new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
+    new AutoTurnPID(s_DriveSubsystem, .65, .65, 86),
+   /* new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
     new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
     new AutoTurnPID(s_DriveSubsystem, .8, .8, 86),
 

@@ -389,7 +389,7 @@ private final Timer Timer;
       }
     public double RatioLeftPID(double v_desiredRatio, double v_targetPower){
     double error;
-      double P = 0.000;
+      double P = 0.0001;
       double I = 0.00;
       double D = 0.0;
       double derivative;
@@ -399,7 +399,10 @@ private final Timer Timer;
       derivative = (error - v_previousError) / .02;
       v_previousError = error;
       rcw = P*error + I*v_integral + D*derivative;
-     // System.out.println(rcw);
+      System.out.println("rcw  "  +  rcw);
+      System.out.println("v_leftSpeed  "  +  v_leftSpeed);
+      System.out.println("Back Right Rate  "  +  Math.abs(BackRightMotor.getSelectedSensorVelocity()));
+      System.out.println("Back Left Rate  "  +  Math.abs(BackLeftMotor.getSelectedSensorVelocity()));
       v_leftSpeed = v_targetPower + rcw;
       return v_leftSpeed;}
 
@@ -454,7 +457,7 @@ private final Timer Timer;
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
-      System.out.println("Current Angle"   +   getCurrentAngle()   +   "ZeroAngle"  +  getZeroAngle());
+      //System.out.println("Current Angle"   +   getCurrentAngle()   +   "ZeroAngle"  +  getZeroAngle());
      
       //Sets drive mode
       if (v_driveMode == c_modeTeleop) {

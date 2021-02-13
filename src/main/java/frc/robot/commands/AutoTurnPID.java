@@ -56,10 +56,11 @@ public class AutoTurnPID extends CommandBase {
   public void end(boolean interrupted) {
     
     DriveSubsystem.changePowerSetPoints(0,0);
-    System.out.println(DriveSubsystem.getLeftPosition());
-    System.out.println(DriveSubsystem.getRightPosition());
+   // System.out.println(DriveSubsystem.getLeftPosition());
+  // System.out.println(DriveSubsystem.getRightPosition());
     DriveSubsystem.zeroAngle();
   }
+
 
   // Returns true when the command should end.
   @Override
