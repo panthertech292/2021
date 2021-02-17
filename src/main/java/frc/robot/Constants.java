@@ -45,7 +45,7 @@ public final class Constants {
         //Sensor Constants
         public static final int kOpticalPort = 9; //DIO
         public static final int kSonarPort = 1;
-        public static final double sonarConversionFactor = 0.009766; //Converts voltage to distance in inches. MAKE THIS FIT CONVENTIONS
+        public static final double sonarConversionFactor = 4.883; //Converts voltage to distance in inches. MAKE THIS FIT CONVENTIONS
 
         //Drive Speeds
         //This is for the backup bot (Default)

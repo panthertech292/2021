@@ -57,7 +57,7 @@ public class AutoTurnPID extends CommandBase {
     DriveSubsystem.changePowerSetPoints(DriveSubsystem.RatioLeftPID(Ratio, TargetSpeedLeft),TargetSpeedRight);}
 
     if(TargetSpeedRight<TargetSpeedLeft){
-      DriveSubsystem.changePowerSetPoints(TargetSpeedLeft,DriveSubsystem.RatioLeftPID(Ratio, TargetSpeedRight));
+      DriveSubsystem.changePowerSetPoints(TargetSpeedLeft,DriveSubsystem.RatioRightPID(Ratio, TargetSpeedRight));
     }
 
     }

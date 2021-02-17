@@ -356,7 +356,7 @@ private final Timer Timer;
 //Changes Right Side based on Left Side
   public double LeftPID(double v_targetPower){
     double error;
-    double P = 0.0016;
+    double P = 0.0256*2*2;
     double I = //0.00812;
     0.0;
     double D = 0.0;
@@ -375,7 +375,7 @@ private final Timer Timer;
     
     public double RightPID(double v_targetPower){
       double error;
-      double P = 0.0016;
+      double P = 0.0256*2*2;
       double I = //0.00812;
     0.0;
       double D = 0.0;
@@ -395,8 +395,8 @@ private final Timer Timer;
     public double RatioLeftPID(double v_desiredRatio, double v_targetPower){
       System.out.println(v_integral);
     double error;
-      double P = 0.0001;
-      double I = 0.0005;
+      double P = 0.000;
+      double I = 0.000;
       double D = 0.0;
       double derivative;
       double rcw;
@@ -425,8 +425,8 @@ private final Timer Timer;
 
       public double RatioRightPID(double v_desiredRatio, double v_targetPower){
         double error;
-          double P = 0.0001;
-          double I = 0.00812;
+          double P = 0.000;
+          double I = 0.00;
           double D = 0.0;
           double derivative;
           double rcw;
@@ -495,12 +495,13 @@ private final Timer Timer;
      // System.out.println("Auto");
       }
       
+      
       updateLimeLight();
       
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
       SmartDashboard.putNumber("LimelightY", v_limeLightY);
       SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
       SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
-      SmartDashboard.putNumber("Sonar Distance in Inches", sonarSensor.getAverageVoltage()/DriveConstants.sonarConversionFactor);
+      SmartDashboard.putNumber("Sonar Distance in mm", 5*sonarSensor.getAverageVoltage()*1000/(DriveConstants.sonarConversionFactor*25.4));
     }
   }
