@@ -65,11 +65,16 @@ public final class Constants {
         //Encoder Constants
         public static final int kShooterEncoderChannel1 = 0; //Placeholder value DIO
         public static final int kShooterEncoderChannel2 = 1; //Placeholder value DIO
+        public static final int kAimEncoder1 = 2;
+        public static final int kAimEncoder2 = 3;
 
         //Shooter Speed Constants
         public static final double kShooterStop = 0.0;
         public static final double kShooterHalf = 0.5;
         public static final double kShooterFull = 1.0;
+
+        
+        
     }
     public static final class PickupConstants {
         //Talon Mapping
