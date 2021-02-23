@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
 
@@ -26,8 +27,10 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new ShooterSubsystem.
    */
   private final WPI_TalonSRX ShooterMotor;
+  private final WPI_TalonSRX AimMotor;
   private DigitalInput BallSensor;
-  private double v_shooterSpeed = 0;
+  private double v_shooterSpeed;
+  private double v_aimSpeed;
   private final Timer Timer;
   private Encoder ShooterEncoder;
   private double v_encoderSetPointShooter;
@@ -66,6 +69,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public ShooterSubsystem() {
     ShooterMotor = new WPI_TalonSRX(ShooterConstants.kShooterMotor);
+    AimMotor = new WPI_TalonSRX(ShooterConstants.kAimMotor);
     ShooterEncoder = new Encoder(ShooterConstants.kShooterEncoderChannel1, ShooterConstants.kShooterEncoderChannel2);
     Timer = new Timer();
     PDP = new PowerDistributionPanel();
@@ -75,6 +79,7 @@ public class ShooterSubsystem extends SubsystemBase {
     
 
     v_shooterSpeed = 0.0;
+    v_aimSpeed = 0.0;
 
     addChild("ShooterMotor", ShooterMotor);
     addChild("ShooterEncoder", ShooterEncoder);
@@ -336,6 +341,16 @@ else{
 }
 //1 = ready to shoot, 0 = not ready to shoot, 2 = timed out/shoot aborted
 }
+public void ShooterAimUp(){
+  v_aimSpeed = 0.2;
+  }
+public void ShooterAimDown(){
+    v_aimSpeed = -0.2;
+  }
+public void ShooterAimStop(){
+  v_aimSpeed = 0.0;
+}
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -346,6 +361,9 @@ else{
     else{
       ShooterMotor.set(PID(v_RPMTarget));
     }
+    
+      AimMotor.set(v_aimSpeed);
+    
    // System.out.println(!BallSensor.get());
    // System.out.println(getEncoderAverageRateArray());
    

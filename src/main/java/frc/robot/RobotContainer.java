@@ -95,6 +95,8 @@ public class RobotContainer {
   private final Command z_ShooterFireFull = new ShooterFireFull(s_ShooterSubsystem);
   private final Command z_ShooterFireGated = new ShooterFireGated(s_ShooterSubsystem, s_GateSubsystem);
   private final Command z_ShooterFireGatedSpinUp = new ShooterFireGatedSpinUp(s_ShooterSubsystem, s_GateSubsystem, v_TargetRPM);
+  private final Command z_AimAdjustDown = new AimAdjustDown(s_ShooterSubsystem);
+  private final Command z_AimAdjustUp = new AimAdjustUp(s_ShooterSubsystem);
 
   // Pickup Commands
   private final Command z_PickupRunHalf = new PickupRunHalf(s_PickupSubsystem);
@@ -140,6 +142,8 @@ public class RobotContainer {
     final JoystickButton d_aButton = new JoystickButton(io_drivercontroller, Button.kA.value);
     final JoystickButton d_bButton = new JoystickButton(io_drivercontroller, Button.kB.value);
     final JoystickButton d_xButton = new JoystickButton(io_drivercontroller, Button.kX.value);
+    final JoystickButton d_startButton = new JoystickButton(io_drivercontroller, Button.kStart.value);
+    final JoystickButton d_backButton = new JoystickButton(io_drivercontroller, Button.kBack.value);
     // final JoystickButton d_yButton = new JoystickButton(io_drivercontroller,
     // Button.kY.value);
     // final JoystickButton d_lbumper = new JoystickButton(io_drivercontroller,
@@ -155,6 +159,10 @@ public class RobotContainer {
     d_aButton.whenPressed(z_AutoSquareRight);
     d_bButton.whenPressed(z_AutoBarrel);
     d_xButton.whileHeld(z_ShooterFireFull);
+    if(getRobotID()== 0){
+      d_backButton.whileHeld(z_AimAdjustDown);
+      d_startButton.whileHeld(z_AimAdjustUp);
+    }
     // d_bButton.whenPressed(z_VisionDistance);
     // o_xButton.whenPressed(z_VisionAll);
     // d_lbumper.whenPressed(m_driveJogLeft);

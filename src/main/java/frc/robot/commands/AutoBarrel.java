@@ -61,7 +61,7 @@ public class AutoBarrel extends SequentialCommandGroup {
     //new AutoDriveVisionCorrection(s_DriveSubsystem, 90.0, .65, .65),
     //new AutoForwardPID(s_DriveSubsystem, .7, .65, 90.0),
    /* new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
+    new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),s
     new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),
     new AutoTurnPID(s_DriveSubsystem, .8, .1, 86),0.4346 */
     //new AutoForwardPID(s_DriveSubsystem, .65, .65, 12.0),

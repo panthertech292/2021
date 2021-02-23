@@ -60,6 +60,7 @@ public final class Constants {
     public static final class ShooterConstants {
         //Talon Mapping
         public static final int kShooterMotor = 13;
+        public static final int kAimMotor = 7; 
 
         //Encoder Constants
         public static final int kShooterEncoderChannel1 = 0; //Placeholder value DIO
