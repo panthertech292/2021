@@ -33,6 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private double v_aimSpeed;
   private final Timer Timer;
   private Encoder ShooterEncoder;
+  private Encoder AimEncoder;
   private double v_encoderSetPointShooter;
   private double v_RPMTarget;
   private int v_loops;
@@ -71,6 +72,7 @@ public class ShooterSubsystem extends SubsystemBase {
     ShooterMotor = new WPI_TalonSRX(ShooterConstants.kShooterMotor);
     AimMotor = new WPI_TalonSRX(ShooterConstants.kAimMotor);
     ShooterEncoder = new Encoder(ShooterConstants.kShooterEncoderChannel1, ShooterConstants.kShooterEncoderChannel2);
+    AimEncoder = new Encoder(ShooterConstants.kAimEncoder1, ShooterConstants.kAimEncoder2);
     Timer = new Timer();
     PDP = new PowerDistributionPanel();
     v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
@@ -83,6 +85,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     addChild("ShooterMotor", ShooterMotor);
     addChild("ShooterEncoder", ShooterEncoder);
+    addChild("AimEncoder", AimEncoder);
     ShooterMotor.setNeutralMode(NeutralMode.Brake);
 
   }
@@ -110,6 +113,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void resetEncoderPosition(){
     ShooterEncoder.reset();
+  }
+  public double getAimEncoder(){
+    return AimEncoder.get();
   }
 
   public void changeSetSpeed(double desiredSpeed){
@@ -364,16 +370,11 @@ public void ShooterAimStop(){
     
       AimMotor.set(v_aimSpeed);
     
-   // System.out.println(!BallSensor.get());
-   // System.out.println(getEncoderAverageRateArray());
-   
-   //ShooterMotor.set(PID(120000));
-   // SmartDashboard.putNumber("ShooterSpeed", v_shooterSpeed);
-   // SmartDashboard.putNumber("ShooterEncoderRateSet", v_encoderSetPointShooter);
+    System.out.println(getAimEncoder());
     SmartDashboard.putNumber("ShooterEncoderRate", getEncoderRate());
     SmartDashboard.putNumber("Motor Percentages", ShooterMotor.getMotorOutputPercent());
     SmartDashboard.getNumber("v_RPMTarget", v_RPMTarget);
-    //System.out.println(getEncoderAverageRateArray());
+    
     
     
     
