@@ -383,21 +383,21 @@ private final Timer Timer;
       return v_leftSpeed;
       }
     public double RatioLeftPID(double v_desiredRatio, double v_targetPower){
-      System.out.println(v_integral);
-    double error;
+    double error = 2.15789;
     double P = //0.0256*2.5; 
-        0.0;
+    0.0256*2*1.5*2*2*2*2;
     double I = //0.00812;
     0.0;
     double D = 0.0;
       double derivative;
       double rcw;
       if (Math.abs(BackLeftMotor.getSelectedSensorVelocity()) == 0){ 
-        error = 0;
+        error = 2.15789;
       }
       else{ 
-        error = v_desiredRatio - (Math.abs(BackRightMotor.getSelectedSensorVelocity())/Math.abs(BackLeftMotor.getSelectedSensorVelocity()));
-        System.out.println("UHHHHH" + Math.abs(BackRightMotor.getSelectedSensorVelocity())/Math.abs(BackLeftMotor.getSelectedSensorVelocity()));
+        error = -1*(v_desiredRatio - (Math.abs(getRightPosition()/Math.abs(getLeftPosition()))));
+      //  System.out.println("Error   "+ error);
+       // System.out.println(("Current Ratio =  " + Math.abs(getRightPosition())/Math.abs(getLeftPosition())));
       }
        // Error = Target - Actual
      // System.out.println("error  " + error);
@@ -406,34 +406,36 @@ private final Timer Timer;
       derivative = (error - v_previousError) / 0.02;
       v_previousError = error;
       rcw = P*error + I*v_integral + D*derivative;
-     // System.out.println("rcw  "  +  rcw);
+      System.out.println("rcw  "  +  rcw);
       v_leftSpeed = v_targetPower + rcw;
       //System.out.println("v_leftSpeed  "  +  v_leftSpeed);
       return v_leftSpeed;}
 
       public double RatioRightPID(double v_desiredRatio, double v_targetPower){
-        double error;
+        double error = 2.15789;
         double P = //0.0256*2.5; 
-        0.0;
+        0.0256*2*1.5*2*2*2*2;
         double I = //0.00812;
         0.0;
         double D = 0.0;
           double derivative;
           double rcw;
           if (Math.abs(BackRightMotor.getSelectedSensorVelocity()) == 0){ 
-            error = 0;
+            error = 2.15789;
           }
           else{ 
-            error = v_desiredRatio - (Math.abs(BackLeftMotor.getSelectedSensorVelocity())/Math.abs(BackRightMotor.getSelectedSensorVelocity()));
+            error = -1*(v_desiredRatio - (Math.abs(getLeftPosition()/Math.abs(getRightPosition()))));
           }// Error = Target - Actual
-         System.out.println("UHHHHHHHH" + Math.abs(BackLeftMotor.getSelectedSensorVelocity())/Math.abs(BackRightMotor.getSelectedSensorVelocity()));
+         // System.out.println("Error   "+ error);
+         // System.out.println(("Current Ratio =  " + Math.abs(getLeftPosition())/Math.abs(getRightPosition())));
           v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
           derivative = (error - v_previousError) / .02;
           v_previousError = error;
           rcw = P*error + I*v_integral + D*derivative;
-         // System.out.println(rcw);
+          System.out.println(rcw);
           v_rightSpeed = v_targetPower + rcw;
           return v_rightSpeed;}
+
 
       public double PerceivedAngle(double distance){
         return (360*distance)/(Math.PI*21);
@@ -508,7 +510,7 @@ private final Timer Timer;
      // System.out.println("Auto");
       }
       //System.out.println(getAbsCurrentAngle());
-      
+      System.out.println(" Current Angle =  "+ getCurrentAngle());
       updateLimeLight();
      // System.out.println(visionTargetSensor());
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
