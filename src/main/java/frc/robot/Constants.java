@@ -73,7 +73,7 @@ public final class Constants {
         public static final double kShooterHalf = 0.5;
         public static final double kShooterFull = 1.0;
 
-        
+        public static final int kAimLimitSwitch = 4;
         
     }
     public static final class PickupConstants {

@@ -29,6 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final WPI_TalonSRX ShooterMotor;
   private final WPI_TalonSRX AimMotor;
   private DigitalInput BallSensor;
+  private DigitalInput AimSwitch;
   private double v_shooterSpeed;
   private double v_aimSpeed;
   private final Timer Timer;
@@ -38,6 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private double v_RPMTarget;
   private int v_loops;
   public int v_shooterSpinIndicator;
+  public double v_aimEncoderValue;
 
   //Average Variables
   //TO DO MAKE FIT STANDARS
@@ -78,10 +80,12 @@ public class ShooterSubsystem extends SubsystemBase {
     v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
     SmartDashboard.putNumber("v_RPMTarget", 0.0);
     BallSensor = new DigitalInput(5);
+    AimSwitch = new DigitalInput(ShooterConstants.kAimLimitSwitch);
     
 
     v_shooterSpeed = 0.0;
     v_aimSpeed = 0.0;
+    v_aimEncoderValue = 0.0;
 
     addChild("ShooterMotor", ShooterMotor);
     addChild("ShooterEncoder", ShooterEncoder);
@@ -115,7 +119,13 @@ public class ShooterSubsystem extends SubsystemBase {
     ShooterEncoder.reset();
   }
   public double getAimEncoder(){
-    return AimEncoder.get();
+    v_aimEncoderValue = AimEncoder.get();
+    return v_aimEncoderValue;
+  }
+  public void resetAimEncoder(){
+    if(AimSwitch.get() == true){
+      v_aimEncoderValue = 0;
+    }
   }
 
   public void changeSetSpeed(double desiredSpeed){
@@ -351,6 +361,7 @@ public void ShooterAimUp(){
   v_aimSpeed = 0.2;
   }
 public void ShooterAimDown(){
+  if(AimSwitch.get() == false)
     v_aimSpeed = -0.2;
   }
 public void ShooterAimStop(){
@@ -367,7 +378,7 @@ public void ShooterAimStop(){
     else{
       ShooterMotor.set(PID(v_RPMTarget));
     }
-    
+   // System.out.println(AimSwitch.get());
       AimMotor.set(v_aimSpeed);
     
     System.out.println(getAimEncoder());

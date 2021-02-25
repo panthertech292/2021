@@ -55,6 +55,8 @@ private final Timer Timer;
     private double c_encoderConversion;
     private double v_integral;
     private double v_previousError;
+    private double v_ticker;
+    private double v_previousAngle;
     
     private int v_pidEnabler = 0;
     private double v_targetPower;
@@ -110,6 +112,8 @@ private final Timer Timer;
     c_VisionAreaTarget = DriveConstants.kVisionAreaTarget;
     v_loopCount = 0;
     v_visionOverride = 0;
+    v_ticker = 0;
+    v_previousAngle = 0;
 
     Drive = new DifferentialDrive(LeftSide,RightSide);
 
@@ -186,6 +190,8 @@ private final Timer Timer;
   }
   public void zeroAngle() {
     ahrs.zeroYaw();
+    v_ticker = 0;
+    v_previousAngle = 0;
   }
   public double getAbsCurrentAngle(){
     return Math.abs(ahrs.getYaw());
@@ -196,8 +202,20 @@ private final Timer Timer;
   public void zeroRightPosition(){
     v_zeroRightPosition = BackRightMotor.getSelectedSensorPosition();
   }
+  public double getTotalAngle(){
+    double angle;
+    angle = getCurrentAngle();
+    if(Math.abs(angle - v_previousAngle)>45 && angle<v_previousAngle){
+      v_ticker = v_ticker -1 ;
+    }
+    if(Math.abs(angle - v_previousAngle)>45 && angle>v_previousAngle){
+      v_ticker = v_ticker +1 ;
+    }
+    v_previousAngle = angle;
+    return Math.abs(-1*(2*(v_ticker*180) + (-1*angle)));
+  }
   public boolean gyroFinish( double angle){
-    if (angle <= getAbsCurrentAngle()){
+    if (angle <= getTotalAngle()){
       return true;
     }
     else{
@@ -510,7 +528,8 @@ private final Timer Timer;
      // System.out.println("Auto");
       }
       //System.out.println(getAbsCurrentAngle());
-      System.out.println(" Current Angle =  "+ getCurrentAngle());
+     // System.out.println(" Current Angle =  "+ getCurrentAngle());
+     System.out.println("Total Angle =  "+ getTotalAngle());
       updateLimeLight();
      // System.out.println(visionTargetSensor());
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
