@@ -22,7 +22,7 @@ public class AimAdjustDown extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute(){
     ShooterSubsystem.ShooterAimDown();
   }
 
@@ -35,6 +35,6 @@ public class AimAdjustDown extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return ShooterSubsystem.AimSwitchValue();
   }
 }

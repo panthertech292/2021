@@ -105,6 +105,7 @@ public class RobotContainer {
   private final Command z_gate1Down = new Gate1Down(s_GateSubsystem);
   private final Command z_gate1Mid = new Gate1Up(s_GateSubsystem);
   private final Command z_gate1Max = new Gate1Max(s_GateSubsystem);
+  private final Command z_GateToggleTimed = new GateToggleTimed(s_GateSubsystem);
   
 
 
@@ -129,6 +130,7 @@ public class RobotContainer {
     o_chooser.addOption("Vision Right", z_VisionAlign);
     Shuffleboard.getTab("Autonomous").add(o_chooser);
     s_DriveSubsystem.setDefaultCommand(z_DriveTeleop);
+    s_GateSubsystem.setDefaultCommand(z_gate1Down);
   }
 
   /**
@@ -158,7 +160,7 @@ public class RobotContainer {
     // Driver Button Binds6
     d_aButton.whenPressed(z_AutoSquareRight);
     d_bButton.whenPressed(z_AutoBarrel);
-    d_xButton.whileHeld(z_ShooterFireFull);
+    d_xButton.whenPressed(z_GateToggleTimed);
     if(getRobotID()== 0){
       d_backButton.whileHeld(z_AimAdjustDown);
       d_startButton.whileHeld(z_AimAdjustUp);

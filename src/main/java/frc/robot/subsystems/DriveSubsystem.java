@@ -529,7 +529,7 @@ private final Timer Timer;
       }
       //System.out.println(getAbsCurrentAngle());
      // System.out.println(" Current Angle =  "+ getCurrentAngle());
-     System.out.println("Total Angle =  "+ getTotalAngle());
+     //System.out.println("Total Angle =  "+ getTotalAngle());
       updateLimeLight();
      // System.out.println(visionTargetSensor());
       SmartDashboard.putNumber("LimelightX", v_limeLightX);

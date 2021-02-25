@@ -112,7 +112,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getEncoderRate(){
-    return ShooterEncoder.getRate();
+    return Math.abs(ShooterEncoder.getRate());
   }
 
   public void resetEncoderPosition(){
@@ -314,22 +314,30 @@ if(counter >= 4 && getEncoderRate() >= 250000){
 */
 //Currently Causes Motor to Overheat? BE CAREFUL
 public double PID(double v_RPMTarget){
-  double error;
-  double P = 0.001;
-  double I = 0.005;
+  double error = 0.0;
+  double P = 0.000095
+
+  ;
+  double I = 0.0000007;
   double D = 0.0;
-  double derivative;
-  double rcw;
+  double derivative = 0.0;
+  double rcw = 0.0;
   if (v_RPMTarget > 50000){
   error = v_RPMTarget - getEncoderRate(); // Error = Target - Actual
   v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
   derivative = (error - v_previousError) / .02;
   v_previousError = error;
   rcw = P*error + I*v_integral + D*derivative;
- // System.out.println(rcw);
+ SmartDashboard.putNumber("error", error);
+ SmartDashboard.putNumber("RCW", rcw);
+ System.out.println(getEncoderRate());
   return rcw;
   }
   else{
+    error = 0;
+    rcw = 0;
+    v_integral = 0;
+    v_previousError = 0;
     return 0.0;
   }
 }
@@ -367,6 +375,9 @@ public void ShooterAimDown(){
 public void ShooterAimStop(){
   v_aimSpeed = 0.0;
 }
+public boolean AimSwitchValue(){
+  return AimSwitch.get();
+}
   
   @Override
   public void periodic() {
@@ -378,12 +389,13 @@ public void ShooterAimStop(){
     else{
       ShooterMotor.set(PID(v_RPMTarget));
     }
-   // System.out.println(AimSwitch.get());
+   //System.out.println(AimSwitch.get());
       AimMotor.set(v_aimSpeed);
     
-    System.out.println(getAimEncoder());
+  //  System.out.println(getAimEncoder());
+  
     SmartDashboard.putNumber("ShooterEncoderRate", getEncoderRate());
-    SmartDashboard.putNumber("Motor Percentages", ShooterMotor.getMotorOutputPercent());
+    
     SmartDashboard.getNumber("v_RPMTarget", v_RPMTarget);
     
     
