@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
 
@@ -26,14 +27,19 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new ShooterSubsystem.
    */
   private final WPI_TalonSRX ShooterMotor;
+  private final WPI_TalonSRX AimMotor;
   private DigitalInput BallSensor;
-  private double v_shooterSpeed = 0;
+  private DigitalInput AimSwitch;
+  private double v_shooterSpeed;
+  private double v_aimSpeed;
   private final Timer Timer;
   private Encoder ShooterEncoder;
+  private Encoder AimEncoder;
   private double v_encoderSetPointShooter;
   private double v_RPMTarget;
   private int v_loops;
   public int v_shooterSpinIndicator;
+  public double v_aimEncoderValue;
 
   //Average Variables
   //TO DO MAKE FIT STANDARS
@@ -66,18 +72,24 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public ShooterSubsystem() {
     ShooterMotor = new WPI_TalonSRX(ShooterConstants.kShooterMotor);
+    AimMotor = new WPI_TalonSRX(ShooterConstants.kAimMotor);
     ShooterEncoder = new Encoder(ShooterConstants.kShooterEncoderChannel1, ShooterConstants.kShooterEncoderChannel2);
+    AimEncoder = new Encoder(ShooterConstants.kAimEncoder1, ShooterConstants.kAimEncoder2);
     Timer = new Timer();
     PDP = new PowerDistributionPanel();
     v_RPMTarget = SmartDashboard.getNumber("v_RPMTarget", 0.0);
     SmartDashboard.putNumber("v_RPMTarget", 0.0);
     BallSensor = new DigitalInput(5);
+    AimSwitch = new DigitalInput(ShooterConstants.kAimLimitSwitch);
     
 
     v_shooterSpeed = 0.0;
+    v_aimSpeed = 0.0;
+    v_aimEncoderValue = 0.0;
 
     addChild("ShooterMotor", ShooterMotor);
     addChild("ShooterEncoder", ShooterEncoder);
+    addChild("AimEncoder", AimEncoder);
     ShooterMotor.setNeutralMode(NeutralMode.Brake);
 
   }
@@ -100,11 +112,20 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getEncoderRate(){
-    return ShooterEncoder.getRate();
+    return Math.abs(ShooterEncoder.getRate());
   }
 
   public void resetEncoderPosition(){
     ShooterEncoder.reset();
+  }
+  public double getAimEncoder(){
+    v_aimEncoderValue = AimEncoder.get();
+    return v_aimEncoderValue;
+  }
+  public void resetAimEncoder(){
+    if(AimSwitch.get() == true){
+      v_aimEncoderValue = 0;
+    }
   }
 
   public void changeSetSpeed(double desiredSpeed){
@@ -293,22 +314,30 @@ if(counter >= 4 && getEncoderRate() >= 250000){
 */
 //Currently Causes Motor to Overheat? BE CAREFUL
 public double PID(double v_RPMTarget){
-  double error;
-  double P = 0.001;
-  double I = 0.005;
+  double error = 0.0;
+  double P = 0.000095
+
+  ;
+  double I = 0.0000007;
   double D = 0.0;
-  double derivative;
-  double rcw;
+  double derivative = 0.0;
+  double rcw = 0.0;
   if (v_RPMTarget > 50000){
   error = v_RPMTarget - getEncoderRate(); // Error = Target - Actual
   v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
   derivative = (error - v_previousError) / .02;
   v_previousError = error;
   rcw = P*error + I*v_integral + D*derivative;
- // System.out.println(rcw);
+ SmartDashboard.putNumber("error", error);
+ SmartDashboard.putNumber("RCW", rcw);
+ System.out.println(getEncoderRate());
   return rcw;
   }
   else{
+    error = 0;
+    rcw = 0;
+    v_integral = 0;
+    v_previousError = 0;
     return 0.0;
   }
 }
@@ -336,6 +365,20 @@ else{
 }
 //1 = ready to shoot, 0 = not ready to shoot, 2 = timed out/shoot aborted
 }
+public void ShooterAimUp(){
+  v_aimSpeed = 0.2;
+  }
+public void ShooterAimDown(){
+  if(AimSwitch.get() == false)
+    v_aimSpeed = -0.2;
+  }
+public void ShooterAimStop(){
+  v_aimSpeed = 0.0;
+}
+public boolean AimSwitchValue(){
+  return AimSwitch.get();
+}
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -346,16 +389,15 @@ else{
     else{
       ShooterMotor.set(PID(v_RPMTarget));
     }
-    //System.out.println(!BallSensor.get());
-   // System.out.println(getEncoderAverageRateArray());
-   
-   //ShooterMotor.set(PID(120000));
-   // SmartDashboard.putNumber("ShooterSpeed", v_shooterSpeed);
-   // SmartDashboard.putNumber("ShooterEncoderRateSet", v_encoderSetPointShooter);
+   //System.out.println(AimSwitch.get());
+      AimMotor.set(v_aimSpeed);
+    
+  //  System.out.println(getAimEncoder());
+  
     SmartDashboard.putNumber("ShooterEncoderRate", getEncoderRate());
-    SmartDashboard.putNumber("Motor Percentages", ShooterMotor.getMotorOutputPercent());
+    
     SmartDashboard.getNumber("v_RPMTarget", v_RPMTarget);
-    //System.out.println(getEncoderAverageRateArray());
+    
     
     
     

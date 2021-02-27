@@ -33,6 +33,7 @@ public class ShooterFireFull extends CommandBase {
   @Override
   public void execute() {
     ShooterSubsystem.changeSetSpeed(ShooterConstants.kShooterFull);
+   System.out.println(ShooterSubsystem.getEncoderRate());
   }
 
   // Called once the command ends or is interrupted.

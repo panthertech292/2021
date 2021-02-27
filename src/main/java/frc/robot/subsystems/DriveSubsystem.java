@@ -55,6 +55,9 @@ private final Timer Timer;
     private double c_encoderConversion;
     private double v_integral;
     private double v_previousError;
+    private double v_ticker;
+    private double v_previousAngle;
+    
     private int v_pidEnabler = 0;
     private double v_targetPower;
      //Put this into constants.java
@@ -109,6 +112,8 @@ private final Timer Timer;
     c_VisionAreaTarget = DriveConstants.kVisionAreaTarget;
     v_loopCount = 0;
     v_visionOverride = 0;
+    v_ticker = 0;
+    v_previousAngle = 0;
 
     Drive = new DifferentialDrive(LeftSide,RightSide);
 
@@ -184,10 +189,12 @@ private final Timer Timer;
     return v_zeroLeftPosition;
   }
   public void zeroAngle() {
-    v_zeroAngle = ahrs.getYaw();
+    ahrs.zeroYaw();
+    v_ticker = 0;
+    v_previousAngle = 0;
   }
-  public double getZeroAngle(){
-    return v_zeroAngle;
+  public double getAbsCurrentAngle(){
+    return Math.abs(ahrs.getYaw());
   }
   public double getCurrentAngle(){
     return ahrs.getYaw();
@@ -195,23 +202,32 @@ private final Timer Timer;
   public void zeroRightPosition(){
     v_zeroRightPosition = BackRightMotor.getSelectedSensorPosition();
   }
+  public double getTotalAngle(){
+    double angle;
+    angle = getCurrentAngle();
+    if(Math.abs(angle - v_previousAngle)>45 && angle<v_previousAngle){
+      v_ticker = v_ticker -1 ;
+    }
+    if(Math.abs(angle - v_previousAngle)>45 && angle>v_previousAngle){
+      v_ticker = v_ticker +1 ;
+    }
+    v_previousAngle = angle;
+    return Math.abs(-1*(2*(v_ticker*180) + (-1*angle)));
+  }
   public boolean gyroFinish( double angle){
-    v_deltaAngle = (getCurrentAngle() - getZeroAngle());
-    if (angle <= v_deltaAngle){
+    if (angle <= getTotalAngle()){
       return true;
     }
     else{
       return false;
     }
-    //Depends on Direction: Right is Positive Angles, Left is Negative Angles
   }
-
   public boolean totalFinish(double angle){
    return (gyroFinish(angle) && encoderFinish((angle/360)*2*Math.PI*21));
   }
 
   public void deltaTurn(){
-   double v_deltaAngle = (getCurrentAngle() - getZeroAngle());
+   double v_deltaAngle = (getAbsCurrentAngle());
    double gyroDistance = (v_deltaAngle/360) *2*Math.PI*21;
    double encoderDistance = (Math.abs(getLeftPosition()) + Math.abs(getRightPosition())) / 2;
    double encoderAngle = ((encoderDistance*360)/(2*Math.PI*10.5));
@@ -234,7 +250,6 @@ private final Timer Timer;
   }
   //Vision
   public boolean visionFinish(){
-   
     if (- 1 <= v_limeLightX && v_limeLightX <= 1 || v_visionOverride == 1 ){
       v_visionOverride = 0;
       return true;}
@@ -253,7 +268,6 @@ private final Timer Timer;
   }
   //Actually turns robot right, aimed too far left
   public void visionAlignLeft(){
-    
     if (v_limeLightX > 1){
       v_loopCount = v_loopCount+1;
       System.out.println(v_loopCount);
@@ -271,12 +285,9 @@ private final Timer Timer;
         v_visionOverride = 1;
       }
     }
-
- 
   }
   //Actually turns robot left, aimed too far right
   public void visionAlignRight(){
-    
     if (v_limeLightX < -1){
       v_loopCount = v_loopCount+1;
       System.out.println(v_loopCount);
@@ -355,36 +366,94 @@ private final Timer Timer;
 //Changes Right Side based on Left Side
   public double LeftPID(double v_targetPower){
     double error;
-    double P = 0.0001;
-    double I = 0.00812;
+    double P = 0.0256*2*1.5;
+    double I = //0.00812;
+    0.0;
     double D = 0.0;
     double derivative;
     double rcw;
-    error = Math.abs(BackLeftMotor.getSelectedSensorVelocity()) - Math.abs(BackRightMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+    error = Math.abs(getLeftPosition()) - Math.abs(getRightPosition()); // Error = Target - Actual
     v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
     derivative = (error - v_previousError) / .02;
     v_previousError = error;
     rcw = P*error + I*v_integral + D*derivative;
-   // System.out.println(rcw);
+   System.out.println(rcw);
+
     v_rightSpeed = v_targetPower + rcw;
     return v_rightSpeed;
     }
+    
     public double RightPID(double v_targetPower){
       double error;
-      double P = 0.0001;
-      double I = 0.00812;
+      double P = 0.0256*2*1.5;
+      double I = //0.00812;
+    0.0;
       double D = 0.0;
       double derivative;
       double rcw;
-      error = Math.abs(BackRightMotor.getSelectedSensorVelocity()) - Math.abs(BackLeftMotor.getSelectedSensorVelocity()); // Error = Target - Actual
+      error = Math.abs(getRightPosition()) - Math.abs(getLeftPosition()); // Error = Target - Actual
       v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
       derivative = (error - v_previousError) / .02;
       v_previousError = error;
       rcw = P*error + I*v_integral + D*derivative;
-     // System.out.println(rcw);
+     System.out.println(rcw);
       v_leftSpeed = v_targetPower + rcw;
       return v_leftSpeed;
       }
+    public double RatioLeftPID(double v_desiredRatio, double v_targetPower){
+    double error = 2.15789;
+    double P = //0.0256*2.5; 
+    0.0256*2*1.5*2*2*2*2;
+    double I = //0.00812;
+    0.0;
+    double D = 0.0;
+      double derivative;
+      double rcw;
+      if (Math.abs(BackLeftMotor.getSelectedSensorVelocity()) == 0){ 
+        error = 2.15789;
+      }
+      else{ 
+        error = -1*(v_desiredRatio - (Math.abs(getRightPosition()/Math.abs(getLeftPosition()))));
+      //  System.out.println("Error   "+ error);
+       // System.out.println(("Current Ratio =  " + Math.abs(getRightPosition())/Math.abs(getLeftPosition())));
+      }
+       // Error = Target - Actual
+     // System.out.println("error  " + error);
+      //v_integral += (error*0.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+      v_integral = v_integral + (error*0.02);
+      derivative = (error - v_previousError) / 0.02;
+      v_previousError = error;
+      rcw = P*error + I*v_integral + D*derivative;
+      System.out.println("rcw  "  +  rcw);
+      v_leftSpeed = v_targetPower + rcw;
+      //System.out.println("v_leftSpeed  "  +  v_leftSpeed);
+      return v_leftSpeed;}
+
+      public double RatioRightPID(double v_desiredRatio, double v_targetPower){
+        double error = 2.15789;
+        double P = //0.0256*2.5; 
+        0.0256*2*1.5*2*2*2*2;
+        double I = //0.00812;
+        0.0;
+        double D = 0.0;
+          double derivative;
+          double rcw;
+          if (Math.abs(BackRightMotor.getSelectedSensorVelocity()) == 0){ 
+            error = 2.15789;
+          }
+          else{ 
+            error = -1*(v_desiredRatio - (Math.abs(getLeftPosition()/Math.abs(getRightPosition()))));
+          }// Error = Target - Actual
+         // System.out.println("Error   "+ error);
+         // System.out.println(("Current Ratio =  " + Math.abs(getLeftPosition())/Math.abs(getRightPosition())));
+          v_integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+          derivative = (error - v_previousError) / .02;
+          v_previousError = error;
+          rcw = P*error + I*v_integral + D*derivative;
+          System.out.println(rcw);
+          v_rightSpeed = v_targetPower + rcw;
+          return v_rightSpeed;}
+
 
       public double PerceivedAngle(double distance){
         return (360*distance)/(Math.PI*21);
@@ -392,7 +461,7 @@ private final Timer Timer;
 
       public double AnglePID(double v_targetAngle, double v_rightSpeedBase){
         double error;
-      double P = 0.0001;
+        double P = 0.0256*2*2;
       double I = 0.00812;
       double D = 0.0;
       double derivative;
@@ -403,36 +472,70 @@ private final Timer Timer;
       v_previousError = error;
       rcw = P*error + I*v_integral + D*derivative;
       if (error <= 0){
-        
         v_rightSpeed = v_rightSpeedBase - rcw;
-
       }
       if (error > 0){
-        
         v_rightSpeed = v_rightSpeedBase + rcw;
       }
       return v_rightSpeed;
       }
       
-  
+      public void initializePID(){
+        v_integral = 0;
+        v_previousError = 0;
+        System.out.println("V_integral    " + v_integral);
+      }
+      public double visionTargetSensor(){
+        System.out.println(v_limeLightArea);
+        return v_limeLightArea;
+      }
+
+      public double limelightXAngle(){
+        return v_limeLightX;
+      }
+
+      public boolean gyroWithVisionFinish(double AutoAngle, double v_turnDirection){
+       boolean v_done = false;
+      System.out.println("Running........");
+       System.out.println("GCA" + getCurrentAngle());
+        if((v_limeLightArea > 0.1) && (AutoAngle-40 <= getAbsCurrentAngle())){
+          System.out.println("Limelight Area" + v_limeLightArea);
+          System.out.println("Angle Calculation" + (AutoAngle-40 <= getAbsCurrentAngle()));
+         System.out.println("Vision should be Activated" + limelightXAngle()*v_turnDirection);
+          if(limelightXAngle()*v_turnDirection <= 0 ){
+            System.out.println("Final Angle Check" + (limelightXAngle()*v_turnDirection <= 0));
+             v_done = true;
+             System.out.println("Vision Says Stop");
+          }
+          else{
+            v_done = false;
+          }
+        }
+        return v_done;
+      }
 
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
-      
+      //System.out.println("Current Angle"   +   getCurrentAngle()   +   "ZeroAngle"  +  getZeroAngle());
+     
       //Sets drive mode
       if (v_driveMode == c_modeTeleop) {
        driveTeleop();
+      // System.out.println("Teleop");
       } else {
       driveAuto();
+     // System.out.println("Auto");
       }
-      
+      //System.out.println(getAbsCurrentAngle());
+     // System.out.println(" Current Angle =  "+ getCurrentAngle());
+     //System.out.println("Total Angle =  "+ getTotalAngle());
       updateLimeLight();
-      
+     // System.out.println(visionTargetSensor());
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
       SmartDashboard.putNumber("LimelightY", v_limeLightY);
       SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
       SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
-      SmartDashboard.putNumber("Sonar Distance in Inches", sonarSensor.getAverageVoltage()/DriveConstants.sonarConversionFactor);
+      SmartDashboard.putNumber("Sonar Distance in mm", 5*sonarSensor.getAverageVoltage()*1000/(DriveConstants.sonarConversionFactor*25.4));
     }
   }

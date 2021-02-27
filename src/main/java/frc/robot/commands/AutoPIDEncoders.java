@@ -12,38 +12,33 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class AutoTurnPID extends CommandBase {
+public class AutoPIDEncoders extends CommandBase {
   private final DriveSubsystem DriveSubsystem;
-  
   private final double TargetSpeedLeft;
   private final double TargetSpeedRight;
-  private double Angle;
-  private double Ratio;
+  private double v_Angle;
+  private double v_PIDRatio;
+  
 
   /**
    * Creates a new AutoForward.
    */
-  public AutoTurnPID(DriveSubsystem s_DriveSubsystem, double v_TargetSpeedLeft, double v_TargetSpeedRight, double m_angle, double v_ratio) {
+  public AutoPIDEncoders(DriveSubsystem s_DriveSubsystem, double v_TargetSpeedLeft, double v_TargetSpeedRight, double v_Angle, double v_PIDRatio) {
     DriveSubsystem = s_DriveSubsystem;
     addRequirements(s_DriveSubsystem);
 
     
     TargetSpeedLeft = v_TargetSpeedLeft;
     TargetSpeedRight = v_TargetSpeedRight;
-    Angle = m_angle;
-    Ratio = v_ratio;
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("##############################");
     DriveSubsystem.resetTimer();
     DriveSubsystem.zeroDistanceSensors();
-    DriveSubsystem.zeroAngle();
-    DriveSubsystem.initializePID();
-    DriveSubsystem.driveModePowerSetPoint();
     
     
   }
@@ -52,38 +47,22 @@ public class AutoTurnPID extends CommandBase {
   @Override
   public void execute() {
     
-    
-    if(TargetSpeedLeft<=TargetSpeedRight){
-    DriveSubsystem.changePowerSetPoints(DriveSubsystem.RatioLeftPID(Ratio, TargetSpeedLeft),TargetSpeedRight);}
-
-    if(TargetSpeedRight<TargetSpeedLeft){
-      DriveSubsystem.changePowerSetPoints(TargetSpeedLeft,DriveSubsystem.RatioRightPID(Ratio, TargetSpeedRight));
-    }
-
-    
-    }
-
-    
-  
+    DriveSubsystem.driveModePowerSetPoint();
+    DriveSubsystem.changePowerSetPoints(v_PIDRatio*DriveSubsystem.RightPID(TargetSpeedLeft),DriveSubsystem.LeftPID(TargetSpeedRight));
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     
     DriveSubsystem.changePowerSetPoints(0,0);
-    System.out.println("All Done");
-   // System.out.println(DriveSubsystem.getLeftPosition());
-  // System.out.println(DriveSubsystem.getRightPosition());
-    DriveSubsystem.zeroAngle();
-    DriveSubsystem.driveModeTeleop();
-    System.out.println("######################################1");
+    System.out.println(DriveSubsystem.getLeftPosition());
+    System.out.println(DriveSubsystem.getRightPosition());
   }
-
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return DriveSubsystem.gyroFinish(Angle);
-   // return DriveSubsystem.encoderFinish(Angle);
+    return DriveSubsystem.gyroFinish(v_Angle);
   }
 }

@@ -82,7 +82,6 @@ public class RobotContainer {
   private final Command z_AutoBarrel = new AutoBarrel(s_DriveSubsystem);
 
   private final Command z_AutoDriveVisionCorrection = new AutoDriveVisionCorrection(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed);
-  private final Command z_AutoStop = new AutoStop(s_DriveSubsystem);
 
   // Vision Commands
   private final Command z_VisionAlign = new VisionAlign(s_DriveSubsystem);
@@ -96,6 +95,8 @@ public class RobotContainer {
   private final Command z_ShooterFireFull = new ShooterFireFull(s_ShooterSubsystem);
   private final Command z_ShooterFireGated = new ShooterFireGated(s_ShooterSubsystem, s_GateSubsystem);
   private final Command z_ShooterFireGatedSpinUp = new ShooterFireGatedSpinUp(s_ShooterSubsystem, s_GateSubsystem, v_TargetRPM);
+  private final Command z_AimAdjustDown = new AimAdjustDown(s_ShooterSubsystem);
+  private final Command z_AimAdjustUp = new AimAdjustUp(s_ShooterSubsystem);
 
   // Pickup Commands
   private final Command z_PickupRunHalf = new PickupRunHalf(s_PickupSubsystem);
@@ -104,6 +105,7 @@ public class RobotContainer {
   private final Command z_gate1Down = new Gate1Down(s_GateSubsystem);
   private final Command z_gate1Mid = new Gate1Up(s_GateSubsystem);
   private final Command z_gate1Max = new Gate1Max(s_GateSubsystem);
+  private final Command z_GateToggleTimed = new GateToggleTimed(s_GateSubsystem);
   
 
 
@@ -128,6 +130,7 @@ public class RobotContainer {
     o_chooser.addOption("Vision Right", z_VisionAlign);
     Shuffleboard.getTab("Autonomous").add(o_chooser);
     s_DriveSubsystem.setDefaultCommand(z_DriveTeleop);
+    s_GateSubsystem.setDefaultCommand(z_gate1Down);
   }
 
   /**
@@ -141,7 +144,10 @@ public class RobotContainer {
     final JoystickButton d_aButton = new JoystickButton(io_drivercontroller, Button.kA.value);
     final JoystickButton d_bButton = new JoystickButton(io_drivercontroller, Button.kB.value);
     final JoystickButton d_xButton = new JoystickButton(io_drivercontroller, Button.kX.value);
-    final JoystickButton d_yButton = new JoystickButton(io_drivercontroller, Button.kY.value);
+    final JoystickButton d_startButton = new JoystickButton(io_drivercontroller, Button.kStart.value);
+    final JoystickButton d_backButton = new JoystickButton(io_drivercontroller, Button.kBack.value);
+    // final JoystickButton d_yButton = new JoystickButton(io_drivercontroller,
+    // Button.kY.value);
     // final JoystickButton d_lbumper = new JoystickButton(io_drivercontroller,
     // Button.kBumperLeft.value);
     // final JoystickButton d_rbumper = new JoystickButton(io_drivercontroller,
@@ -151,17 +157,26 @@ public class RobotContainer {
     final JoystickButton o_bButton = new JoystickButton(io_opercontroller, Button.kB.value);
     final JoystickButton o_xButton = new JoystickButton(io_opercontroller, Button.kX.value);
     final JoystickButton o_yButton = new JoystickButton(io_opercontroller, Button.kY.value);
-    // Driver Button Binds
+    // Driver Button Binds6
+    d_aButton.whenPressed(z_AutoSquareRight);
+    d_bButton.whenPressed(z_AutoBarrel);
+    d_xButton.whenPressed(z_GateToggleTimed);
+    if(getRobotID()== 0){
+      d_backButton.whileHeld(z_AimAdjustDown);
+      d_startButton.whileHeld(z_AimAdjustUp);
+    }
+    // d_bButton.whenPressed(z_VisionDistance);
+    // o_xButton.whenPressed(z_VisionAll);
+    // d_lbumper.whenPressed(m_driveJogLeft);
+    // d_rbumper.whenPressed(m_driveJogRight);
 
-    //Driver Binds
-    d_aButton.whenPressed(z_AutoRight90Encoder);
-    d_bButton.whenPressed(z_AutoSquareRight);
-    d_xButton.whileHeld(z_ShooterFireFull);
-    d_yButton.whenPressed(z_AutoStop);
-  
-    //Operator Binds
+    // o_bButton.whenPressed(z_AutoForward);
+    // d_xButton.whenPressed(z_AutoSquareRight);
     o_aButton.whileHeld(z_AutoBarrel);
+    // o_xButton.whenPressed(z_gate1Mid);
     o_yButton.whenPressed(z_AutoRight90Encoder);
+    // o_yButton.whenReleased(z_gate1Up);
+
     o_bButton.whileHeld(z_PickupRunHalf);
     
 

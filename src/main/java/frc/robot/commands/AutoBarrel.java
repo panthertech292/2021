@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -13,6 +14,7 @@ import frc.robot.subsystems.DriveSubsystem;
 public class AutoBarrel extends SequentialCommandGroup {
   /** Creates a new AutoBarrel. */
   private final DriveSubsystem DriveSubsystem;
+  
   private double v_driveSpeed;
   private double v_fudgeFactor;
   private double v_standardForward;
@@ -33,21 +35,20 @@ public class AutoBarrel extends SequentialCommandGroup {
      //Template Commands
     //new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed),
     //new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(75), 1.0, -.35),
-    new AutoForwardPID(s_DriveSubsystem, .8, .8, 106.0),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .8, .1, 78.99704244),
-    new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoForwardPID(s_DriveSubsystem, .8, .8, 60.0),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoForwardPID(s_DriveSubsystem, .8, .8, 90.0),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoTurnPID(s_DriveSubsystem, .1, .8, -78.99704244),
-    new AutoForwardPID(s_DriveSubsystem, .8, .8, 270.0),
+    new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0),
+   new AutoForward(s_DriveSubsystem, 0.1, .65, 0.2),
+   new AutoTurnPID(s_DriveSubsystem, .65, .2, 360, 2.15789),
+   new AutoForwardPID(s_DriveSubsystem, .7, .65, 90.0),
+   new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
+   new AutoTurnPID(s_DriveSubsystem, .2, .65, 270, 2.15789),
+   new AutoForwardPID(s_DriveSubsystem, .7, .65, 60.0),
+   new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
+   new AutoTurnPID(s_DriveSubsystem, .2, .65, 90, 2.15789),
+   new AutoForwardPID(s_DriveSubsystem, .7, .65, 90.0),
+   new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
+   new AutoTurnPID(s_DriveSubsystem, .2, .65, 180, 2.15789),
+   new AutoForwardPID(s_DriveSubsystem, .7, .65, 300.0),
+   
     new AutoDead(s_DriveSubsystem)
    );
 
