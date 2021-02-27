@@ -196,12 +196,12 @@ public class RobotContainer {
     return io_drivercontroller.getY(GenericHID.Hand.kRight);
   }
 
-  public static double getDriveSpeedAdjust() {
+ /* public static double getDriveSpeedAdjust() {
     double v_driveSpeedAdjust;
     v_driveSpeedAdjust = 1 - ((io_drivercontroller.getRawAxis(io_righttrigger) / 2.5)
         + (io_drivercontroller.getRawAxis(io_lefttrigger) / 2.5));
     return v_driveSpeedAdjust;
-  }
+  } */
 
   public static int getRobotID() {
     if (io_IDchecker.getVoltage() < 2.5) {

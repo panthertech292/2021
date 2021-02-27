@@ -50,7 +50,7 @@ public class AutoForwardEncoder extends CommandBase {
     System.out.println(DriveSubsystem.getLeftPosition());
     System.out.println(DriveSubsystem.getRightPosition());
     */
-    DriveSubsystem.deltaTurn();
+   
   }
 
   // Returns true when the command should end.

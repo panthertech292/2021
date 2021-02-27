@@ -37,6 +37,9 @@ public class AutoForwardPID extends CommandBase {
   public void initialize() {
     DriveSubsystem.resetTimer();
     DriveSubsystem.zeroDistanceSensors();
+    DriveSubsystem.zeroAngle();
+    System.out.println("Forward PID is Start############################");
+    
     
     
   }
@@ -56,6 +59,7 @@ public class AutoForwardPID extends CommandBase {
     DriveSubsystem.changePowerSetPoints(0,0);
     System.out.println(DriveSubsystem.getLeftPosition());
     System.out.println(DriveSubsystem.getRightPosition());
+    System.out.println("Forward PID is DONE############################");
   }
 
   // Returns true when the command should end.

@@ -24,32 +24,28 @@ public class AutoBarrel extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
    // addCommands();
    DriveSubsystem = s_DriveSubsystem;
-   v_driveSpeed = 0.8;
-   v_fudgeFactor = 78;
-   v_firstTurnAdjustment = 0.0;
-   v_standardForward = 46.0;
-
    addRequirements(s_DriveSubsystem);
 
    addCommands(
      //Template Commands
     //new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed),
     //new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(75), 1.0, -.35),
-    new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0),
-   new AutoForward(s_DriveSubsystem, 0.1, .65, 0.2),
-   new AutoTurnPID(s_DriveSubsystem, .65, .2, 360, 2.15789),
-   new AutoForwardPID(s_DriveSubsystem, .7, .65, 90.0),
-   new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
+    new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0-10.0),
+   new AutoForward(s_DriveSubsystem, 0.1, 0.0, 0.15),
+   new AutoTurnPID(s_DriveSubsystem, .65, .15, 90.0, 2.15789),
+   new AutoTurnPID(s_DriveSubsystem, .65, .30, 270.0, 2.15789)
+   //new AutoDriveVisionCorrection(s_DriveSubsystem, 90.0, .7, .65),
+   /*new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
    new AutoTurnPID(s_DriveSubsystem, .2, .65, 270, 2.15789),
-   new AutoForwardPID(s_DriveSubsystem, .7, .65, 60.0),
+   new AutoDriveVisionCorrection(s_DriveSubsystem, 60.0, .7, .65),
    new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
    new AutoTurnPID(s_DriveSubsystem, .2, .65, 90, 2.15789),
    new AutoForwardPID(s_DriveSubsystem, .7, .65, 90.0),
    new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
    new AutoTurnPID(s_DriveSubsystem, .2, .65, 180, 2.15789),
-   new AutoForwardPID(s_DriveSubsystem, .7, .65, 300.0),
+   new AutoDriveVisionCorrection(s_DriveSubsystem, 300.0, .7, .65), */
    
-    new AutoDead(s_DriveSubsystem)
+   
    );
 
   }

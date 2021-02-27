@@ -19,6 +19,7 @@ public class AutoTurnPID extends CommandBase {
   private final double TargetSpeedRight;
   private double Angle;
   private double Ratio;
+  
 
   /**
    * Creates a new AutoForward.
@@ -32,18 +33,20 @@ public class AutoTurnPID extends CommandBase {
     TargetSpeedRight = v_TargetSpeedRight;
     Angle = m_angle;
     Ratio = v_ratio;
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("##############################");
+    
     DriveSubsystem.resetTimer();
     DriveSubsystem.zeroDistanceSensors();
     DriveSubsystem.zeroAngle();
     DriveSubsystem.initializePID();
     DriveSubsystem.driveModePowerSetPoint();
+    System.out.println("Turn PID is Start############################");
     
     
   }
@@ -71,12 +74,10 @@ public class AutoTurnPID extends CommandBase {
   public void end(boolean interrupted) {
     
     DriveSubsystem.changePowerSetPoints(0,0);
-    System.out.println("All Done");
-   // System.out.println(DriveSubsystem.getLeftPosition());
-  // System.out.println(DriveSubsystem.getRightPosition());
     DriveSubsystem.zeroAngle();
     DriveSubsystem.driveModeTeleop();
-    System.out.println("######################################1");
+    System.out.println("Turn PID is DONE############################");
+    
   }
 
 
@@ -84,6 +85,6 @@ public class AutoTurnPID extends CommandBase {
   @Override
   public boolean isFinished() {
     return DriveSubsystem.gyroFinish(Angle);
-   // return DriveSubsystem.encoderFinish(Angle);
+  //return DriveSubsystem.encoderTurnFinish(diameter, Angle);
   }
 }

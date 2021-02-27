@@ -33,6 +33,8 @@ public class AutoForward extends CommandBase {
   public void initialize() {
     DriveSubsystem.resetTimer();
     DriveSubsystem.zeroDistanceSensors();
+    DriveSubsystem.zeroAngle();
+    System.out.println("Forward  is Start############################");
     
     System.out.println(LeftSpeed  +  RightSpeed  +  Time);
   }
@@ -52,6 +54,7 @@ public class AutoForward extends CommandBase {
     DriveSubsystem.changePowerSetPoints(0,0);
     System.out.println(DriveSubsystem.getLeftPosition());
     System.out.println(DriveSubsystem.getRightPosition());
+    System.out.println("Forward is DONE############################");
   }
 
   // Returns true when the command should end.

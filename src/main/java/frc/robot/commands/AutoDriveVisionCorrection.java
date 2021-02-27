@@ -33,6 +33,7 @@ public class AutoDriveVisionCorrection extends CommandBase {
     System.out.println(DriveSubsystem.getLeftPosition());
     System.out.println(DriveSubsystem.getRightPosition());
     DriveSubsystem.zeroDistanceSensors();
+    DriveSubsystem.zeroAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -50,7 +51,7 @@ public class AutoDriveVisionCorrection extends CommandBase {
     System.out.println(DriveSubsystem.getLeftPosition());
     System.out.println(DriveSubsystem.getRightPosition());
     */
-    DriveSubsystem.deltaTurn();
+    
   }
 
   // Returns true when the command should end.

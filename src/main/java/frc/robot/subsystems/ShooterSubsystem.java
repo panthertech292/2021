@@ -312,7 +312,7 @@ if(counter >= 4 && getEncoderRate() >= 250000){
 }
 }
 */
-//Currently Causes Motor to Overheat? BE CAREFUL
+// BE CAREFUL! Running for too long causes the motor to overheat due to the rapid changes.
 public double PID(double v_RPMTarget){
   double error = 0.0;
   double P = 0.000095

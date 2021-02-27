@@ -38,7 +38,6 @@ public class AutoBackward extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     DriveSubsystem.changePowerSetPoints(-0.5,-0.5);
-    DriveSubsystem.deltaTurn();
   }
 
   // Returns true when the command should end.

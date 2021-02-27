@@ -36,7 +36,6 @@ public class AutoRight90Encoder extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     DriveSubsystem.changePowerSetPoints(0,0);
-    DriveSubsystem.deltaTurn();
   System.out.println(DriveSubsystem.PerceivedAngle(DriveSubsystem.getLeftPosition()));
   }
 

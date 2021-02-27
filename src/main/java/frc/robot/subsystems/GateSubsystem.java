@@ -144,8 +144,8 @@ public void resetGates() {
     Gate1();
     Gate2();
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("GateShootState", m_shootState);
-    SmartDashboard.putNumber("GateTimer", getTimerValue());
-    SmartDashboard.putBoolean("Ball Sensor", isBallPresent());
+   // SmartDashboard.putNumber("GateShootState", m_shootState);
+    //SmartDashboard.putNumber("GateTimer", getTimerValue());
+    //SmartDashboard.putBoolean("Ball Sensor", isBallPresent());
   }
 }
