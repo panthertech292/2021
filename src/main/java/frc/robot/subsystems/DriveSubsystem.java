@@ -38,6 +38,58 @@ public class DriveSubsystem extends SubsystemBase {
 
   private final SpeedControllerGroup LeftSide;
   private final SpeedControllerGroup RightSide;
+<<<<<<< HEAD
+=======
+ 
+private final Timer Timer;
+
+    private final DifferentialDrive Drive;
+
+    private double v_leftSpeed;
+    private double v_rightSpeed;
+    private double v_setPointLeft;
+    private double v_setPointRight;
+
+    private double v_zeroLeftPosition;
+    private double v_zeroRightPosition;
+    private double v_zeroAngle;
+    //private double m_leftDistance;
+    private double v_deltaAngle;
+    private double c_encoderConversion;
+    private double v_integral;
+    private double v_previousError;
+    private double v_ticker;
+    private double v_previousAngle;
+    
+    private int v_pidEnabler = 0;
+    private double v_targetPower;
+     //Put this into constants.java
+    private int c_modeTeleop = 0;
+    private int c_modeSetPoint = 1;
+    private int v_driveMode = c_modeTeleop;
+    private DigitalInput v_testSwitch;
+    private DigitalInput opticalSensor;
+    private DigitalInput testDio;
+    private AnalogInput sonarSensor;
+    private double v_limeLightX;
+    private double v_limeLightY;
+    private double v_limeLightArea;
+    private double c_VisionAreaTarget;
+    private int v_loopCount;
+    private int v_visionOverride;
+
+    private int v_printCount;
+
+    private NetworkTableEntry v_TableEntrytx;
+    private NetworkTableEntry v_TableEntryty;
+    private NetworkTableEntry v_TableEntryta;
+
+    private NetworkTable table;
+
+    AHRS ahrs;
+ 
+
+>>>>>>> 98c352b0ccc8fe141d594b764452a59a54c95114
 
   private final Timer Timer;
 
@@ -113,7 +165,13 @@ public class DriveSubsystem extends SubsystemBase {
     v_ticker = 0;
     v_previousAngle = 0;
 
+<<<<<<< HEAD
     Drive = new DifferentialDrive(LeftSide, RightSide);
+=======
+    v_printCount = 0;
+
+    Drive = new DifferentialDrive(LeftSide,RightSide);
+>>>>>>> 98c352b0ccc8fe141d594b764452a59a54c95114
 
     try {
       /* Communicate w/navX-MXP via the MXP SPI Bus. */
@@ -540,6 +598,14 @@ public boolean encoderTurnFinish(double diameter, double angle){
         }
         return v_done;
       }
+      public void timedPrintOut(){
+        if(v_printCount % 100 == 0){
+          //System.out.println("Test timed print :)");
+          //System.out.println(v_printCount);
+        }
+        
+        v_printCount = v_printCount + 1;
+      }
 
     @Override
     public void periodic() {
@@ -553,8 +619,16 @@ public boolean encoderTurnFinish(double diameter, double angle){
       driveAuto();
      
       }
+<<<<<<< HEAD
       updateLimeLight();
      
+=======
+     
+    
+      updateLimeLight();
+      timedPrintOut();
+
+>>>>>>> 98c352b0ccc8fe141d594b764452a59a54c95114
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
       //SmartDashboard.putNumber("LimelightY", v_limeLightY);
      // SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
