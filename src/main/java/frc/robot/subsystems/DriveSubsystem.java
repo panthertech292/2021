@@ -75,6 +75,8 @@ private final Timer Timer;
     private int v_loopCount;
     private int v_visionOverride;
 
+    private int v_printCount;
+
     private NetworkTableEntry v_TableEntrytx;
     private NetworkTableEntry v_TableEntryty;
     private NetworkTableEntry v_TableEntryta;
@@ -114,6 +116,8 @@ private final Timer Timer;
     v_visionOverride = 0;
     v_ticker = 0;
     v_previousAngle = 0;
+
+    v_printCount = 0;
 
     Drive = new DifferentialDrive(LeftSide,RightSide);
 
@@ -513,11 +517,19 @@ private final Timer Timer;
         }
         return v_done;
       }
+      public void timedPrintOut(){
+        if(v_printCount % 100 == 0){
+          //System.out.println("Test timed print :)");
+          //System.out.println(v_printCount);
+        }
+        
+        v_printCount = v_printCount + 1;
+      }
 
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
-      //System.out.println("Current Angle"   +   getCurrentAngle()   +   "ZeroAngle"  +  getZeroAngle());
+      
      
       //Sets drive mode
       if (v_driveMode == c_modeTeleop) {
@@ -527,11 +539,11 @@ private final Timer Timer;
       driveAuto();
      // System.out.println("Auto");
       }
-      //System.out.println(getAbsCurrentAngle());
-     // System.out.println(" Current Angle =  "+ getCurrentAngle());
-     //System.out.println("Total Angle =  "+ getTotalAngle());
+     
+    
       updateLimeLight();
-     // System.out.println(visionTargetSensor());
+      timedPrintOut();
+
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
       SmartDashboard.putNumber("LimelightY", v_limeLightY);
       SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
