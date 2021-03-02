@@ -57,7 +57,7 @@ private final Timer Timer;
     private double c_encoderConversion;
     private double v_integral;
     private double v_previousError;
-    private double v_ticker;
+    private double v_ticker = 0;
     private double v_previousAngle;
     
     private int v_pidEnabler = 0;
@@ -154,6 +154,7 @@ private final Timer Timer;
     FrontRightMotor.setNeutralMode(NeutralMode.Brake);
     BackRightMotor.setNeutralMode(NeutralMode.Brake);
     BackLeftMotor.setNeutralMode(NeutralMode.Brake);
+    SmartDashboard.putNumber("Ratio Proportion", 0.0);
 
   }
 
@@ -215,19 +216,26 @@ private final Timer Timer;
   }
 
   public double getTotalAngle() {
-    double angle;
-    v_ticker = 0;
-    
-    angle = getCurrentAngle();
-    if (Math.abs(angle - v_previousAngle) > 45 && angle < v_previousAngle) {
-      v_ticker = v_ticker - 1;
-    }
-    if (Math.abs(angle - v_previousAngle) > 45 && angle > v_previousAngle) {
-      v_ticker = v_ticker + 1;
-    }
-    v_previousAngle = angle;
-    return Math.abs(-1 * (2 * (v_ticker * 180) + (-1 * angle)));
+  double angle;
+  
+  angle = getCurrentAngle();
+    if (Math.abs(angle - v_previousAngle) >= 45) {
+      System.out.println("Ticking!!!!! (You off :))");
+      System.out.println("Angle =" + angle);
+      System.out.println("Previous Angle =" + v_previousAngle);
+
+      if((v_previousAngle)/Math.abs(v_previousAngle) !=0 && v_previousAngle !=0){
+        v_ticker = v_ticker + (v_previousAngle)/Math.abs(v_previousAngle);
+      }
+     /* if((angle-v_previousAngle)/Math.abs(angle-v_previousAngle) ==0 && v_previousAngle !=0){
+        v_ticker = 0;
+      } */
   }
+  v_previousAngle = angle;
+  return Math.abs((2.0 * v_ticker * 180.0) + (angle));
+}
+
+
 
   public boolean gyroFinish(double angle) {
     SmartDashboard.putNumber("Gyro Angle", getTotalAngle());
@@ -432,19 +440,20 @@ public boolean encoderTurnFinish(double diameter, double angle){
 
   public double RatioLeftPID(double v_desiredRatio, double v_targetPower) {
     double error = 2.15789;
+    
     double P = // 0.0256*2.5;
-        0.0256 * 2 * 1.5 * 2 * 2 * 2 *0;
+    SmartDashboard.getNumber("Ratio Proportion", 0.0256 * 2 * 1.5 * 2 * 2 * 2);
     double I = // 0.00812;
         0.0;
     double D = 0.0;
     double derivative;
     double rcw;
-    if (Math.abs(BackLeftMotor.getSelectedSensorVelocity()) == 0) {
+    if (Math.abs(getLeftPosition()) == 0) {
       error = 2.15789;
     } else {
       error = -1 * (v_desiredRatio - (Math.abs(getRightPosition()) / Math.abs(getLeftPosition())));
     }
-    System.out.println("Ratio =  " + Math.abs(getRightPosition()) / Math.abs(getLeftPosition()));
+    
     // Error = Target - Actual
    
     v_integral += (error*0.02); // Integral is increased by the error*time (which
@@ -454,7 +463,8 @@ public boolean encoderTurnFinish(double diameter, double angle){
     v_previousError = error;
     rcw = P * error + I * v_integral + D * derivative;
     
-    // SmartDashboard.putNumber("RCW", rcw);
+    SmartDashboard.putNumber("RCW", rcw);
+    SmartDashboard.putNumber("Turn Error", error);
 
     v_leftSpeed = v_targetPower + rcw;
     
@@ -463,8 +473,9 @@ public boolean encoderTurnFinish(double diameter, double angle){
 
   public double RatioRightPID(double v_desiredRatio, double v_targetPower) {
     double error = 2.15789;
+    
     double P = // 0.0256*2.5;
-        0.0256 * 2 * 1.5 * 2 * 2 * 2 * 0;
+    SmartDashboard.getNumber("Ratio Proportion", 0.0256 * 2 * 1.5 * 2 * 2 * 2);
     double I = // 0.00812;
         0.0;
     double D = 0.0;
@@ -484,7 +495,8 @@ public boolean encoderTurnFinish(double diameter, double angle){
     rcw = P * error + I * v_integral + D * derivative;
     
     // SmartDashboard.putNumber("RCW", rcw);
-   
+    SmartDashboard.putNumber("RCW", rcw);
+    SmartDashboard.putNumber("Turn Error", error);
     v_rightSpeed = v_targetPower + rcw;
     return v_rightSpeed;
   }
@@ -577,7 +589,7 @@ public boolean encoderTurnFinish(double diameter, double angle){
       updateLimeLight();
       timedPrintOut();
 
-
+      
       SmartDashboard.putNumber("LimelightX", v_limeLightX);
       //SmartDashboard.putNumber("LimelightY", v_limeLightY);
      // SmartDashboard.putNumber("LimelightArea", v_limeLightArea);

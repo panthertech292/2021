@@ -38,6 +38,7 @@ public class AutoForwardPID extends CommandBase {
     DriveSubsystem.resetTimer();
     DriveSubsystem.zeroDistanceSensors();
     DriveSubsystem.zeroAngle();
+    DriveSubsystem.initializePID();
     System.out.println("Forward PID is Start############################");
     
     

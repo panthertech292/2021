@@ -30,11 +30,11 @@ public class AutoBarrel extends SequentialCommandGroup {
      //Template Commands
     //new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed),
     //new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(75), 1.0, -.35),
-    new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0-10.0),
-   new AutoForward(s_DriveSubsystem, 0.1, 0.0, 0.15),
-   new AutoTurnPID(s_DriveSubsystem, .65, .15, 90.0, 2.15789),
-   new AutoTurnPID(s_DriveSubsystem, .65, .30, 270.0, 2.15789)
-   //new AutoDriveVisionCorrection(s_DriveSubsystem, 90.0, .7, .65),
+    new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0-40.0),
+    new AutoForward(s_DriveSubsystem, 0.1, 0.0, 0.15),
+    new AutoTurnPID(s_DriveSubsystem, .65, .15, 90.0, 2.15789),
+    new AutoTurnPID(s_DriveSubsystem, .65, .15, 270.0, 2.15789),
+   new AutoDriveVisionCorrection(s_DriveSubsystem, 40.0, .7, .65)
    /*new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
    new AutoTurnPID(s_DriveSubsystem, .2, .65, 270, 2.15789),
    new AutoDriveVisionCorrection(s_DriveSubsystem, 60.0, .7, .65),
