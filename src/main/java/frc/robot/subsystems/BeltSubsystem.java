@@ -15,6 +15,10 @@ public class BeltSubsystem extends SubsystemBase {
   private final WPI_TalonSRX BackBeltMotor;
   private final WPI_TalonSRX BottomBeltMotor;
 
+  private double v_bottomBeltSpeed;
+  private double v_frontBeltSpeed;
+  private double v_backBeltSpeed;
+
   private int v_printCount;
 
   public BeltSubsystem() {
@@ -24,8 +28,27 @@ public class BeltSubsystem extends SubsystemBase {
 
     v_printCount = 0;
   }
+  public void BottomBeltDrive(double bottomBeltSpeed){
+    v_bottomBeltSpeed = bottomBeltSpeed;
+  }
+  public void FrontBeltDrive(double frontBeltSpeed){
+    v_frontBeltSpeed = frontBeltSpeed;
+  }
+  public void BackBeltDrive(double backBeltSpeed){
+    v_backBeltSpeed = backBeltSpeed;
+  }
 
+  public void DriveBelts(double bottomBeltSpeed, double backBeltSpeed, double frontBeltSpeed){
+    v_bottomBeltSpeed = bottomBeltSpeed;
+    v_frontBeltSpeed = frontBeltSpeed;
+    v_backBeltSpeed = backBeltSpeed;
+  }
 
+public void StopBelts(){
+  v_bottomBeltSpeed = 0.0;
+    v_frontBeltSpeed = 0.0;
+    v_backBeltSpeed = 0.0;
+}
 
 
 
@@ -39,6 +62,7 @@ public class BeltSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    DriveBelts(v_bottomBeltSpeed, v_backBeltSpeed, v_frontBeltSpeed);
     // This method will be called once per scheduler run
   }
 }
