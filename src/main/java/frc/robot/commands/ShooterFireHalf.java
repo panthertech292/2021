@@ -32,7 +32,7 @@ public class ShooterFireHalf extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ShooterSubsystem.changeSetSpeed(ShooterConstants.kShooterHalf);
+    ShooterSubsystem.changeSetSpeed(ShooterConstants.kShooterStop);
   }
 
   // Called once the command ends or is interrupted.

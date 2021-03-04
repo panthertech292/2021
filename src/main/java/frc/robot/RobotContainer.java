@@ -146,8 +146,7 @@ public class RobotContainer {
     final JoystickButton d_xButton = new JoystickButton(io_drivercontroller, Button.kX.value);
     final JoystickButton d_startButton = new JoystickButton(io_drivercontroller, Button.kStart.value);
     final JoystickButton d_backButton = new JoystickButton(io_drivercontroller, Button.kBack.value);
-    // final JoystickButton d_yButton = new JoystickButton(io_drivercontroller,
-    // Button.kY.value);
+     final JoystickButton d_yButton = new JoystickButton(io_drivercontroller, Button.kY.value);
     // final JoystickButton d_lbumper = new JoystickButton(io_drivercontroller,
     // Button.kBumperLeft.value);
     // final JoystickButton d_rbumper = new JoystickButton(io_drivercontroller,
@@ -160,7 +159,8 @@ public class RobotContainer {
     // Driver Button Binds6
     d_aButton.whenPressed(z_AutoSquareRight);
     d_bButton.whenPressed(z_AutoBarrel);
-    d_xButton.whenPressed(z_GateToggleTimed);
+    d_xButton.whenPressed(z_ShooterFireFull);
+    d_yButton.whileHeld(z_ShooterFireHalf);
     if(getRobotID()== 0){
       d_backButton.whileHeld(z_AimAdjustDown);
       d_startButton.whileHeld(z_AimAdjustUp);
