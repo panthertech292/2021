@@ -39,57 +39,56 @@ public class DriveSubsystem extends SubsystemBase {
   private final SpeedControllerGroup LeftSide;
   private final SpeedControllerGroup RightSide;
 
+  private final Timer Timer;
+
+  private final DifferentialDrive Drive;
+
+  private double v_leftSpeed;
+  private double v_rightSpeed;
+  private double v_setPointLeft;
+  private double v_setPointRight;
+
+  private double v_zeroLeftPosition;
+  private double v_zeroRightPosition;
+  private double v_zeroAngle;
+  private double v_deltaAngle;
+  private double c_encoderConversion;
+  private double v_integral;
+  private double v_previousError;
+  private double v_ticker = 0;
+  private double v_previousAngle;
+  private int v_pidEnabler = 0;
+
+  private double v_targetPower;
+  //Put this into constants.java
+  private int c_modeTeleop = 0;
+  private int c_modeSetPoint = 1;
+  private int v_driveMode = c_modeTeleop;
+
+  private double v_limeLightX;
+  private double v_limeLightY;
+  private double v_limeLightArea;
+  private double c_VisionAreaTarget;
+  private int v_loopCount;
+  private int v_visionOverride;
+
+  private int v_printCount;
+
+  //Inputs
+  private DigitalInput v_testSwitch;
+  private DigitalInput opticalSensor;
+  private DigitalInput testDio;
+  private AnalogInput sonarSensor;
+
+  //Network Tables
+  private NetworkTableEntry v_TableEntrytx;
+  private NetworkTableEntry v_TableEntryty;
+  private NetworkTableEntry v_TableEntryta;
+
+  private NetworkTable table;
+
+  AHRS ahrs;
  
-private final Timer Timer;
-
-    private final DifferentialDrive Drive;
-
-    private double v_leftSpeed;
-    private double v_rightSpeed;
-    private double v_setPointLeft;
-    private double v_setPointRight;
-
-    private double v_zeroLeftPosition;
-    private double v_zeroRightPosition;
-    private double v_zeroAngle;
-    //private double m_leftDistance;
-    private double v_deltaAngle;
-    private double c_encoderConversion;
-    private double v_integral;
-    private double v_previousError;
-    private double v_ticker = 0;
-    private double v_previousAngle;
-    
-    private int v_pidEnabler = 0;
-    private double v_targetPower;
-     //Put this into constants.java
-    private int c_modeTeleop = 0;
-    private int c_modeSetPoint = 1;
-    private int v_driveMode = c_modeTeleop;
-    private DigitalInput v_testSwitch;
-    private DigitalInput opticalSensor;
-    private DigitalInput testDio;
-    private AnalogInput sonarSensor;
-    private double v_limeLightX;
-    private double v_limeLightY;
-    private double v_limeLightArea;
-    private double c_VisionAreaTarget;
-    private int v_loopCount;
-    private int v_visionOverride;
-
-    private int v_printCount;
-
-    private NetworkTableEntry v_TableEntrytx;
-    private NetworkTableEntry v_TableEntryty;
-    private NetworkTableEntry v_TableEntryta;
-
-    private NetworkTable table;
-
-    AHRS ahrs;
- 
-
-
-
   public DriveSubsystem() {
 
     FrontLeftMotor = new WPI_TalonSRX(DriveConstants.kFrontLeftMotor);
@@ -217,9 +216,8 @@ private final Timer Timer;
   }
 
   public double getTotalAngle() {
-  double angle;
-  
-  angle = getCurrentAngle();
+    double angle;
+    angle = getCurrentAngle();
     if (Math.abs(angle - v_previousAngle) >= 45) {
       System.out.println("Ticking!!!!! (You off :))");
       System.out.println("Angle =" + angle);
@@ -228,13 +226,10 @@ private final Timer Timer;
       if((v_previousAngle)/Math.abs(v_previousAngle) !=0 && v_previousAngle !=0){
         v_ticker = v_ticker + (v_previousAngle)/Math.abs(v_previousAngle);
       }
-     /* if((angle-v_previousAngle)/Math.abs(angle-v_previousAngle) ==0 && v_previousAngle !=0){
-        v_ticker = 0;
-      } */
-  }
+    }
   v_previousAngle = angle;
   return Math.abs((2.0 * v_ticker * 180.0) + (angle));
-}
+  }
 
 
 
@@ -250,14 +245,6 @@ private final Timer Timer;
   public boolean totalFinish(double angle) {
     return (gyroFinish(angle) && encoderFinish((angle / 360) * 2 * Math.PI * 21));
   }
-
-  /*public void deltaTurn() {
-    double v_deltaAngle = (getAbsCurrentAngle());
-    double gyroDistance = (v_deltaAngle / 360) * 2 * Math.PI * 21;
-    double encoderDistance = (Math.abs(getLeftPosition()) + Math.abs(getRightPosition())) / 2;
-    double encoderAngle = ((encoderDistance * 360) / (2 * Math.PI * 10.5));
-
-  }*/
 
   public void zeroDistanceSensors() {
     zeroLeftPosition();
@@ -358,20 +345,20 @@ private final Timer Timer;
     average = (Math.abs(getLeftPosition()) + Math.abs(getRightPosition())) / 2;
     return distance <= average;
   }
-public boolean encoderTurnFinish(double diameter, double angle){
-  double circumference = diameter*Math.PI;
-  double distance = (angle/360)*(circumference);
-  System.out.println("Hello?");
-  if(v_leftSpeed>v_rightSpeed){
-    System.out.println("Left Position = " +   Math.abs(getLeftPosition()));
-    return distance <= Math.abs(getLeftPosition());
+  public boolean encoderTurnFinish(double diameter, double angle){
+    double circumference = diameter*Math.PI;
+    double distance = (angle/360)*(circumference);
+    System.out.println("Hello?");
+    if(v_leftSpeed>v_rightSpeed){
+      System.out.println("Left Position = " +   Math.abs(getLeftPosition()));
+      return distance <= Math.abs(getLeftPosition());
+    }
+    if(v_rightSpeed>v_leftSpeed){
+      System.out.println("Right Position = " +   Math.abs(getRightPosition()));
+      return distance <= Math.abs(getRightPosition());
+    }
+    else{return false;}
   }
-  if(v_rightSpeed>v_leftSpeed){
-    System.out.println("Right Position = " +   Math.abs(getRightPosition()));
-    return distance <= Math.abs(getRightPosition());
-  }
-  else{return false;}
-}
   public double rotateRobot(double m_angle) {
 
     return (((42 * Math.PI) * (m_angle / 360)) * .5);
@@ -540,61 +527,39 @@ public boolean encoderTurnFinish(double diameter, double angle){
   }
 
   public double limelightXAngle(){
-        return v_limeLightX;
-        
-      }
-
-      public boolean gyroWithVisionFinish(double AutoAngle, double v_turnDirection){
-       boolean v_done = false;
-      //System.out.println("Running........");
-      // System.out.println("GCA" + getCurrentAngle());
-        if((v_limeLightArea > 0.1) && (AutoAngle-40 <= getAbsCurrentAngle())){
-          //System.out.println("Limelight Area" + v_limeLightArea);
-         // System.out.println("Angle Calculation" + (AutoAngle-40 <= getAbsCurrentAngle()));
-        // System.out.println("Vision should be Activated" + limelightXAngle()*v_turnDirection);
-          if(limelightXAngle()*v_turnDirection <= 0 ){
-           // System.out.println("Final Angle Check" + (limelightXAngle()*v_turnDirection <= 0));
-             v_done = true;
-             //System.out.println("Vision Says Stop");
-          }
-          else{
-            v_done = false;
-          }
-        }
-        return v_done;
-      }
-      public void timedPrintOut(){
-        if(v_printCount % 100 == 0){
-          //Enter print statements here!
-          
-        }
-        
-        v_printCount = v_printCount + 1;
-      }
-
-    @Override
-    public void periodic() {
-      // This method will be called once per scheduler run
-      
-     
-      //Sets drive mode
-      if (v_driveMode == c_modeTeleop) {
-       driveTeleop();
-      } else {
-      driveAuto();
-     
-      }
-
-     
-    
-      updateLimeLight();
-      timedPrintOut();
-
-      
-      SmartDashboard.putNumber("LimelightX", v_limeLightX);
-      //SmartDashboard.putNumber("LimelightY", v_limeLightY);
-     // SmartDashboard.putNumber("LimelightArea", v_limeLightArea);
-      //SmartDashboard.putNumber("Sonar Voltage", sonarSensor.getAverageVoltage());
-      //SmartDashboard.putNumber("Sonar Distance in mm", 5*sonarSensor.getAverageVoltage()*1000/(DriveConstants.sonarConversionFactor*25.4));
-    }
+    return v_limeLightX;
   }
+  public boolean gyroWithVisionFinish(double AutoAngle, double v_turnDirection){
+    boolean v_done = false;
+    if((v_limeLightArea > 0.1) && (AutoAngle-40 <= getAbsCurrentAngle())){
+      if(limelightXAngle()*v_turnDirection <= 0 ){
+        v_done = true;
+      }
+      else{
+        v_done = false;
+      }
+    }
+    return v_done;
+  }
+  public void timedPrintOut(){
+    if(v_printCount % 100 == 0){
+    //Enter print statements here!  
+    }
+    v_printCount = v_printCount + 1;
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    //Sets drive mode
+    if (v_driveMode == c_modeTeleop) {
+      driveTeleop();
+    } else {
+      driveAuto();
+    }
+
+    updateLimeLight();
+    timedPrintOut();
+      SmartDashboard.putNumber("LimelightX", v_limeLightX);
+  }
+}
