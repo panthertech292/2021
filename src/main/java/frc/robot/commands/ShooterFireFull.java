@@ -26,7 +26,6 @@ public class ShooterFireFull extends CommandBase {
   @Override
   public void initialize() {
     ShooterSubsystem.ShooterStop();
-    ShooterSubsystem.resetEncoderAverageRateArray();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
