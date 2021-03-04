@@ -59,7 +59,7 @@ public class RobotContainer {
   private final GateSubsystem s_GateSubsystem = new GateSubsystem();
 
   // Auto Commands
-  private final Command z_AutoForward = new AutoForward(s_DriveSubsystem, v_Time, v_LeftSpeed, v_RightSpeed);
+  private final Command z_AutoForward = new AutoForward(s_DriveSubsystem, v_LeftSpeed, v_RightSpeed, v_Time);
   private final Command z_AutoForwardPID = new AutoForwardPID(s_DriveSubsystem, v_LeftSpeed, v_RightSpeed, v_AutoDistance);
   private final Command z_AutoForwardEncoder = new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed,
       v_RightSpeed);
