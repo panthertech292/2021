@@ -5,20 +5,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.BeltConstants;
+import frc.robot.subsystems.BeltSubsystem;
 
 public class BeltBackwardAll extends CommandBase {
   /** Creates a new BeltBackwardAll. */
-  public BeltBackwardAll() {
+  private final BeltSubsystem BeltSubsystem;
+  public BeltBackwardAll(BeltSubsystem s_BeltSubsystem) {
+    BeltSubsystem = s_BeltSubsystem;
+    addRequirements(s_BeltSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    BeltSubsystem.DriveBelts(0.0, 0.0, 0.0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    BeltSubsystem.DriveBelts(BeltConstants.kBeltBackwardSpeed, BeltConstants.kBeltBackwardSpeed, BeltConstants.kBeltBackwardSpeed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

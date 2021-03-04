@@ -112,6 +112,8 @@ public final class Constants {
 
         public static final double kBeltForwardSpeed = .2; //Placeholder
         public static final double kBeltBackwardSpeed = .2; //Placeholder
+
+        public static final int kBallReadySensor = 6;
     }
    
 }
