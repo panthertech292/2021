@@ -44,11 +44,11 @@ public class BeltSubsystem extends SubsystemBase {
     v_backBeltSpeed = backBeltSpeed;
   }
 
-public void StopBelts(){
-  v_bottomBeltSpeed = 0.0;
+  public void StopBelts(){
+    v_bottomBeltSpeed = 0.0;
     v_frontBeltSpeed = 0.0;
     v_backBeltSpeed = 0.0;
-}
+  }
 
 
 
@@ -62,7 +62,8 @@ public void StopBelts(){
 
   @Override
   public void periodic() {
-    DriveBelts(v_bottomBeltSpeed, v_backBeltSpeed, v_frontBeltSpeed);
     // This method will be called once per scheduler run
+    DriveBelts(v_bottomBeltSpeed, v_backBeltSpeed, v_frontBeltSpeed);
+    
   }
 }
