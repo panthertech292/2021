@@ -208,8 +208,9 @@ private final Timer Timer;
 
   public double getCurrentAngle() {
     return ahrs.getYaw();
+    
   }
-
+  
   public void zeroRightPosition() {
     v_zeroRightPosition = BackRightMotor.getSelectedSensorPosition();
   }
@@ -552,8 +553,8 @@ public boolean encoderTurnFinish(double diameter, double angle){
       }
       public void timedPrintOut(){
         if(v_printCount % 100 == 0){
-          //System.out.println("Test timed print :)");
-          //System.out.println(v_printCount);
+          //Enter print statements here!
+          
         }
         
         v_printCount = v_printCount + 1;
