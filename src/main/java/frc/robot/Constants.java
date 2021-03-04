@@ -110,8 +110,9 @@ public final class Constants {
         public static final int kBackBeltMotor = 66; //Placeholder
         public static final int kBottomBeltMotor = 77; //Placeholder
 
-        public static final int kBeltForwardSpeed = .2; //Placeholder
-        public static final int kBeltBackwardSpeed = .2; //Placeholder
+        public static final double kBeltForwardSpeed = .2; //Placeholder
+        public static final double kBeltBackwardSpeed = .2; //Placeholder
+        public static final int kBallReadySensor = 6;
     }
    
 }

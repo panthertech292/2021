@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.BeltConstants;
 
@@ -19,12 +20,15 @@ public class BeltSubsystem extends SubsystemBase {
   private double v_frontBeltSpeed;
   private double v_backBeltSpeed;
 
+  private DigitalInput BallReadySensor;
+
   private int v_printCount;
 
   public BeltSubsystem() {
     FrontBeltMotor = new WPI_TalonSRX(BeltConstants.kFrontBeltMotor);
     BackBeltMotor = new WPI_TalonSRX(BeltConstants.kBackBeltMotor);
     BottomBeltMotor = new WPI_TalonSRX(BeltConstants.kBottomBeltMotor);
+    BallReadySensor = new DigitalInput(BeltConstants.kBallReadySensor);
 
     v_printCount = 0;
   }
@@ -47,9 +51,12 @@ public class BeltSubsystem extends SubsystemBase {
   public void StopBelts(){
     v_bottomBeltSpeed = 0.0;
     v_frontBeltSpeed = 0.0;
-    v_backBeltSpeed = 0.0;
+    v_backBeltSpeed = 0.0; 
   }
 
+  public boolean BallReadyToFire(){
+    return BallReadySensor.get();
+  }
 
 
   public void timedPrintOut(){
@@ -62,8 +69,7 @@ public class BeltSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
     DriveBelts(v_bottomBeltSpeed, v_backBeltSpeed, v_frontBeltSpeed);
-    
+    // This method will be called once per scheduler run
   }
 }
