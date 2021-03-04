@@ -104,7 +104,12 @@ public final class Constants {
         public static final double gateDownTime = 1.5;
 		public static final double ShooterSpinUpTime = 2.5;
     }
-
+    public static final class BeltConstants{
+        //Talon Mapping
+        public static final int kFrontBeltMotor = 55; //Placeholder
+        public static final int kBackBeltMotor = 66; //Placeholder
+        public static final int kBottomBeltMotor = 77; //Placeholder
+    }
    
 }
 /*DigitalInput/DigitalOutput Addressing
