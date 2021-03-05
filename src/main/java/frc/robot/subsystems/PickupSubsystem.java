@@ -19,50 +19,41 @@ public class PickupSubsystem extends SubsystemBase {
   /**
    * Creates a new PickupSubsystem.
    */
+  //Motors
   private final WPI_TalonSRX pickupMotorTop;
   private final WPI_TalonSRX pickupMotorBottom;
   private final WPI_TalonSRX pickupMotorArm;
+  //Variables
   private double v_pickupSpeedTop;
   private double v_pickupSpeedBottom;
   private double v_pickupSpeedArm;
   private final Timer Timer;
   public PickupSubsystem() {
+    //Motors
     pickupMotorTop = new WPI_TalonSRX(PickupConstants.kPickupMotorTop);
     pickupMotorBottom = new WPI_TalonSRX(PickupConstants.kPickupMotorBottom);
     pickupMotorArm = new WPI_TalonSRX(PickupConstants.kPickupMotorArm);
-
     pickupMotorTop.setNeutralMode(NeutralMode.Brake);
     pickupMotorBottom.setNeutralMode(NeutralMode.Brake);
-
     Timer = new Timer();
   }
   public void resetTimer() {
     Timer.reset();
     Timer.start();
   }
-
-  public Double getTimerValue() {
+  public double getTimerValue() {
     return Math.abs(Timer.get());
   }
   public void ChangeSetpoint(double pickupspeed) {
-    v_pickupSpeedTop = pickupspeed; //* m_ratio;
+    v_pickupSpeedTop = pickupspeed;
     v_pickupSpeedBottom = pickupspeed;
-    
-  }
-  public void ChangeSetpointsRev(double pickupspeed) {
-    v_pickupSpeedTop = -pickupspeed; // * m_ratio;
-    v_pickupSpeedBottom = -pickupspeed;
-
   }
   public void ArmDown() {
     v_pickupSpeedArm = -.5;
   }
-
   public void ArmUp(){
     v_pickupSpeedArm = .5;
   }
-
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -70,6 +61,5 @@ public class PickupSubsystem extends SubsystemBase {
     pickupMotorTop.set(v_pickupSpeedTop);
     pickupMotorBottom.set(v_pickupSpeedBottom);
     pickupMotorArm.set(v_pickupSpeedArm);
-    
   }
 }
