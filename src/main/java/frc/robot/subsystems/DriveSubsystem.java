@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Timer;
-
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -58,6 +58,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double v_ticker = 0;
   private double v_previousAngle;
   private int v_pidEnabler = 0;
+  
 
   private double v_targetPower;
   //Put this into constants.java
@@ -99,6 +100,7 @@ public class DriveSubsystem extends SubsystemBase {
     opticalSensor = new DigitalInput(DriveConstants.kOpticalPort);
     sonarSensor = new AnalogInput(DriveConstants.kSonarPort);
     testDio = new DigitalInput(6);
+    
 
     LeftSide = new SpeedControllerGroup(FrontLeftMotor, BackLeftMotor);
     RightSide = new SpeedControllerGroup(FrontRightMotor, BackRightMotor);
@@ -153,7 +155,7 @@ public class DriveSubsystem extends SubsystemBase {
     FrontRightMotor.setNeutralMode(NeutralMode.Brake);
     BackRightMotor.setNeutralMode(NeutralMode.Brake);
     BackLeftMotor.setNeutralMode(NeutralMode.Brake);
-    SmartDashboard.putNumber("Ratio Proportion", 0.0);
+    //SmartDashboard.putNumber("Ratio Proportion", 0.0);
 
   }
 
@@ -234,7 +236,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 
   public boolean gyroFinish(double angle) {
-    SmartDashboard.putNumber("Gyro Angle", getTotalAngle());
+    //SmartDashboard.putNumber("Gyro Angle", getTotalAngle());
     if (angle <= getTotalAngle()) {
       return true;
     } else {
@@ -429,8 +431,8 @@ public class DriveSubsystem extends SubsystemBase {
   public double RatioLeftPID(double v_desiredRatio, double v_targetPower) {
     double error = 2.15789;
     
-    double P = // 0.0256*2.5;
-    SmartDashboard.getNumber("Ratio Proportion", 0.0256 * 2 * 1.5 * 2 * 2 * 2);
+    double P =  0.0256*2.5;
+    //SmartDashboard.getNumber("Ratio Proportion", 0.0256 * 2 * 1.5 * 2 * 2 * 2);
     double I = // 0.00812;
         0.0;
     double D = 0.0;
@@ -462,8 +464,8 @@ public class DriveSubsystem extends SubsystemBase {
   public double RatioRightPID(double v_desiredRatio, double v_targetPower) {
     double error = 2.15789;
     
-    double P = // 0.0256*2.5;
-    SmartDashboard.getNumber("Ratio Proportion", 0.0256 * 2 * 1.5 * 2 * 2 * 2);
+    double P =  0.0256*2.5;
+  //  SmartDashboard.getNumber("Ratio Proportion", 0.0256 * 2 * 1.5 * 2 * 2 * 2);
     double I = // 0.00812;
         0.0;
     double D = 0.0;
@@ -560,6 +562,6 @@ public class DriveSubsystem extends SubsystemBase {
 
     updateLimeLight();
     timedPrintOut();
-      SmartDashboard.putNumber("LimelightX", v_limeLightX);
+    //  SmartDashboard.putNumber("LimelightX", v_limeLightX);
   }
 }
