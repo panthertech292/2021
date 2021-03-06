@@ -61,7 +61,7 @@ public final class Constants {
         //Shooter Speed Constants
         public static final double kShooterStop = 0.0;
         public static final double kShooterHalf = 0.5;
-        public static final double kShooterFull = 1.0;
+        public static final double kShooterFull = 0.8;
         //DIO
         public static final int kAimLimitSwitch = 4;
         
@@ -98,12 +98,12 @@ public final class Constants {
         //Talon Mapping
         public static final int kFrontBeltMotor = 9; //Placeholder
         public static final int kBackBeltMotor = 2; //Placeholder
-        public static final int kBottomBeltMotor = 77; //Placeholder
+        public static final int kBottomBeltMotor = 0; //Placeholder
 
         public static final double kBeltForwardSpeed = -.65; //Placeholder
         public static final double kBeltBackwardSpeed = .2; //Placeholder
 
-        public static final int kBallReadySensor = 12;//PlaceHolder
+        public static final int kBallReadySensor = 5;//PlaceHolder
     }
    
 }

@@ -99,7 +99,8 @@ public class RobotContainer {
   private final Command z_ShooterFireGatedSpinUp = new ShooterFireGatedSpinUp(s_ShooterSubsystem, s_GateSubsystem, v_TargetRPM);
   private final Command z_AimAdjustDown = new AimAdjustDown(s_ShooterSubsystem);
   private final Command z_AimAdjustUp = new AimAdjustUp(s_ShooterSubsystem);
-
+  private final Command z_ShooterFirePID = new ShooterFirePID(s_ShooterSubsystem, v_TargetRPM);
+  private final Command z_ShooterFireBelts = new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem);
   // Pickup Commands
   private final Command z_PickupRunHalf = new PickupRunHalf(s_PickupSubsystem);
 
@@ -112,8 +113,9 @@ public class RobotContainer {
   //Belt Commands
 
   private final Command z_BeltForwardAll = new BeltForwardAll(s_BeltSubsystem);
-  
-
+  private final Command z_BeltSchedule = new BeltSchedule(s_BeltSubsystem);
+  private final Command z_BeltMoveTimed = new BeltMoveTimed(s_BeltSubsystem);
+  private final Command z_BeltBackwardAll = new BeltBackwardAll(s_BeltSubsystem);
 
   SendableChooser<Command> o_chooser = new SendableChooser<>();
 
@@ -137,6 +139,7 @@ public class RobotContainer {
     Shuffleboard.getTab("Autonomous").add(o_chooser);
     s_DriveSubsystem.setDefaultCommand(z_DriveTeleop);
     s_GateSubsystem.setDefaultCommand(z_gate1Down);
+    
   }
 
   /**
@@ -165,8 +168,9 @@ public class RobotContainer {
     // Driver Button Binds6
     d_aButton.whileHeld(z_BeltForwardAll);
     d_bButton.whenPressed(z_AutoBarrel);
-    d_xButton.whenPressed(z_ShooterFireFull);
-    d_yButton.whileHeld(z_ShooterFireHalf);
+    //d_xButton.whileHeld(z_ShooterFirePID);
+    d_xButton.whenPressed(z_ShooterFireBelts);
+    d_yButton.whileHeld(z_BeltBackwardAll);
     if(getRobotID()== 0){
       d_backButton.whileHeld(z_AimAdjustDown);
       d_startButton.whileHeld(z_AimAdjustUp);
@@ -222,5 +226,10 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
      //An ExampleCommand will run in autonomous
     return o_chooser.getSelected();
+  }
+  public static double getShooterSubsystemRate(){
+    double rate;
+    rate = ShooterSubsystem.getShooterSpeed();
+    return rate;
   }
 }

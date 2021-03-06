@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.BeltConstants;
+import edu.wpi.first.wpilibj.Timer;
 
 public class BeltSubsystem extends SubsystemBase {
   /** Creates a new BeltSubsystem. */
@@ -21,6 +22,9 @@ public class BeltSubsystem extends SubsystemBase {
   private double v_backBeltSpeed;
 
   private DigitalInput BallReadySensor;
+  private final Timer timer;
+  
+  private boolean Timeout;
 
   private int v_printCount;
 
@@ -29,6 +33,8 @@ public class BeltSubsystem extends SubsystemBase {
     BackBeltMotor = new WPI_TalonSRX(BeltConstants.kBackBeltMotor);
     BottomBeltMotor = new WPI_TalonSRX(BeltConstants.kBottomBeltMotor);
     BallReadySensor = new DigitalInput(BeltConstants.kBallReadySensor);
+    timer = new Timer();
+    
 
     v_printCount = 0;
   }
@@ -60,7 +66,7 @@ public class BeltSubsystem extends SubsystemBase {
   }
 
   public boolean BallReadyToFire(){
-    return BallReadySensor.get();
+    return !BallReadySensor.get();
   }
 
 
@@ -70,12 +76,37 @@ public class BeltSubsystem extends SubsystemBase {
     }
     v_printCount = v_printCount + 1;
   }
+  public void resetTimer() {
+    timer.reset();
+    timer.start();
+  }
+  public double getTimerValue() {
+    return Math.abs(timer.get());
+  }
+
+  public boolean BallTimeout(){
+    Timeout = false;
+    if(BallReadyToFire() == true){
+      resetTimer();
+      Timeout = false;
+    }
+    else{
+      if(getTimerValue()>=0.5){
+        Timeout = true;
+        resetTimer();
+      }
+  }
+  return Timeout;
+}
 
   @Override
   public void periodic() {
-    //SetBelts();
+    SetBelts();
+    
+    //System.out.println(BallReadyToFire());
+    
     //System.out.println(v_backBeltSpeed);
-    BackBeltMotor.set(0.5);
+    //BackBeltMotor.set(0.5);
     // This method will be called once per scheduler run
   }
 }

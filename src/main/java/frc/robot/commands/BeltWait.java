@@ -5,39 +5,53 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.BeltConstants;
 import frc.robot.subsystems.BeltSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class BeltBackwardAll extends CommandBase {
-  /** Creates a new BeltBackwardAll. */
+public class BeltWait extends CommandBase {
+  /** Creates a new BeltForwardAll. */
   private final BeltSubsystem BeltSubsystem;
-  public BeltBackwardAll(BeltSubsystem s_BeltSubsystem) {
-    BeltSubsystem = s_BeltSubsystem;
-    addRequirements(s_BeltSubsystem);
+  
+  private double beltSpeed;
+  private double Time;
+  public BeltWait(BeltSubsystem s_BeltSubsystem, double time) {
     // Use addRequirements() here to declare subsystem dependencies.
+    BeltSubsystem = s_BeltSubsystem;
+    Time = time;
+    addRequirements(s_BeltSubsystem);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    BeltSubsystem.DriveBelts(0.0, 0.0, 0.0);
+    BeltSubsystem.resetTimer();
+    System.out.println("Waiting I = " + BeltSubsystem.getTimerValue());
+    
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    BeltSubsystem.DriveBelts(BeltConstants.kBeltBackwardSpeed, BeltConstants.kBeltBackwardSpeed, BeltConstants.kBeltBackwardSpeed);
+      
+      System.out.println("Waiting E= " + BeltSubsystem.getTimerValue());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    BeltSubsystem.DriveBelts(0.0, 0.0, 0.0);
+    
+    BeltSubsystem.resetTimer();
   }
 
   // Returns true when the command should end.
   @Override
+
   public boolean isFinished() {
-    return false;
+    System.out.println("Waiting F= " + BeltSubsystem.getTimerValue());
+    return BeltSubsystem.getTimerValue()>=Time;
   }
 }
