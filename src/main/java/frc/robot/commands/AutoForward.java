@@ -18,7 +18,7 @@ public class AutoForward extends CommandBase {
   /**
    * Creates a new AutoForward.
    */
-  public AutoForward(DriveSubsystem s_DriveSubsystem, double v_Time, double v_LeftSpeed, double v_RightSpeed) {
+  public AutoForward(DriveSubsystem s_DriveSubsystem, double v_LeftSpeed, double v_RightSpeed, double v_Time) {
     DriveSubsystem = s_DriveSubsystem;
     addRequirements(s_DriveSubsystem);
 

@@ -26,7 +26,7 @@ public class AutoShootTimed extends CommandBase {
   @Override
   public void initialize() {
     ShooterSubsystem.ShooterStop();
-    ShooterSubsystem.resetEncoderAverageRateArray();
+    
     ShooterSubsystem.resetTimer();
   }
 

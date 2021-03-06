@@ -47,6 +47,11 @@ public class BeltSubsystem extends SubsystemBase {
     v_frontBeltSpeed = frontBeltSpeed;
     v_backBeltSpeed = backBeltSpeed;
   }
+  public void SetBelts(){
+    BottomBeltMotor.set(v_bottomBeltSpeed);
+    FrontBeltMotor.set(v_frontBeltSpeed);
+    BackBeltMotor.set(v_backBeltSpeed);
+  }
 
   public void StopBelts(){
     v_bottomBeltSpeed = 0.0;
@@ -62,14 +67,15 @@ public class BeltSubsystem extends SubsystemBase {
   public void timedPrintOut(){
     if(v_printCount % 100 == 0){
       //Enter print statements here!
-      
     }
     v_printCount = v_printCount + 1;
   }
 
   @Override
   public void periodic() {
-    DriveBelts(v_bottomBeltSpeed, v_backBeltSpeed, v_frontBeltSpeed);
+    //SetBelts();
+    //System.out.println(v_backBeltSpeed);
+    BackBeltMotor.set(0.5);
     // This method will be called once per scheduler run
   }
 }

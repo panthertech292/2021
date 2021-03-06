@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.BeltSubsystem;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GateSubsystem;
@@ -57,9 +58,10 @@ public class RobotContainer {
   private final ShooterSubsystem s_ShooterSubsystem = new ShooterSubsystem();
   private final PickupSubsystem s_PickupSubsystem = new PickupSubsystem();
   private final GateSubsystem s_GateSubsystem = new GateSubsystem();
+  private final BeltSubsystem s_BeltSubsystem = new BeltSubsystem();
 
   // Auto Commands
-  private final Command z_AutoForward = new AutoForward(s_DriveSubsystem, v_Time, v_LeftSpeed, v_RightSpeed);
+  private final Command z_AutoForward = new AutoForward(s_DriveSubsystem, v_LeftSpeed, v_RightSpeed, v_Time);
   private final Command z_AutoForwardPID = new AutoForwardPID(s_DriveSubsystem, v_LeftSpeed, v_RightSpeed, v_AutoDistance);
   private final Command z_AutoForwardEncoder = new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed,
       v_RightSpeed);
@@ -106,6 +108,10 @@ public class RobotContainer {
   private final Command z_gate1Mid = new Gate1Up(s_GateSubsystem);
   private final Command z_gate1Max = new Gate1Max(s_GateSubsystem);
   private final Command z_GateToggleTimed = new GateToggleTimed(s_GateSubsystem);
+
+  //Belt Commands
+
+  private final Command z_BeltForwardAll = new BeltForwardAll(s_BeltSubsystem);
   
 
 
@@ -157,7 +163,7 @@ public class RobotContainer {
     final JoystickButton o_xButton = new JoystickButton(io_opercontroller, Button.kX.value);
     final JoystickButton o_yButton = new JoystickButton(io_opercontroller, Button.kY.value);
     // Driver Button Binds6
-    d_aButton.whenPressed(z_AutoSquareRight);
+    d_aButton.whileHeld(z_BeltForwardAll);
     d_bButton.whenPressed(z_AutoBarrel);
     d_xButton.whenPressed(z_ShooterFireFull);
     d_yButton.whileHeld(z_ShooterFireHalf);
