@@ -5,47 +5,42 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.BeltConstants;
-import frc.robot.subsystems.BeltSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class BeltMoveTimed extends CommandBase {
-  /** Creates a new BeltForwardAll. */
-  private final BeltSubsystem BeltSubsystem;
-  
-  private double beltSpeed;
-  private double PIDRate;
-  public BeltMoveTimed(BeltSubsystem s_BeltSubsystem) {
+public class AimAdjustThirdZone extends CommandBase {
+  /** Creates a new AimAdjustThirdZone. */
+  public final ShooterSubsystem ShooterSubsystem;
+  public AimAdjustThirdZone(ShooterSubsystem s_ShooterSubsystem) {
+    ShooterSubsystem = s_ShooterSubsystem;
+    addRequirements(s_ShooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
-    BeltSubsystem = s_BeltSubsystem;
-    addRequirements(s_BeltSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    BeltSubsystem.DriveBelts(0.0,0.0,0.0);
-    BeltSubsystem.resetTimer();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  
-    BeltSubsystem.DriveBelts(0.0, BeltConstants.kBeltForwardSpeed, BeltConstants.kBeltForwardSpeed);
+    if(ShooterSubsystem.getAimEncoder()<33.5+56){
+      
+      ShooterSubsystem.ShooterAimUp();
+    }
+    else{
+      ShooterSubsystem.ShooterAimDown();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    BeltSubsystem.DriveBelts(0.0,0.0,0.0);
-    BeltSubsystem.resetTimer();
+    ShooterSubsystem.ShooterAimStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return BeltSubsystem.BallTimeout();
+    return ShooterSubsystem.getAimEncoder()>=33+56 && ShooterSubsystem.getAimEncoder() <=35+56;
   }
 }

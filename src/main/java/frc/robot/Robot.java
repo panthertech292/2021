@@ -24,6 +24,8 @@ import frc.robot.commands.AimAdjustDown;
  */
 public class Robot extends TimedRobot {
   private Command z_AutonomousCommand;
+  private Command z_InitialAim;
+  private Command z_SecondaryAim;
 
   private RobotContainer s_RobotContainer;
 
@@ -97,6 +99,9 @@ public class Robot extends TimedRobot {
     if (z_AutonomousCommand != null) {
       z_AutonomousCommand.cancel();
     }
+    z_InitialAim = s_RobotContainer.getInitialAimCommand();
+    z_InitialAim.schedule();
+    
     
   }
 

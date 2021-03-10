@@ -100,7 +100,7 @@ public final class Constants {
         public static final int kBackBeltMotor = 2; //Placeholder
         public static final int kBottomBeltMotor = 0; //Placeholder
 
-        public static final double kBeltForwardSpeed = -.65; //Placeholder
+        public static final double kBeltForwardSpeed = -.45; //Placeholder
         public static final double kBeltBackwardSpeed = .2; //Placeholder
 
         public static final int kBallReadySensor = 5;//PlaceHolder
