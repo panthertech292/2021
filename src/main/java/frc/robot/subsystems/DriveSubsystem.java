@@ -120,6 +120,8 @@ public class DriveSubsystem extends SubsystemBase {
     v_ticker = 0;
     v_previousAngle = 0;
 
+    SmartDashboard.putNumber("Back Speed", 0.0);
+    SmartDashboard.putNumber("Front Speed", 0.0);
 
     v_printCount = 0;
 
@@ -559,7 +561,7 @@ public class DriveSubsystem extends SubsystemBase {
     } else {
       driveAuto();
     }
-
+    
     updateLimeLight();
     timedPrintOut();
     //  SmartDashboard.putNumber("LimelightX", v_limeLightX);

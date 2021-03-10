@@ -133,13 +133,15 @@ public class RobotContainer {
     // Configure the button bindings
 
     configureButtonBindings();
-    o_chooser.addOption("Auto Forward", z_AutoForward);
+    /*o_chooser.addOption("Auto Forward", z_AutoForward);
     o_chooser.addOption("Auto Forward Encoder", z_AutoForwardEncoder);
     o_chooser.addOption("Auto Backward Encoder", z_AutoBackwardEncoder);
     o_chooser.addOption("Auto Backward", z_AutoBackward);
     o_chooser.addOption("Auto RIght 90 Encoder", z_AutoRight90Encoder);
     o_chooser.addOption("Auto Right 90 Timed", z_AutoRight90Timed);
-    o_chooser.addOption("Auto Right 90 Gyro", z_AutoRight90Gyro);
+    o_chooser.addOption("Auto Right 90 Gyro", z_AutoRight90Gyro);*/
+    o_chooser.addOption("Barrel", z_AutoBarrel);
+
 
     // Vision stuff
     o_chooser.addOption("Vision Right", z_VisionAlign);
@@ -178,12 +180,14 @@ public class RobotContainer {
     final POVButton o_dPadRight = new POVButton(io_opercontroller, 90);
     final POVButton o_dPadDown = new POVButton(io_opercontroller, 180);
     final POVButton o_dPadLeft = new POVButton(io_opercontroller, 270);
+    final JoystickButton o_rBumper = new JoystickButton(io_opercontroller,Button.kBumperRight.value);
+    final JoystickButton o_lBumper = new JoystickButton(io_drivercontroller,Button.kBumperLeft.value);
     // Driver Button Binds6
-    d_aButton.whileHeld(z_BeltForwardAll);
-    d_bButton.whenPressed(z_AutoBarrel);
+    //d_aButton.whileHeld(z_BeltForwardAll);
+    //d_bButton.whenPressed(z_AutoBarrel);
     //d_xButton.whileHeld(z_ShooterFirePID);
-    d_xButton.whenPressed(z_ShooterFireBelts);
-    d_yButton.whenPressed(z_AimAdjustFarZone);
+    //d_xButton.whenPressed(z_ShooterFireBelts);
+    //d_yButton.whenPressed(z_AimAdjustFarZone);
     
     
     
@@ -199,12 +203,13 @@ public class RobotContainer {
     // o_bButton.whenPressed(z_AutoForward);
     // d_xButton.whenPressed(z_AutoSquareRight);
     o_aButton.whenPressed(z_AimAdjustNearZone);
-    o_bButton.whenPressed(z_AimAdjustSecondZone);
-    o_yButton.whenPressed(z_AimAdjustThirdZone);
+    o_yButton.whenPressed(z_AimAdjustSecondZone);
+    o_xButton.whenPressed(z_AimAdjustThirdZone);
     // o_yButton.whenReleased(z_gate1Up);
-    o_xButton.whenPressed(z_AimAdjustFarZone);
-    o_backButton.whenPressed(z_BeltForwardAll);
-    o_startButton.whenPressed(z_ShooterFireBelts);
+    o_bButton.whenPressed(z_AimAdjustFarZone);
+    o_startButton.whenPressed(z_BeltForwardAll);
+    o_rBumper.whenPressed(z_ShooterFireBelts);
+
 
     
 
