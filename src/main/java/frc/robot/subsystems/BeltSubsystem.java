@@ -103,7 +103,7 @@ public class BeltSubsystem extends SubsystemBase {
   public void periodic() {
     SetBelts();
     
-    //System.out.println(BallReadyToFire());
+    System.out.println(BallReadyToFire());
     
     //System.out.println(v_backBeltSpeed);
     //BackBeltMotor.set(0.5);

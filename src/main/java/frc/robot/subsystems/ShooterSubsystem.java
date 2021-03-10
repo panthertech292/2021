@@ -107,7 +107,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void resetAimEncoder() {
     if (AimSwitch.get() == true) {
-      v_aimEncoderValue = 0;
+      AimEncoder.reset();
     }
   }
 
@@ -221,6 +221,8 @@ public class ShooterSubsystem extends SubsystemBase {
       //ShooterMotor.set(PID(v_RPMTarget));
     }
     AimMotor.set(v_aimSpeed);
+    System.out.println(getAimEncoder());
+    resetAimEncoder();
     
    // SmartDashboard.putNumber("ShooterEncoderRate", getEncoderRate());
    // SmartDashboard.getNumber("v_RPMTarget", v_RPMTarget);
