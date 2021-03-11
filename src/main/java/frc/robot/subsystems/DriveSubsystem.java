@@ -433,7 +433,7 @@ public class DriveSubsystem extends SubsystemBase {
   public double RatioLeftPID(double v_desiredRatio, double v_targetPower) {
     double error = 2.15789;
     
-    double P =  0.0256*2.5;
+    double P =  0.0256*2.5 *0.0;
     //SmartDashboard.getNumber("Ratio Proportion", 0.0256 * 2 * 1.5 * 2 * 2 * 2);
     double I = // 0.00812;
         0.0;
@@ -466,7 +466,7 @@ public class DriveSubsystem extends SubsystemBase {
   public double RatioRightPID(double v_desiredRatio, double v_targetPower) {
     double error = 2.15789;
     
-    double P =  0.0256*2.5;
+    double P =  0.0256*2.5 *0.0;
   //  SmartDashboard.getNumber("Ratio Proportion", 0.0256 * 2 * 1.5 * 2 * 2 * 2);
     double I = // 0.00812;
         0.0;
