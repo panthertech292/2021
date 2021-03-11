@@ -5,39 +5,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.BeltConstants;
-import frc.robot.subsystems.BeltSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class BeltBackwardAll extends CommandBase {
-  /** Creates a new BeltBackwardAll. */
-  private final BeltSubsystem BeltSubsystem;
-  public BeltBackwardAll(BeltSubsystem s_BeltSubsystem) {
-    BeltSubsystem = s_BeltSubsystem;
-    addRequirements(s_BeltSubsystem);
+public class AimAdjustNearZone extends CommandBase {
+  /** Creates a new AimAdjustNearZone. */
+  public final ShooterSubsystem ShooterSubsystem;
+  public AimAdjustNearZone(ShooterSubsystem s_ShooterSubsystem) {
+    ShooterSubsystem = s_ShooterSubsystem;
+    addRequirements(s_ShooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    BeltSubsystem.DriveBelts(0.0, 0.0, 0.0);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    BeltSubsystem.DriveBelts(BeltConstants.kBeltBackwardSpeed, BeltConstants.kBeltBackwardSpeed, BeltConstants.kBeltBackwardSpeed);
+    if(ShooterSubsystem.getAimEncoder()<33.5){
+      ShooterSubsystem.ShooterAimUp();
+    }
+    else{
+      ShooterSubsystem.ShooterAimDown();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    BeltSubsystem.DriveBelts(0.0, 0.0, 0.0);
+    ShooterSubsystem.ShooterAimStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return ShooterSubsystem.getAimEncoder()>=33 && ShooterSubsystem.getAimEncoder() <=35;
   }
 }

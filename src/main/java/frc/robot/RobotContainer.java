@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.subsystems.BeltSubsystem;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
@@ -45,6 +46,7 @@ public class RobotContainer {
   private double v_RightSpeed;
   private double v_TargetRPM;
   private double v_TargetSpeed;
+  private int operAngle;
   
 
   final static int io_lefttrigger = 2;
@@ -99,7 +101,13 @@ public class RobotContainer {
   private final Command z_ShooterFireGatedSpinUp = new ShooterFireGatedSpinUp(s_ShooterSubsystem, s_GateSubsystem, v_TargetRPM);
   private final Command z_AimAdjustDown = new AimAdjustDown(s_ShooterSubsystem);
   private final Command z_AimAdjustUp = new AimAdjustUp(s_ShooterSubsystem);
-
+  private final Command z_AimAdjustStartingPosition = new AimAdjustStartingPosition(s_ShooterSubsystem);
+  private final Command z_AimAdjustNearZone = new AimAdjustNearZone(s_ShooterSubsystem);
+  private final Command z_AimAdjustSecondZone = new AimAdjustSecondZone(s_ShooterSubsystem);
+  private final Command z_AimAdjustThirdZone = new AimAdjustThirdZone(s_ShooterSubsystem);
+  private final Command z_AimAdjustFarZone = new AimAdjustFarZone(s_ShooterSubsystem);
+  private final Command z_ShooterFirePID = new ShooterFirePID(s_ShooterSubsystem, v_TargetRPM);
+  private final Command z_ShooterFireBelts = new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem);
   // Pickup Commands
   private final Command z_PickupRunHalf = new PickupRunHalf(s_PickupSubsystem);
 
@@ -112,8 +120,9 @@ public class RobotContainer {
   //Belt Commands
 
   private final Command z_BeltForwardAll = new BeltForwardAll(s_BeltSubsystem);
-  
-
+  private final Command z_BeltSchedule = new BeltSchedule(s_BeltSubsystem);
+  private final Command z_BeltMoveTimed = new BeltMoveTimed(s_BeltSubsystem);
+  private final Command z_BeltBackwardAll = new BeltBackwardAll(s_BeltSubsystem);
 
   SendableChooser<Command> o_chooser = new SendableChooser<>();
 
@@ -124,19 +133,22 @@ public class RobotContainer {
     // Configure the button bindings
 
     configureButtonBindings();
-    o_chooser.addOption("Auto Forward", z_AutoForward);
+    /*o_chooser.addOption("Auto Forward", z_AutoForward);
     o_chooser.addOption("Auto Forward Encoder", z_AutoForwardEncoder);
     o_chooser.addOption("Auto Backward Encoder", z_AutoBackwardEncoder);
     o_chooser.addOption("Auto Backward", z_AutoBackward);
     o_chooser.addOption("Auto RIght 90 Encoder", z_AutoRight90Encoder);
     o_chooser.addOption("Auto Right 90 Timed", z_AutoRight90Timed);
-    o_chooser.addOption("Auto Right 90 Gyro", z_AutoRight90Gyro);
+    o_chooser.addOption("Auto Right 90 Gyro", z_AutoRight90Gyro);*/
+    o_chooser.addOption("Barrel", z_AutoBarrel);
+
 
     // Vision stuff
     o_chooser.addOption("Vision Right", z_VisionAlign);
     Shuffleboard.getTab("Autonomous").add(o_chooser);
     s_DriveSubsystem.setDefaultCommand(z_DriveTeleop);
     s_GateSubsystem.setDefaultCommand(z_gate1Down);
+    
   }
 
   /**
@@ -162,11 +174,23 @@ public class RobotContainer {
     final JoystickButton o_bButton = new JoystickButton(io_opercontroller, Button.kB.value);
     final JoystickButton o_xButton = new JoystickButton(io_opercontroller, Button.kX.value);
     final JoystickButton o_yButton = new JoystickButton(io_opercontroller, Button.kY.value);
+    final JoystickButton o_startButton = new JoystickButton(io_opercontroller, Button.kStart.value);
+    final JoystickButton o_backButton = new JoystickButton(io_opercontroller, Button.kBack.value);
+    final POVButton o_dPadUp = new POVButton(io_opercontroller, 0);
+    final POVButton o_dPadRight = new POVButton(io_opercontroller, 90);
+    final POVButton o_dPadDown = new POVButton(io_opercontroller, 180);
+    final POVButton o_dPadLeft = new POVButton(io_opercontroller, 270);
+    final JoystickButton o_rBumper = new JoystickButton(io_opercontroller,Button.kBumperRight.value);
+    final JoystickButton o_lBumper = new JoystickButton(io_drivercontroller,Button.kBumperLeft.value);
     // Driver Button Binds6
-    d_aButton.whileHeld(z_BeltForwardAll);
-    d_bButton.whenPressed(z_AutoBarrel);
-    d_xButton.whenPressed(z_ShooterFireFull);
-    d_yButton.whileHeld(z_ShooterFireHalf);
+    //d_aButton.whileHeld(z_BeltForwardAll);
+    //d_bButton.whenPressed(z_AutoBarrel);
+    //d_xButton.whileHeld(z_ShooterFirePID);
+    //d_xButton.whenPressed(z_ShooterFireBelts);
+    //d_yButton.whenPressed(z_AimAdjustFarZone);
+    
+    
+    
     if(getRobotID()== 0){
       d_backButton.whileHeld(z_AimAdjustDown);
       d_startButton.whileHeld(z_AimAdjustUp);
@@ -178,12 +202,15 @@ public class RobotContainer {
 
     // o_bButton.whenPressed(z_AutoForward);
     // d_xButton.whenPressed(z_AutoSquareRight);
-    o_aButton.whileHeld(z_AutoBarrel);
-    // o_xButton.whenPressed(z_gate1Mid);
-    o_yButton.whenPressed(z_AutoRight90Encoder);
+    o_aButton.whenPressed(z_AimAdjustNearZone);
+    o_yButton.whenPressed(z_AimAdjustSecondZone);
+    o_xButton.whenPressed(z_AimAdjustThirdZone);
     // o_yButton.whenReleased(z_gate1Up);
+    o_bButton.whenPressed(z_AimAdjustFarZone);
+    o_startButton.whenPressed(z_BeltForwardAll);
+    o_rBumper.whenPressed(z_ShooterFireBelts);
 
-    o_bButton.whileHeld(z_PickupRunHalf);
+
     
 
   }
@@ -201,7 +228,6 @@ public class RobotContainer {
   public static double getRightSpeed() {
     return io_drivercontroller.getY(GenericHID.Hand.kRight);
   }
-
  /* public static double getDriveSpeedAdjust() {
     double v_driveSpeedAdjust;
     v_driveSpeedAdjust = 1 - ((io_drivercontroller.getRawAxis(io_righttrigger) / 2.5)
@@ -223,4 +249,16 @@ public class RobotContainer {
      //An ExampleCommand will run in autonomous
     return o_chooser.getSelected();
   }
+  public static double getShooterSubsystemRate(){
+    double rate;
+    rate = ShooterSubsystem.getShooterSpeed();
+    return rate;
+  }
+  public Command getInitialAimCommand(){
+    return z_AimAdjustStartingPosition;
+  }
+
+  
+  
+
 }
