@@ -40,7 +40,13 @@ public class AutoDriveVisionCorrection extends CommandBase {
   @Override
   public void execute() {
     DriveSubsystem.driveModePowerSetPoint();
+    if(DriveSubsystem.visionTargetSensor() != 0.0){
     DriveSubsystem.changePowerSetPoints(LeftSpeed,DriveSubsystem.AnglePID(0.0, RightSpeed));
+    }
+    else{
+      DriveSubsystem.changePowerSetPoints(0.0, 0.0);
+
+    }
   }
 
   // Called once the command ends or is interrupted.

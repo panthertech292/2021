@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class AimAdjustStartingPosition extends CommandBase {
@@ -49,6 +50,6 @@ public class AimAdjustStartingPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ShooterSubsystem.getAimEncoder()>=90;
+    return ShooterSubsystem.getAimEncoder()>=ShooterConstants.kstartingAim;
   }
 }
