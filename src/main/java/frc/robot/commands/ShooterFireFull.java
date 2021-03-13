@@ -31,7 +31,13 @@ public class ShooterFireFull extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(ShooterSubsystem.getAimEncoder()>=ShooterConstants.kstartingAim-10 && ShooterSubsystem.getAimEncoder() <=ShooterConstants.kstartingAim +10){
+    ShooterSubsystem.changeSetSpeed(0.65); //reset to .65 after testing
+    System.out.println("As intended!");
+    }
+    else{
     ShooterSubsystem.changeSetSpeed(ShooterConstants.kShooterFull);
+    }
    System.out.println(ShooterSubsystem.getEncoderRate());
   }
 

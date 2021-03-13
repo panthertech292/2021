@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class AimAdjustFarZone extends CommandBase {
@@ -23,7 +24,7 @@ public class AimAdjustFarZone extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(ShooterSubsystem.getAimEncoder()<384+56){
+    if(ShooterSubsystem.getAimEncoder() <=ShooterConstants.kstartingAim+ShooterConstants.kdeltaAimFar +2){
       ShooterSubsystem.ShooterAimUp();
     }
     else{
@@ -40,6 +41,6 @@ public class AimAdjustFarZone extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ShooterSubsystem.getAimEncoder()>=384+56 && ShooterSubsystem.getAimEncoder() <=386+56;
+    return ShooterSubsystem.getAimEncoder()>=ShooterConstants.kstartingAim +ShooterConstants.kdeltaAimFar && ShooterSubsystem.getAimEncoder() <=ShooterConstants.kstartingAim+ShooterConstants.kdeltaAimFar +2;
   }
 }

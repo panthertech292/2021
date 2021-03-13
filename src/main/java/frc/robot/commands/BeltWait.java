@@ -28,7 +28,7 @@ public class BeltWait extends CommandBase {
   @Override
   public void initialize() {
     BeltSubsystem.resetTimer();
-    System.out.println("Waiting I = " + BeltSubsystem.getTimerValue());
+    //System.out.println("Waiting I = " + BeltSubsystem.getTimerValue());
     
     
   }
@@ -37,7 +37,7 @@ public class BeltWait extends CommandBase {
   @Override
   public void execute() {
       
-      System.out.println("Waiting E= " + BeltSubsystem.getTimerValue());
+      //System.out.println("Waiting E= " + BeltSubsystem.getTimerValue());
   }
 
   // Called once the command ends or is interrupted.
@@ -51,7 +51,7 @@ public class BeltWait extends CommandBase {
   @Override
 
   public boolean isFinished() {
-    System.out.println("Waiting F= " + BeltSubsystem.getTimerValue());
+   // System.out.println("Waiting F= " + BeltSubsystem.getTimerValue());
     return BeltSubsystem.getTimerValue()>=Time;
   }
 }

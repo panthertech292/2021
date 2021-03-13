@@ -91,7 +91,7 @@ public class BeltSubsystem extends SubsystemBase {
       Timeout = false;
     }
     else{
-      if(getTimerValue()>=0.5){
+      if(getTimerValue()>=3.0){
         Timeout = true;
         resetTimer();
       }
@@ -103,7 +103,7 @@ public class BeltSubsystem extends SubsystemBase {
   public void periodic() {
     SetBelts();
     
-    System.out.println(BallReadyToFire());
+    //System.out.println(BallReadyToFire());
     
     //System.out.println(v_backBeltSpeed);
     //BackBeltMotor.set(0.5);

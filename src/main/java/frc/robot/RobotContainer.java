@@ -108,6 +108,10 @@ public class RobotContainer {
   private final Command z_AimAdjustFarZone = new AimAdjustFarZone(s_ShooterSubsystem);
   private final Command z_ShooterFirePID = new ShooterFirePID(s_ShooterSubsystem, v_TargetRPM);
   private final Command z_ShooterFireBelts = new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem);
+  private final Command z_TotalFireNearZone = new TotalFireNearZone(s_ShooterSubsystem, s_BeltSubsystem);
+  private final Command z_TotalFireSecondZone = new TotalFireSecondZone(s_ShooterSubsystem, s_BeltSubsystem);
+  private final Command z_TotalFireThirdZone = new TotalFireThirdZone(s_ShooterSubsystem, s_BeltSubsystem);
+  private final Command z_TotalFireFarZone = new TotalFireFarZone(s_ShooterSubsystem, s_BeltSubsystem);
   // Pickup Commands
   private final Command z_PickupRunHalf = new PickupRunHalf(s_PickupSubsystem);
 
@@ -202,12 +206,13 @@ public class RobotContainer {
 
     // o_bButton.whenPressed(z_AutoForward);
     // d_xButton.whenPressed(z_AutoSquareRight);
-    o_aButton.whenPressed(z_AimAdjustNearZone);
-    o_yButton.whenPressed(z_AimAdjustSecondZone);
-    o_xButton.whenPressed(z_AimAdjustThirdZone);
+    o_aButton.whenPressed(z_TotalFireNearZone);
+    o_yButton.whenPressed(z_TotalFireSecondZone);
+    o_xButton.whenPressed(z_TotalFireThirdZone);
     // o_yButton.whenReleased(z_gate1Up);
-    o_bButton.whenPressed(z_AimAdjustFarZone);
+    o_bButton.whenPressed(z_TotalFireFarZone);
     o_startButton.whenPressed(z_BeltForwardAll);
+    o_backButton.whileHeld(z_BeltBackwardAll);
     o_rBumper.whenPressed(z_ShooterFireBelts);
 
 
