@@ -9,8 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.Constants;
-import frc.robot.Constants.DriveConstants;
 public class AutoDriveVisionCorrection extends CommandBase {
   private final DriveSubsystem DriveSubsystem;
   private double AutoDistance;

@@ -29,6 +29,7 @@ public class VisionAlign extends CommandBase {
   public void initialize() {
     DriveSubsystem.changePowerSetPoints(0,0);
     DriveSubsystem.zeroDistanceSensors();
+    System.out.println("Starting Adjustment");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
