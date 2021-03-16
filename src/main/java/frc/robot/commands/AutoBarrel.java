@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -14,11 +14,6 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class AutoBarrel extends SequentialCommandGroup {
   /** Creates a new AutoBarrel. */
   private final DriveSubsystem DriveSubsystem;
-  
-  private double v_driveSpeed;
-  private double v_fudgeFactor;
-  private double v_standardForward;
-  private double v_firstTurnAdjustment;
   public AutoBarrel(DriveSubsystem s_DriveSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());

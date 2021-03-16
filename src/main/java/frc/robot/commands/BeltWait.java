@@ -5,16 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.BeltConstants;
 import frc.robot.subsystems.BeltSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+
 
 public class BeltWait extends CommandBase {
   /** Creates a new BeltForwardAll. */
   private final BeltSubsystem BeltSubsystem;
-  
-  private double beltSpeed;
   private double Time;
   public BeltWait(BeltSubsystem s_BeltSubsystem, double time) {
     // Use addRequirements() here to declare subsystem dependencies.

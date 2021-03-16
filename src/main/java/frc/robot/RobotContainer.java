@@ -198,7 +198,9 @@ public class RobotContainer {
     if(getRobotID()== 0){
       d_backButton.whileHeld(z_AimAdjustDown);
       d_startButton.whileHeld(z_AimAdjustUp);
+      
     }
+    d_aButton.whenPressed(z_VisionAlign);
     // d_bButton.whenPressed(z_VisionDistance);
     // o_xButton.whenPressed(z_VisionAll);
     // d_lbumper.whenPressed(m_driveJogLeft);
@@ -260,7 +262,12 @@ public class RobotContainer {
     return rate;
   }
   public Command getInitialAimCommand(){
+    if(getRobotID()==0){
     return z_AimAdjustStartingPosition;
+    }
+    else{
+      return z_DriveTeleop;
+    }
   }
 
   

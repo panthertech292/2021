@@ -42,7 +42,7 @@ public final class Constants {
         public static final double sonarConversionFactor = 4.883; //Converts voltage to distance in inches. MAKE THIS FIT CONVENTIONS
         //Drive Speeds
         //This is for the backup bot (Default)
-        public static final double kVisionAlignSpeedDefault = .3850; 
+        public static final double kVisionAlignSpeedDefault = .5; 
         public static final double kVisionForwardSpeedDefault = .3850; 
         //This is for the production bot
         public static final double kProdBotVisionAlignSpeedDefault = .50; //These are placeholder values as the actual bot is not yet built

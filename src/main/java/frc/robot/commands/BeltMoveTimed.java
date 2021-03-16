@@ -5,17 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.BeltConstants;
 import frc.robot.subsystems.BeltSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+
 
 public class BeltMoveTimed extends CommandBase {
   /** Creates a new BeltForwardAll. */
   private final BeltSubsystem BeltSubsystem;
-  
-  private double beltSpeed;
-  private double PIDRate;
   public BeltMoveTimed(BeltSubsystem s_BeltSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     BeltSubsystem = s_BeltSubsystem;
@@ -33,7 +29,7 @@ public class BeltMoveTimed extends CommandBase {
   @Override
   public void execute() {
   
-    BeltSubsystem.DriveBelts(BeltConstants.kBeltBackwardSpeed-.1, BeltConstants.kBeltForwardSpeed*0.0, BeltConstants.kBeltForwardSpeed+.2);
+    BeltSubsystem.DriveBelts(BeltConstants.kBeltForwardSpeed+0.1, BeltConstants.kBeltForwardSpeed*0.0, BeltConstants.kBeltForwardSpeed+.2);
   }
 
   // Called once the command ends or is interrupted.

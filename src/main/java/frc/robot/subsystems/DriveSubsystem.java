@@ -281,9 +281,10 @@ public class DriveSubsystem extends SubsystemBase {
     if (v_limeLightX > 1) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault, -DriveConstants.kProdBotVisionAlignSpeedDefault);
-      } else {
-        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault, -DriveConstants.kVisionAlignSpeedDefault);
+        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.006), -DriveConstants.kProdBotVisionAlignSpeedDefault - Math.abs(v_limeLightX*0.006));
+      } 
+      else {
+        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.006), -DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.006));
       }
       // 50 loops = 1 sec?
       if (v_loopCount >= 150) {
@@ -301,9 +302,10 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kProdBotVisionAlignSpeedDefault);
-      } else {
-        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault);
+        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.006),DriveConstants.kProdBotVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.006));
+      } 
+      else {
+        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.006), DriveConstants.kVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.006));
       }
       if (v_loopCount >= 150) {
         System.out.println("Alignment Aborted");
