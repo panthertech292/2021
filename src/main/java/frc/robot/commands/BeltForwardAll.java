@@ -26,7 +26,7 @@ public class BeltForwardAll extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    BeltSubsystem.DriveBelts(BeltConstants.kBeltForwardSpeed -.1, BeltConstants.kBeltForwardSpeed, BeltConstants.kBeltForwardSpeed);
+    BeltSubsystem.DriveBelts(BeltConstants.kBeltForwardSpeed, BeltConstants.kBeltForwardSpeed, BeltConstants.kBeltForwardSpeed);
   }
 
   // Called once the command ends or is interrupted.

@@ -281,8 +281,7 @@ public class DriveSubsystem extends SubsystemBase {
     if (v_limeLightX > 1) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault,
-            -DriveConstants.kProdBotVisionAlignSpeedDefault);
+        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault, -DriveConstants.kProdBotVisionAlignSpeedDefault);
       } else {
         changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault, -DriveConstants.kVisionAlignSpeedDefault);
       }
@@ -302,8 +301,7 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault,
-            DriveConstants.kProdBotVisionAlignSpeedDefault);
+        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault, DriveConstants.kProdBotVisionAlignSpeedDefault);
       } else {
         changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault, DriveConstants.kVisionAlignSpeedDefault);
       }
@@ -498,10 +496,11 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double AnglePID(double v_targetAngle, double v_rightSpeedBase) {
+    
     double error;
-    double P = 0.0256 * 0.5 * 0.5 * 0.4 * 2 * 2;
+    double P = 0.0256 * 0.5 * 0.5 * 0.4 * 2 * 2 * 2 * 1.35;
     double I = 0.0;// 0.00812;
-    double D = 0.0;
+    double D = 0.01;
     double derivative;
     double rcw;
     error = -1 * (v_limeLightX - v_targetAngle);

@@ -179,7 +179,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void ShooterAimUp() {
-    v_aimSpeed = 0.2;
+    v_aimSpeed = 0.35;
   }
 
   public void ShooterAimDown() {
@@ -221,7 +221,7 @@ public class ShooterSubsystem extends SubsystemBase {
       //ShooterMotor.set(PID(v_RPMTarget));
     }
     AimMotor.set(v_aimSpeed);
-    System.out.println(getAimEncoder());
+   // System.out.println(getAimEncoder());
     resetAimEncoder();
     
    // SmartDashboard.putNumber("ShooterEncoderRate", getEncoderRate());

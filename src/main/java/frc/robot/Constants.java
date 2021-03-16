@@ -26,10 +26,10 @@ public final class Constants {
 
     public static final class DriveConstants {
         //Motor Mapping
-        public static final int kFrontLeftMotor = 20;
-        public static final int kBackLeftMotor = 1;
-        public static final int kFrontRightMotor = 15;
-        public static final int kBackRightMotor = 14;
+        public static final int kFrontLeftMotor = 2;
+        public static final int kBackLeftMotor = 4;
+        public static final int kFrontRightMotor = 1;
+        public static final int kBackRightMotor = 17;
         //Auto Move Constants
         public static final double kAutoForwardEncoderDistance = 144; //inches!
         public static final double kAutoBackwardEncoderDistance = 144; 
@@ -42,8 +42,8 @@ public final class Constants {
         public static final double sonarConversionFactor = 4.883; //Converts voltage to distance in inches. MAKE THIS FIT CONVENTIONS
         //Drive Speeds
         //This is for the backup bot (Default)
-        public static final double kVisionAlignSpeedDefault = .60; 
-        public static final double kVisionForwardSpeedDefault = .60; 
+        public static final double kVisionAlignSpeedDefault = .3850; 
+        public static final double kVisionForwardSpeedDefault = .3850; 
         //This is for the production bot
         public static final double kProdBotVisionAlignSpeedDefault = .50; //These are placeholder values as the actual bot is not yet built
         public static final double kProdBotVisionForwardSpeedDefault = .50; //These are placeholder values as the actual bot is not yet built
@@ -51,8 +51,8 @@ public final class Constants {
 
     public static final class ShooterConstants {
         //Motor Mapping
-        public static final int kShooterMotor = 13;
-        public static final int kAimMotor = 7; 
+        public static final int kShooterMotor = 11;
+        public static final int kAimMotor = 12; 
         //Encoder Constants
         public static final int kShooterEncoderChannel1 = 0; //Placeholder value DIO
         public static final int kShooterEncoderChannel2 = 1; //Placeholder value DIO
@@ -65,6 +65,10 @@ public final class Constants {
         //DIO
         public static final int kAimLimitSwitch = 4;
         
+        public static final double kstartingAim = 260;
+        public static final double kdeltaAimSecond = 380;
+        public static final double kdeltaAimThird = 500;
+        public static final double kdeltaAimFar = 500;
     }
 
     public static final class PickupConstants {
@@ -96,14 +100,14 @@ public final class Constants {
     }
     public static final class BeltConstants{
         //Talon Mapping
-        public static final int kFrontBeltMotor = 9; //Placeholder
-        public static final int kBackBeltMotor = 2; //Placeholder
-        public static final int kBottomBeltMotor = 0; //Placeholder
+        public static final int kFrontBeltMotor = 21; 
+        public static final int kBackBeltMotor = 22; 
+        public static final int kBottomBeltMotor = 23; 
 
-        public static final double kBeltForwardSpeed = -.45; //Placeholder
-        public static final double kBeltBackwardSpeed = .2; //Placeholder
+        public static final double kBeltForwardSpeed = -.45; 
+        public static final double kBeltBackwardSpeed = .2; 
 
-        public static final int kBallReadySensor = 5;//PlaceHolder
+        public static final int kBallReadySensor = 5;
     }
    
 }
