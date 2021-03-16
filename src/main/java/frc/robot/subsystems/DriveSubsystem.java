@@ -278,13 +278,13 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Actually turns robot right, aimed too far left
   public void visionAlignLeft() {
-    if (v_limeLightX > 1) {
+    if (v_limeLightX > 1.3) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.006), -DriveConstants.kProdBotVisionAlignSpeedDefault - Math.abs(v_limeLightX*0.006));
+        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.007), -DriveConstants.kProdBotVisionAlignSpeedDefault - Math.abs(v_limeLightX*0.007));
       } 
       else {
-        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.006), -DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.006));
+        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.007), -DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.007));
       }
       // 50 loops = 1 sec?
       if (v_loopCount >= 150) {
@@ -297,15 +297,15 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Actually turns robot left, aimed too far right
   public void visionAlignRight() {
-    if (v_limeLightX < -1) {
+    if (v_limeLightX < -1.3) {
       v_loopCount = v_loopCount + 1;
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.006),DriveConstants.kProdBotVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.006));
+        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.007),DriveConstants.kProdBotVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.007));
       } 
       else {
-        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.006), DriveConstants.kVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.006));
+        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.007), DriveConstants.kVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.007));
       }
       if (v_loopCount >= 150) {
         System.out.println("Alignment Aborted");

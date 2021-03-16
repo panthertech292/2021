@@ -36,7 +36,7 @@ public class ShooterFireFull extends CommandBase {
     System.out.println("As intended!");
     }
     else{
-    ShooterSubsystem.changeSetSpeed(ShooterConstants.kShooterFull+0.05);
+    ShooterSubsystem.changeSetSpeed(ShooterConstants.kShooterFull+0.065);
     }
    System.out.println(ShooterSubsystem.getEncoderRate());
   }
