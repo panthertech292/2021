@@ -39,6 +39,10 @@ public class VisionAlign extends CommandBase {
     DriveSubsystem.driveModePowerSetPoint();
     DriveSubsystem.visionAlignLeft();
     DriveSubsystem.visionAlignRight();
+    DriveSubsystem.visionAlignLeft();
+    DriveSubsystem.visionAlignRight();
+    DriveSubsystem.visionAlignLeft();
+    DriveSubsystem.visionAlignRight();
     
    
   }
