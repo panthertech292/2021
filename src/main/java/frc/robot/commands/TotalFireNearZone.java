@@ -24,7 +24,7 @@ public class TotalFireNearZone extends SequentialCommandGroup {
     addCommands(
       new AimAdjustStartingPosition(s_ShooterSubsystem),
       new BeltForwardAll(s_BeltSubsystem),
-      new AimAdjustNearZone(s_ShooterSubsystem,ShooterConstants.kShooterFull+0.065),
+      new AimAdjustNearZone(s_ShooterSubsystem,.8),
       new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem)
     );
   }

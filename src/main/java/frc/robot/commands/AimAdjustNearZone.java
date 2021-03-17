@@ -41,6 +41,7 @@ public class AimAdjustNearZone extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     ShooterSubsystem.ShooterAimStop();
+    ShooterSubsystem.changeSetSpeed(0.0);
   }
 
   // Returns true when the command should end.
