@@ -567,7 +567,7 @@ public class DriveSubsystem extends SubsystemBase {
     
     updateLimeLight();
     timedPrintOut();
-    System.out.println("LimelightArea" +  visionTargetSensor());
+    
     //  SmartDashboard.putNumber("LimelightX", v_limeLightX);
   }
 }
