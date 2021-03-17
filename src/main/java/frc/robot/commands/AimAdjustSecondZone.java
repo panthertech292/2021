@@ -5,14 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class AimAdjustSecondZone extends CommandBase {
   /** Creates a new AimAdjustSecondZone. */
   public final ShooterSubsystem ShooterSubsystem;
-  public AimAdjustSecondZone(ShooterSubsystem s_ShooterSubsystem) {
+  private double shooterSpeed;
+  public AimAdjustSecondZone(ShooterSubsystem s_ShooterSubsystem, double v_shooterSpeed) {
     ShooterSubsystem = s_ShooterSubsystem;
+    shooterSpeed = v_shooterSpeed;
     addRequirements(s_ShooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -24,6 +27,8 @@ public class AimAdjustSecondZone extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(ShooterSubsystem.aimResetCheck()==true){
+      ShooterSubsystem.changeSetSpeed(shooterSpeed);
     if(ShooterSubsystem.getAimEncoder() <=ShooterConstants.kstartingAim+ShooterConstants.kdeltaAimSecond+2){
       ShooterSubsystem.ShooterAimUp();
     }
@@ -31,7 +36,7 @@ public class AimAdjustSecondZone extends CommandBase {
       ShooterSubsystem.ShooterAimDown();
     }
   }
-
+  }
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
