@@ -258,7 +258,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Vision
   public boolean visionFinish() {
-    if (-1 <= v_limeLightX && v_limeLightX <= 1 || v_visionOverride == 1) {
+    if (v_limeLightArea!=0.0&&-1 <= v_limeLightX && v_limeLightX <= 1 || v_visionOverride == 1) {
       v_visionOverride = 0;
       return true;
     }
@@ -551,7 +551,9 @@ public class DriveSubsystem extends SubsystemBase {
     //Enter print statements here!  
     }
     v_printCount = v_printCount + 1;
+    ahrs.getWorldLinearAccelX();
   }
+
 
   @Override
   public void periodic() {
@@ -565,6 +567,7 @@ public class DriveSubsystem extends SubsystemBase {
     
     updateLimeLight();
     timedPrintOut();
+    System.out.println("LimelightArea" +  visionTargetSensor());
     //  SmartDashboard.putNumber("LimelightX", v_limeLightX);
   }
 }

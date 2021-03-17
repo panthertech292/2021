@@ -47,6 +47,7 @@ public class RobotContainer {
   private double v_TargetRPM;
   private double v_TargetSpeed;
   private int operAngle;
+  private static boolean v_resetEncoder = false;
   
 
   final static int io_lefttrigger = 2;
@@ -103,10 +104,10 @@ public class RobotContainer {
   private final Command z_AimAdjustDown = new AimAdjustDown(s_ShooterSubsystem);
   private final Command z_AimAdjustUp = new AimAdjustUp(s_ShooterSubsystem);
   private final Command z_AimAdjustStartingPosition = new AimAdjustStartingPosition(s_ShooterSubsystem);
-  private final Command z_AimAdjustNearZone = new AimAdjustNearZone(s_ShooterSubsystem);
-  private final Command z_AimAdjustSecondZone = new AimAdjustSecondZone(s_ShooterSubsystem);
-  private final Command z_AimAdjustThirdZone = new AimAdjustThirdZone(s_ShooterSubsystem);
-  private final Command z_AimAdjustFarZone = new AimAdjustFarZone(s_ShooterSubsystem);
+  private final Command z_AimAdjustNearZone = new AimAdjustNearZone(s_ShooterSubsystem, v_TargetSpeed);
+  private final Command z_AimAdjustSecondZone = new AimAdjustSecondZone(s_ShooterSubsystem, v_TargetSpeed);
+  private final Command z_AimAdjustThirdZone = new AimAdjustThirdZone(s_ShooterSubsystem, v_TargetSpeed);
+  private final Command z_AimAdjustFarZone = new AimAdjustFarZone(s_ShooterSubsystem, v_TargetSpeed);
   private final Command z_ShooterFirePID = new ShooterFirePID(s_ShooterSubsystem, v_TargetRPM);
   private final Command z_ShooterFireBelts = new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem);
   private final Command z_TotalFireNearZone = new TotalFireNearZone(s_ShooterSubsystem, s_BeltSubsystem);
@@ -257,11 +258,11 @@ public class RobotContainer {
      //An ExampleCommand will run in autonomous
     return o_chooser.getSelected();
   }
-  public static double getShooterSubsystemRate(){
+  /*public static double getShooterSubsystemRate(){
     double rate;
     rate = ShooterSubsystem.getShooterSpeed();
     return rate;
-  }
+  }*/
   public Command getInitialAimCommand(){
     if(getRobotID()==0){
     return z_AimAdjustStartingPosition;
@@ -270,7 +271,6 @@ public class RobotContainer {
       return z_DriveTeleop;
     }
   }
-
   
   
 

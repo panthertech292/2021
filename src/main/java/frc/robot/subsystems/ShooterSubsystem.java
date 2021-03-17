@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -52,6 +53,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private double v_previousError = 0;
   private double v_integral = 0;
   private double v_PIDSetpoint;
+  private boolean v_reset = false;
   // PDP
   private PowerDistributionPanel PDP;
   private PIDController ShooterPID;
@@ -77,10 +79,11 @@ public class ShooterSubsystem extends SubsystemBase {
     v_shooterSpeed = 0.0;
     v_aimSpeed = 0.0;
     v_aimEncoderValue = 0.0;
+    v_reset = false;
     // PDP
     PDP = new PowerDistributionPanel();
     ShooterPID = new PIDController(0.000095, 0.0000007, 0.0);
-
+    ShooterMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
   }
 
   public void ShooterStop() {
@@ -97,7 +100,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getEncoderRate() {
-    return Math.abs(ShooterEncoder.getRate());
+    return Math.abs(ShooterMotor.getSelectedSensorVelocity());
   }
 
   public double getAimEncoder() {
@@ -204,9 +207,14 @@ public class ShooterSubsystem extends SubsystemBase {
     ShooterPID.reset();
   }
 
-  public static double getShooterSpeed() {
-    return ShooterEncoder.getRate();
-}
+  public boolean aimResetCheck(){
+    if(AimSwitchValue() == true){
+      v_reset = true;
+    }
+    return v_reset;
+  }
+
+ 
   
   @Override
   public void periodic() {
@@ -223,6 +231,7 @@ public class ShooterSubsystem extends SubsystemBase {
     AimMotor.set(v_aimSpeed);
    // System.out.println(getAimEncoder());
     resetAimEncoder();
+    aimResetCheck();
     
    // SmartDashboard.putNumber("ShooterEncoderRate", getEncoderRate());
    // SmartDashboard.getNumber("v_RPMTarget", v_RPMTarget);
