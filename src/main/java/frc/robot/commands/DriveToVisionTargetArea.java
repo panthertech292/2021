@@ -9,43 +9,60 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
-
-public class VisionDistance extends CommandBase {
+public class DriveToVisionTargetArea extends CommandBase {
   private final DriveSubsystem DriveSubsystem;
+  
+  private double LeftSpeed;
+  private double RightSpeed;
+  private double targetArea;
   /**
-   * Creates a new VisionDistance.
+   * Creates a new DriveToVisionTargetArea.
    */
-  private double VisionAreaTarget;
-  public VisionDistance(DriveSubsystem s_DriveSubsystem, double v_VisionAreaTarget) {
+  public DriveToVisionTargetArea(DriveSubsystem s_DriveSubsystem, double v_LeftSpeed, double v_RightSpeed, double v_targetArea) {
     DriveSubsystem = s_DriveSubsystem;
-    VisionAreaTarget = v_VisionAreaTarget;
-    // Use addRequirements() here to declare subsystem dependencies.
+    
+    LeftSpeed = v_LeftSpeed;
+    RightSpeed = v_RightSpeed;
+    targetArea = v_targetArea;
     addRequirements(s_DriveSubsystem);
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    DriveSubsystem.changePowerSetPoints(0,0);
+    System.out.println("Forward Before Reset");
+    System.out.println(DriveSubsystem.getLeftPosition());
+    System.out.println(DriveSubsystem.getRightPosition());
+    DriveSubsystem.zeroDistanceSensors();
+    DriveSubsystem.zeroAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Running the distance command");
     DriveSubsystem.driveModePowerSetPoint();
-    DriveSubsystem.visionDistanceArea(VisionAreaTarget);
+    if(DriveSubsystem.visionTargetSensor() != 0.0){
+    DriveSubsystem.changePowerSetPoints(LeftSpeed,DriveSubsystem.AnglePID(0.0, RightSpeed));
+    }
+    else{
+      DriveSubsystem.changePowerSetPoints(0.0, 0.0);
+
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     DriveSubsystem.changePowerSetPoints(0,0);
+   /* System.out.println("Forward Done");
+    System.out.println(DriveSubsystem.getLeftPosition());
+    System.out.println(DriveSubsystem.getRightPosition());
+    */
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return DriveSubsystem.visionFinishDistance(VisionAreaTarget) && DriveSubsystem.getRightEncoderVelocity() == 0.0;
+    return DriveSubsystem.visionTargetSizeFinishApproach(targetArea);
   }
 }

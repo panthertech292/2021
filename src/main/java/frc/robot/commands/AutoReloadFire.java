@@ -43,7 +43,7 @@ public class AutoReloadFire extends SequentialCommandGroup {
 
     new AutoRight90Gyro(s_DriveSubsystem, 90, 0.65, -0.65),
 
-    new VisionAll(s_DriveSubsystem),
+    new VisionAll(s_DriveSubsystem, 1.4),
 
     new AutoShootTimed(s_ShooterSubsystem)
     );

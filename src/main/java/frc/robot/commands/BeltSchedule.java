@@ -20,7 +20,7 @@ public class BeltSchedule extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new BeltWait(s_BeltSubsystem, 5.0),
+      new BeltWait(s_BeltSubsystem, 2.5),
       new BeltMoveTimed(s_BeltSubsystem)
       /* new BeltMoveTimed(s_BeltSubsystem, 0.0, 0.5),
        new BeltMoveTimed(s_BeltSubsystem, BeltConstants.kBeltForwardSpeed, 0.3),

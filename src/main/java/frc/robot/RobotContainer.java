@@ -91,8 +91,8 @@ public class RobotContainer {
 
   // Vision Commands
   private final Command z_VisionAlign = new VisionAlign(s_DriveSubsystem);
-  private final Command z_VisionDistance = new VisionDistance(s_DriveSubsystem);
-  private final Command z_VisionAll = new VisionAll(s_DriveSubsystem);
+  private final Command z_VisionDistance = new VisionDistance(s_DriveSubsystem, v_AutoAngle);
+  private final Command z_VisionAll = new VisionAll(s_DriveSubsystem, v_AutoAngle);
   // Drive Commands
   private final Command z_DriveTeleop = new DriveTeleop(s_DriveSubsystem);
 
@@ -104,10 +104,10 @@ public class RobotContainer {
   private final Command z_AimAdjustDown = new AimAdjustDown(s_ShooterSubsystem);
   private final Command z_AimAdjustUp = new AimAdjustUp(s_ShooterSubsystem);
   private final Command z_AimAdjustStartingPosition = new AimAdjustStartingPosition(s_ShooterSubsystem);
-  private final Command z_AimAdjustNearZone = new AimAdjustNearZone(s_ShooterSubsystem, v_TargetSpeed);
-  private final Command z_AimAdjustSecondZone = new AimAdjustSecondZone(s_ShooterSubsystem, v_TargetSpeed);
-  private final Command z_AimAdjustThirdZone = new AimAdjustThirdZone(s_ShooterSubsystem, v_TargetSpeed);
-  private final Command z_AimAdjustFarZone = new AimAdjustFarZone(s_ShooterSubsystem, v_TargetSpeed);
+  private final Command z_AimAdjustNearZone = new AimAdjustNearZone(s_ShooterSubsystem);
+  private final Command z_AimAdjustSecondZone = new AimAdjustSecondZone(s_ShooterSubsystem);
+  private final Command z_AimAdjustThirdZone = new AimAdjustThirdZone(s_ShooterSubsystem);
+  private final Command z_AimAdjustFarZone = new AimAdjustFarZone(s_ShooterSubsystem);
   private final Command z_ShooterFirePID = new ShooterFirePID(s_ShooterSubsystem, v_TargetRPM);
   private final Command z_ShooterFireBelts = new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem);
   private final Command z_TotalFireNearZone = new TotalFireNearZone(s_ShooterSubsystem, s_BeltSubsystem);
@@ -125,7 +125,7 @@ public class RobotContainer {
 
   //Belt Commands
 
-  private final Command z_BeltForwardAll = new BeltForwardAll(s_BeltSubsystem);
+  private final Command z_BeltForwardAll = new BeltForwardAll(s_BeltSubsystem, s_ShooterSubsystem, v_TargetSpeed);
   private final Command z_BeltSchedule = new BeltSchedule(s_BeltSubsystem);
   private final Command z_BeltMoveTimed = new BeltMoveTimed(s_BeltSubsystem);
   private final Command z_BeltBackwardAll = new BeltBackwardAll(s_BeltSubsystem);
@@ -203,7 +203,7 @@ public class RobotContainer {
       
     }
     d_aButton.whenPressed(z_VisionAlign);
-    d_bButton.whenPressed(z_AutoSlalom);
+    d_bButton.whenPressed(z_AutoSquareRight);
     // o_xButton.whenPressed(z_VisionAll);
     // d_lbumper.whenPressed(m_driveJogLeft);
     // d_rbumper.whenPressed(m_driveJogRight);

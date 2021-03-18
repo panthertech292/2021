@@ -268,8 +268,8 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
-  public boolean visionFinishDistance() {
-    if (c_VisionAreaTarget - 0.1 <= v_limeLightArea && c_VisionAreaTarget + 0.1 >= v_limeLightArea) {
+  public boolean visionFinishDistance(double v_VisionAreaTarget) {
+    if (v_VisionAreaTarget - 0.15 <= v_limeLightArea && v_VisionAreaTarget + 0.15 >= v_limeLightArea) {
       return true;
     } else {
       return false;
@@ -281,10 +281,10 @@ public class DriveSubsystem extends SubsystemBase {
     if (v_limeLightX > 1.3) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.007), -DriveConstants.kProdBotVisionAlignSpeedDefault - Math.abs(v_limeLightX*0.007));
+        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.0082), -DriveConstants.kProdBotVisionAlignSpeedDefault - Math.abs(v_limeLightX*0.0082));
       } 
       else {
-        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.007), -DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.007));
+        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.0082), -DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.0082));
       }
       // 50 loops = 1 sec?
       if (v_loopCount >= 150) {
@@ -302,10 +302,10 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.007),DriveConstants.kProdBotVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.007));
+        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.0082),DriveConstants.kProdBotVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.0082));
       } 
       else {
-        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.007), DriveConstants.kVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.007));
+        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.0082), DriveConstants.kVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.0082));
       }
       if (v_loopCount >= 150) {
         System.out.println("Alignment Aborted");
@@ -315,21 +315,21 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
-  public void visionDistanceArea() {
-    if (v_limeLightArea > c_VisionAreaTarget) {
+  public void visionDistanceArea(double v_VisionAreaTarget) {
+    if (v_limeLightArea > v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
         changePowerSetPoints(-DriveConstants.kProdBotVisionForwardSpeedDefault,
             -DriveConstants.kProdBotVisionForwardSpeedDefault);
       } else {
-        changePowerSetPoints(-DriveConstants.kVisionForwardSpeedDefault, -DriveConstants.kVisionForwardSpeedDefault);
+        changePowerSetPoints(-DriveConstants.kVisionForwardSpeedDefault - .45*(v_limeLightArea-v_VisionAreaTarget), -DriveConstants.kVisionForwardSpeedDefault - .45*(v_limeLightArea-v_VisionAreaTarget));
       }
     }
-    if (v_limeLightArea < c_VisionAreaTarget) {
+    if (v_limeLightArea < v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
         changePowerSetPoints(DriveConstants.kProdBotVisionForwardSpeedDefault,
             DriveConstants.kProdBotVisionForwardSpeedDefault);
       } else {
-        changePowerSetPoints(DriveConstants.kVisionForwardSpeedDefault, DriveConstants.kVisionForwardSpeedDefault);
+        changePowerSetPoints(DriveConstants.kVisionForwardSpeedDefault + .45*(v_limeLightArea-v_VisionAreaTarget),  DriveConstants.kVisionForwardSpeedDefault+.45*(v_limeLightArea-v_VisionAreaTarget));
       }
     }
   }
@@ -340,6 +340,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double getRightEncoderValue() {
     return BackRightMotor.getSelectedSensorPosition();
+  }
+
+  public double getRightEncoderVelocity(){
+    return BackRightMotor.getSelectedSensorVelocity();
   }
 
   // Distance is in Inches
@@ -502,23 +506,19 @@ public class DriveSubsystem extends SubsystemBase {
     double error;
     double P = 0.0256 * 0.5 * 0.5 * 0.4 * 2 * 2 * 2 * 1.35;
     double I = 0.0;// 0.00812;
-    double D = 0.01;
+    double D = 0.00;
     double derivative;
     double rcw;
-    error = -1 * (v_limeLightX - v_targetAngle);
-    v_integral += (error * .02); // Integral is increased by the error*time (which is .02 seconds using normal
-                                 // IterativeRobot)
+    error = (v_limeLightX - v_targetAngle);
+    v_integral += (error * .02); // Integral is increased by the error*time (which is .02 seconds using normal// IterativeRobot)
     derivative = (error - v_previousError) / .02;
     v_previousError = error;
     rcw = P * error + I * v_integral + D * derivative;
-    if (error <= 0) {
-      v_rightSpeed = v_rightSpeedBase - rcw;
-    }
-    if (error > 0) {
-      v_rightSpeed = v_rightSpeedBase + rcw;
-    }
-   // System.out.println(v_rightSpeed);
+    v_rightSpeed = v_rightSpeedBase - rcw;
+   System.out.println("Error =    "+ error);
+   System.out.println("RCW =    "+ rcw);
     return v_rightSpeed;
+
   }
 
   public void initializePID() {
@@ -529,6 +529,14 @@ public class DriveSubsystem extends SubsystemBase {
   public double visionTargetSensor() {
    // System.out.println(v_limeLightArea);
     return v_limeLightArea;
+  }
+  public boolean visionTargetSizeFinishApproach(double TargetArea){
+    if(v_limeLightArea>=TargetArea){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   public double limelightXAngle(){
@@ -551,7 +559,7 @@ public class DriveSubsystem extends SubsystemBase {
     //Enter print statements here!  
     }
     v_printCount = v_printCount + 1;
-    ahrs.getWorldLinearAccelX();
+    
   }
 
 

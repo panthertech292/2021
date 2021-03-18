@@ -12,8 +12,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class AimAdjustThirdZone extends CommandBase {
   /** Creates a new AimAdjustThirdZone. */
   public final ShooterSubsystem ShooterSubsystem;
-  private double shooterSpeed;
-  public AimAdjustThirdZone(ShooterSubsystem s_ShooterSubsystem, double v_shooterSpeed) {
+  
+  public AimAdjustThirdZone(ShooterSubsystem s_ShooterSubsystem) {
     ShooterSubsystem = s_ShooterSubsystem;
     addRequirements(s_ShooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,7 +27,6 @@ public class AimAdjustThirdZone extends CommandBase {
   @Override
   public void execute() {
     if(ShooterSubsystem.aimResetCheck()==true){
-      ShooterSubsystem.changeSetSpeed(shooterSpeed);
     if(ShooterSubsystem.getAimEncoder() <=ShooterConstants.kstartingAim+ShooterConstants.kdeltaAimThird+2){
       
       ShooterSubsystem.ShooterAimUp();
