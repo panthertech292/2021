@@ -38,12 +38,15 @@ public class AutoSquareRight extends SequentialCommandGroup {
    // new VisionAlign(s_DriveSubsystem)
     //new AutoTurnGyroWithVisionFinish(s_DriveSubsystem, 90.0, .7, .2),
     //new AutoDriveVisionCorrection(s_DriveSubsystem, 24.0, .65, .65)
-    new AutoRight90Gyro(s_DriveSubsystem, 140, 0.65, -.65) //Gives 180 Degrees
+    //new AutoRight90Gyro(s_DriveSubsystem, 140, 0.65, -.65) //Gives 180 Degrees
   //new AutoTurnPID(s_DriveSubsystem, .85, .00, 78.99704244)
 //new AutoBarrel(s_DriveSubsystem)
-
+    new DriveToVisionTargetArea(s_DriveSubsystem, 0.65, 0.65, 2.5),
+    new VisionAll(s_DriveSubsystem, 2.75),
+    new VisionAlign(s_DriveSubsystem)
+    //new VisionAlign(s_DriveSubsystem)
    /* new AutoForward(s_DriveSubsystem, 0.25, 0.0, 0.0),
-   new AutoRight90Gyro(s_DriveSubsystem, 87, 0.5, -.25),
+   new AutoRight90Gyro(s_DriveSubsystem, 87, 0.5, -.25
     new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(81.3), 1.0, -.25),
     new AutoForward(s_DriveSubsystem, 0.25, 0.0, 0.0),
     new AutoForwardEncoder(s_DriveSubsystem, 24.0, 0.5, 0.5),

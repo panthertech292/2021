@@ -12,10 +12,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class AimAdjustSecondZone extends CommandBase {
   /** Creates a new AimAdjustSecondZone. */
   public final ShooterSubsystem ShooterSubsystem;
-  private double shooterSpeed;
-  public AimAdjustSecondZone(ShooterSubsystem s_ShooterSubsystem, double v_shooterSpeed) {
+  public AimAdjustSecondZone(ShooterSubsystem s_ShooterSubsystem) {
     ShooterSubsystem = s_ShooterSubsystem;
-    shooterSpeed = v_shooterSpeed;
+    
     addRequirements(s_ShooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -28,7 +27,7 @@ public class AimAdjustSecondZone extends CommandBase {
   @Override
   public void execute() {
     if(ShooterSubsystem.aimResetCheck()==true){
-      ShooterSubsystem.changeSetSpeed(shooterSpeed);
+      
     if(ShooterSubsystem.getAimEncoder() <=ShooterConstants.kstartingAim+ShooterConstants.kdeltaAimSecond+2){
       ShooterSubsystem.ShooterAimUp();
     }

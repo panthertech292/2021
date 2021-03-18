@@ -18,7 +18,9 @@ public class VisionAll extends SequentialCommandGroup {
    * Creates a new VisionAll.
    */
   private final DriveSubsystem DriveSubsystem;
-  public VisionAll(DriveSubsystem s_DriveSubsystem){
+  private double VisionTargetArea;
+  public VisionAll(DriveSubsystem s_DriveSubsystem, double v_VisionTargetArea){
+    VisionTargetArea = v_VisionTargetArea;
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     //super();
@@ -28,7 +30,7 @@ public class VisionAll extends SequentialCommandGroup {
     addCommands(
       
     new VisionAlign(s_DriveSubsystem),
-    new VisionDistance(s_DriveSubsystem),
+    new VisionDistance(s_DriveSubsystem, VisionTargetArea),
     new VisionAlign(s_DriveSubsystem)
     );
   }

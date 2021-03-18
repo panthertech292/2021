@@ -35,7 +35,7 @@ public final class Constants {
         public static final double kAutoBackwardEncoderDistance = 144; 
         public static final int kTestSwitch = 10;
         //Vision Constants
-        public static final double kVisionAreaTarget = 1.4;
+        public static final double kVisionAreaTarget = .85;
         //Sensor Constants
         public static final int kOpticalPort = 9; //DIO
         public static final int kSonarPort = 1;
@@ -65,10 +65,10 @@ public final class Constants {
         //DIO
         public static final int kAimLimitSwitch = 4;
         
-        public static final double kstartingAim = 260;
-        public static final double kdeltaAimSecond = 380;
-        public static final double kdeltaAimThird = 430;
-        public static final double kdeltaAimFar = 430;
+        public static final double kstartingAim = 130;
+        public static final double kdeltaAimSecond = 280;
+        public static final double kdeltaAimThird = 350;
+        public static final double kdeltaAimFar = 360;
     }
 
     public static final class PickupConstants {

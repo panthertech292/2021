@@ -182,12 +182,12 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void ShooterAimUp() {
-    v_aimSpeed = 0.35;
+    v_aimSpeed = 0.65;
   }
 
   public void ShooterAimDown() {
     if (AimSwitch.get() == false) {
-      v_aimSpeed = -0.35;
+      v_aimSpeed = -0.65;
     }
   }
 
