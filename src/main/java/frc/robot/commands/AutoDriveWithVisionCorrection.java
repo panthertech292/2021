@@ -13,17 +13,14 @@ import frc.robot.subsystems.DriveSubsystem;
 public class AutoDriveWithVisionCorrection extends SequentialCommandGroup {
   /** Creates a new AutoDriveWithVisionCorrection. */
  
-  private double TargetSpeed;
-  private double Time;
+  
   private final DriveSubsystem DriveSubsystem;
-  private int c_Implementations;
+  
   public AutoDriveWithVisionCorrection( DriveSubsystem s_DriveSubsystem, double v_Time, double v_TargetSpeed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     DriveSubsystem = s_DriveSubsystem;
-    TargetSpeed = v_TargetSpeed;
-    Time = v_Time;
-    c_Implementations = 10;
+    
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       //Deprecated

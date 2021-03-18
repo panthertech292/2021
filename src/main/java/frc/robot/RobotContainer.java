@@ -47,6 +47,7 @@ public class RobotContainer {
   private double v_TargetRPM;
   private double v_TargetSpeed;
   private int operAngle;
+  private static boolean v_resetEncoder = false;
   
 
   final static int io_lefttrigger = 2;
@@ -84,6 +85,7 @@ public class RobotContainer {
   private final Command z_AutoReloadFire = new AutoReloadFire(s_ShooterSubsystem, s_DriveSubsystem, s_PickupSubsystem);
 
   private final Command z_AutoBarrel = new AutoBarrel(s_DriveSubsystem);
+  private final Command z_AutoSlalom = new AutoSlalom(s_DriveSubsystem);
 
   private final Command z_AutoDriveVisionCorrection = new AutoDriveVisionCorrection(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed);
 
@@ -102,10 +104,10 @@ public class RobotContainer {
   private final Command z_AimAdjustDown = new AimAdjustDown(s_ShooterSubsystem);
   private final Command z_AimAdjustUp = new AimAdjustUp(s_ShooterSubsystem);
   private final Command z_AimAdjustStartingPosition = new AimAdjustStartingPosition(s_ShooterSubsystem);
-  private final Command z_AimAdjustNearZone = new AimAdjustNearZone(s_ShooterSubsystem);
-  private final Command z_AimAdjustSecondZone = new AimAdjustSecondZone(s_ShooterSubsystem);
-  private final Command z_AimAdjustThirdZone = new AimAdjustThirdZone(s_ShooterSubsystem);
-  private final Command z_AimAdjustFarZone = new AimAdjustFarZone(s_ShooterSubsystem);
+  private final Command z_AimAdjustNearZone = new AimAdjustNearZone(s_ShooterSubsystem, v_TargetSpeed);
+  private final Command z_AimAdjustSecondZone = new AimAdjustSecondZone(s_ShooterSubsystem, v_TargetSpeed);
+  private final Command z_AimAdjustThirdZone = new AimAdjustThirdZone(s_ShooterSubsystem, v_TargetSpeed);
+  private final Command z_AimAdjustFarZone = new AimAdjustFarZone(s_ShooterSubsystem, v_TargetSpeed);
   private final Command z_ShooterFirePID = new ShooterFirePID(s_ShooterSubsystem, v_TargetRPM);
   private final Command z_ShooterFireBelts = new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem);
   private final Command z_TotalFireNearZone = new TotalFireNearZone(s_ShooterSubsystem, s_BeltSubsystem);
@@ -198,8 +200,10 @@ public class RobotContainer {
     if(getRobotID()== 0){
       d_backButton.whileHeld(z_AimAdjustDown);
       d_startButton.whileHeld(z_AimAdjustUp);
+      
     }
-    // d_bButton.whenPressed(z_VisionDistance);
+    d_aButton.whenPressed(z_VisionAlign);
+    d_bButton.whenPressed(z_AutoSlalom);
     // o_xButton.whenPressed(z_VisionAll);
     // d_lbumper.whenPressed(m_driveJogLeft);
     // d_rbumper.whenPressed(m_driveJogRight);
@@ -254,15 +258,19 @@ public class RobotContainer {
      //An ExampleCommand will run in autonomous
     return o_chooser.getSelected();
   }
-  public static double getShooterSubsystemRate(){
+  /*public static double getShooterSubsystemRate(){
     double rate;
     rate = ShooterSubsystem.getShooterSpeed();
     return rate;
-  }
+  }*/
   public Command getInitialAimCommand(){
+    if(getRobotID()==0){
     return z_AimAdjustStartingPosition;
+    }
+    else{
+      return z_DriveTeleop;
+    }
   }
-
   
   
 

@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
   private Command z_AutonomousCommand;
   private Command z_InitialAim;
   private Command z_SecondaryAim;
+  public boolean v_resetAim = false;
 
   private RobotContainer s_RobotContainer;
 
@@ -38,8 +39,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     s_RobotContainer = new RobotContainer();
+   
     //SmartDashboard.putData(CommandScheduler.getInstance());
-    
   }
 
   /**
@@ -99,11 +100,9 @@ public class Robot extends TimedRobot {
     if (z_AutonomousCommand != null) {
       z_AutonomousCommand.cancel();
     }
-    z_InitialAim = s_RobotContainer.getInitialAimCommand();
-    z_InitialAim.schedule();
-    
-    
-  }
+  //z_InitialAim = s_RobotContainer.getInitialAimCommand();
+  //z_InitialAim.schedule();
+    }
 
   /**
    * This function is called periodically during operator control.

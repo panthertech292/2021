@@ -5,14 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class AimAdjustNearZone extends CommandBase {
   /** Creates a new AimAdjustNearZone. */
   public final ShooterSubsystem ShooterSubsystem;
-  public AimAdjustNearZone(ShooterSubsystem s_ShooterSubsystem) {
+  private double shooterSpeed;
+  public AimAdjustNearZone(ShooterSubsystem s_ShooterSubsystem, double v_shooterSpeed) {
     ShooterSubsystem = s_ShooterSubsystem;
+    shooterSpeed = v_shooterSpeed;
     addRequirements(s_ShooterSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -24,18 +27,21 @@ public class AimAdjustNearZone extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(ShooterSubsystem.getAimEncoder()<33.5){
+    if(ShooterSubsystem.aimResetCheck()==true){
+      ShooterSubsystem.changeSetSpeed(shooterSpeed);
+    if(ShooterSubsystem.getAimEncoder()<ShooterConstants.kstartingAim){
       ShooterSubsystem.ShooterAimUp();
     }
     else{
       ShooterSubsystem.ShooterAimDown();
     }
   }
-
+  }
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     ShooterSubsystem.ShooterAimStop();
+    ShooterSubsystem.changeSetSpeed(0.0);
   }
 
   // Returns true when the command should end.

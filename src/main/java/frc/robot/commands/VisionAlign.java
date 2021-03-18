@@ -13,6 +13,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class VisionAlign extends CommandBase {
   private final DriveSubsystem DriveSubsystem;
+  private boolean v_timeout;
   /**
    * Creates a new VisionAlign.
    */
@@ -27,8 +28,11 @@ public class VisionAlign extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    DriveSubsystem.resetTimer();
     DriveSubsystem.changePowerSetPoints(0,0);
     DriveSubsystem.zeroDistanceSensors();
+    System.out.println("Starting Adjustment");
+    v_timeout = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,11 +40,32 @@ public class VisionAlign extends CommandBase {
   public void execute() {
     System.out.println("Running the move command");
     DriveSubsystem.driveModePowerSetPoint();
+    if(DriveSubsystem.visionTargetSensor()!=0.0){
+    DriveSubsystem.resetTimer();
     DriveSubsystem.visionAlignLeft();
     DriveSubsystem.visionAlignRight();
-    
-   
-  }
+    DriveSubsystem.visionAlignLeft();
+    DriveSubsystem.visionAlignRight();
+    DriveSubsystem.visionAlignLeft();
+    DriveSubsystem.visionAlignRight();
+    System.out.println("Seeing a target!!!!!!!!");
+    }
+    else{
+      if(DriveSubsystem.getTimerValue()<3 && DriveSubsystem.getTimerValue()>0){
+        System.out.println("No Target!!!!!!!!");
+      DriveSubsystem.changePowerSetPoints(-0.85, 0.85); //Adjust values!!!
+      }
+      if(DriveSubsystem.getTimerValue()>3 && DriveSubsystem.getTimerValue()<6){
+        System.out.println("No Target2!!!!!!!!");
+        DriveSubsystem.changePowerSetPoints(0.85, -0.85); //Adjust Values!!!
+        }
+        if(DriveSubsystem.getTimerValue()>5.0){
+          System.out.println("No Target3!!!!!!!!");
+          System.out.println(v_timeout);
+          v_timeout = true;
+        }
+      }
+    }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -48,6 +73,7 @@ public class VisionAlign extends CommandBase {
     DriveSubsystem.changePowerSetPoints(0,0);
     System.out.println("Left Encoder Value"  +   DriveSubsystem.getLeftPosition());
     System.out.println("Right Encoder Value"  +   DriveSubsystem.getRightPosition());
+    System.out.println(v_timeout);
 
     System.out.println("Perceived Angle"   +  DriveSubsystem.PerceivedAngle(DriveSubsystem.getLeftPosition()));
   }
@@ -55,6 +81,6 @@ public class VisionAlign extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return DriveSubsystem.visionFinish() ;
+    return DriveSubsystem.visionFinish() || v_timeout;
   }
 }
