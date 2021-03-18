@@ -75,6 +75,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   private int v_printCount;
 
+  private double v_driveSpeedMod;
+
   //Inputs
   private DigitalInput v_testSwitch;
   private DigitalInput opticalSensor;
@@ -119,6 +121,8 @@ public class DriveSubsystem extends SubsystemBase {
     v_visionOverride = 0;
     v_ticker = 0;
     v_previousAngle = 0;
+
+    v_driveSpeedMod = 0.95;
 
     SmartDashboard.putNumber("Back Speed", 0.0);
     SmartDashboard.putNumber("Front Speed", 0.0);
@@ -389,7 +393,23 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void driveTeleop() {
-    differentialDrive((RobotContainer.getLeftSpeed()), RobotContainer.getRightSpeed());
+    differentialDrive((RobotContainer.getLeftSpeed()*v_driveSpeedMod), RobotContainer.getRightSpeed()*v_driveSpeedMod);
+  }
+  public void slowDrive(){
+    if (RobotContainer.getLeftSpeed() < 0 && RobotContainer.getRightSpeed() > 0) {
+      System.out.println("Going slower!");
+      v_driveSpeedMod = .80;
+    }
+    if (RobotContainer.getLeftSpeed() > 0 && RobotContainer.getRightSpeed() < 0){
+      System.out.println("Going slower!");
+      v_driveSpeedMod = .80;
+    }
+    if (RobotContainer.getLeftSpeed() > 0 && RobotContainer.getRightSpeed() > 0){
+      v_driveSpeedMod = .90;
+    }
+    if (RobotContainer.getLeftSpeed() < 0 && RobotContainer.getRightSpeed() < 0){
+      v_driveSpeedMod = .90;
+    }
   }
 
   // Changes Right Side based on Left Side
@@ -561,6 +581,7 @@ public class DriveSubsystem extends SubsystemBase {
     //Sets drive mode
     if (v_driveMode == c_modeTeleop) {
       driveTeleop();
+      slowDrive();
     } else {
       driveAuto();
     }
