@@ -45,8 +45,8 @@ public final class Constants {
         public static final double kVisionAlignSpeedDefault = .47; 
         public static final double kVisionForwardSpeedDefault = .3850; 
         //This is for the production bot
-        public static final double kProdBotVisionAlignSpeedDefault = .50; //These are placeholder values as the actual bot is not yet built
-        public static final double kProdBotVisionForwardSpeedDefault = .50; //These are placeholder values as the actual bot is not yet built
+        public static final double kProdBotVisionAlignSpeedDefault = .2; //These are placeholder values as the actual bot is not yet built
+        public static final double kProdBotVisionForwardSpeedDefault = .2; //These are placeholder values as the actual bot is not yet built
     }
 
     public static final class ShooterConstants {

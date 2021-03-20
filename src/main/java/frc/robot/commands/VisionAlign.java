@@ -14,6 +14,7 @@ import frc.robot.subsystems.DriveSubsystem;
 public class VisionAlign extends CommandBase {
   private final DriveSubsystem DriveSubsystem;
   private boolean v_timeout;
+  private boolean v_aligning;
   /**
    * Creates a new VisionAlign.
    */
@@ -31,8 +32,10 @@ public class VisionAlign extends CommandBase {
     DriveSubsystem.resetTimer();
     DriveSubsystem.changePowerSetPoints(0,0);
     DriveSubsystem.zeroDistanceSensors();
+    DriveSubsystem.initializePID();
     System.out.println("Starting Adjustment");
     v_timeout = false;
+    v_aligning = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -40,8 +43,9 @@ public class VisionAlign extends CommandBase {
   public void execute() {
     System.out.println("Running the move command");
     DriveSubsystem.driveModePowerSetPoint();
-    if(DriveSubsystem.visionTargetSensor()!=0.0){
+    if(DriveSubsystem.visionTargetSensor()>=1.0){
     DriveSubsystem.resetTimer();
+    v_aligning = true;
     DriveSubsystem.visionAlignLeft();
     DriveSubsystem.visionAlignRight();
     DriveSubsystem.visionAlignLeft();
@@ -51,20 +55,28 @@ public class VisionAlign extends CommandBase {
     System.out.println("Seeing a target!!!!!!!!");
     }
     else{
-      if(DriveSubsystem.getTimerValue()<3 && DriveSubsystem.getTimerValue()>0){
+      if(v_aligning == false){
+      if(DriveSubsystem.getTimerValue()<1.0 && DriveSubsystem.getTimerValue()>0.0){
         System.out.println("No Target!!!!!!!!");
-      DriveSubsystem.changePowerSetPoints(-0.85, 0.85); //Adjust values!!!
+      DriveSubsystem.changePowerSetPoints(-0.5, 0.5); //Adjust values!!!
       }
-      if(DriveSubsystem.getTimerValue()>3 && DriveSubsystem.getTimerValue()<6){
+      if(DriveSubsystem.getTimerValue()>1.0 && DriveSubsystem.getTimerValue()<2.5){
+        DriveSubsystem.changePowerSetPoints(-0.0, 0.0);
+      }
+      if(DriveSubsystem.getTimerValue()>2.5 && DriveSubsystem.getTimerValue()<4.0){
         System.out.println("No Target2!!!!!!!!");
-        DriveSubsystem.changePowerSetPoints(0.85, -0.85); //Adjust Values!!!
+        DriveSubsystem.changePowerSetPoints(0.5, -0.5); //Adjust Values!!!
         }
-        if(DriveSubsystem.getTimerValue()>5.0){
+        if(DriveSubsystem.getTimerValue()>4.0 && DriveSubsystem.getTimerValue()<5.5){
+          DriveSubsystem.changePowerSetPoints(-0.0, 0.0);
+        }
+        if(DriveSubsystem.getTimerValue()>5.5){
           System.out.println("No Target3!!!!!!!!");
           System.out.println(v_timeout);
           v_timeout = true;
         }
       }
+    }
     }
 
   // Called once the command ends or is interrupted.
@@ -81,6 +93,6 @@ public class VisionAlign extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return DriveSubsystem.visionFinish() || v_timeout;
+    return (DriveSubsystem.visionFinish()&& DriveSubsystem.getRightEncoderVelocity() == 0.0) || v_timeout;
   }
 }

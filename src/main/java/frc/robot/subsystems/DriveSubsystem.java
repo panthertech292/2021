@@ -78,7 +78,7 @@ public class DriveSubsystem extends SubsystemBase {
   //Inputs
   private DigitalInput v_testSwitch;
   private DigitalInput opticalSensor;
-  private DigitalInput testDio;
+  private DigitalInput bounceSensor;
   private AnalogInput sonarSensor;
 
   //Network Tables
@@ -99,7 +99,7 @@ public class DriveSubsystem extends SubsystemBase {
     v_testSwitch = new DigitalInput(DriveConstants.kTestSwitch);
     opticalSensor = new DigitalInput(DriveConstants.kOpticalPort);
     sonarSensor = new AnalogInput(DriveConstants.kSonarPort);
-    testDio = new DigitalInput(6);
+    bounceSensor = new DigitalInput(6);
     
 
     LeftSide = new SpeedControllerGroup(FrontLeftMotor, BackLeftMotor);
@@ -258,7 +258,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Vision
   public boolean visionFinish() {
-    if (v_limeLightArea!=0.0&&-1 <= v_limeLightX && v_limeLightX <= 1 || v_visionOverride == 1) {
+    if (( v_limeLightArea!=0.0&&-1.3 <= v_limeLightX && v_limeLightX <= 1.3) || v_visionOverride == 1) {
       v_visionOverride = 0;
       return true;
     }
@@ -269,7 +269,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public boolean visionFinishDistance(double v_VisionAreaTarget) {
-    if (v_VisionAreaTarget - 0.15 <= v_limeLightArea && v_VisionAreaTarget + 0.15 >= v_limeLightArea) {
+    if (v_VisionAreaTarget - 0.3 <= v_limeLightArea && v_VisionAreaTarget + 0.3 >= v_limeLightArea) {
       return true;
     } else {
       return false;
@@ -278,13 +278,13 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Actually turns robot right, aimed too far left
   public void visionAlignLeft() {
-    if (v_limeLightX > 1.3) {
+    if (v_limeLightX > 1.5) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(DriveConstants.kProdBotVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.0082), -DriveConstants.kProdBotVisionAlignSpeedDefault - Math.abs(v_limeLightX*0.0082));
+        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0), -.1);
       } 
       else {
-        changePowerSetPoints(DriveConstants.kVisionAlignSpeedDefault + Math.abs(v_limeLightX*0.0082), -DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.0082));
+        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0), -.1);
       }
       // 50 loops = 1 sec?
       if (v_loopCount >= 150) {
@@ -297,15 +297,15 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Actually turns robot left, aimed too far right
   public void visionAlignRight() {
-    if (v_limeLightX < -1.3) {
+    if (v_limeLightX < -1.5) {
       v_loopCount = v_loopCount + 1;
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-DriveConstants.kProdBotVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.0082),DriveConstants.kProdBotVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.0082));
+        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0),.1);
       } 
       else {
-        changePowerSetPoints(-DriveConstants.kVisionAlignSpeedDefault- Math.abs(v_limeLightX*0.0082), DriveConstants.kVisionAlignSpeedDefault+ Math.abs(v_limeLightX*0.0082));
+        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0), .1);
       }
       if (v_loopCount >= 150) {
         System.out.println("Alignment Aborted");
@@ -318,18 +318,18 @@ public class DriveSubsystem extends SubsystemBase {
   public void visionDistanceArea(double v_VisionAreaTarget) {
     if (v_limeLightArea > v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-DriveConstants.kProdBotVisionForwardSpeedDefault,
-            -DriveConstants.kProdBotVisionForwardSpeedDefault);
+        changePowerSetPoints(-.1-.5*(v_limeLightArea-v_VisionAreaTarget),
+            -.1-.5*(v_limeLightArea-v_VisionAreaTarget));
       } else {
-        changePowerSetPoints(-DriveConstants.kVisionForwardSpeedDefault - .45*(v_limeLightArea-v_VisionAreaTarget), -DriveConstants.kVisionForwardSpeedDefault - .45*(v_limeLightArea-v_VisionAreaTarget));
+        changePowerSetPoints( -.1-.5*(v_limeLightArea-v_VisionAreaTarget), -.1-.5*(v_limeLightArea-v_VisionAreaTarget));
       }
     }
     if (v_limeLightArea < v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(DriveConstants.kProdBotVisionForwardSpeedDefault,
-            DriveConstants.kProdBotVisionForwardSpeedDefault);
+        changePowerSetPoints(.1-.5*(v_limeLightArea-v_VisionAreaTarget),
+        .1 -.5*(v_limeLightArea-v_VisionAreaTarget));
       } else {
-        changePowerSetPoints(DriveConstants.kVisionForwardSpeedDefault + .45*(v_limeLightArea-v_VisionAreaTarget),  DriveConstants.kVisionForwardSpeedDefault+.45*(v_limeLightArea-v_VisionAreaTarget));
+        changePowerSetPoints( .1-.5*(v_limeLightArea-v_VisionAreaTarget), .1-.5*(v_limeLightArea-v_VisionAreaTarget));
       }
     }
   }
@@ -521,11 +521,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-  public void initializePID() {
-    v_integral = 0;
-    v_previousError = 0;
-  }
-
   public double visionTargetSensor() {
    // System.out.println(v_limeLightArea);
     return v_limeLightArea;
@@ -562,6 +557,42 @@ public class DriveSubsystem extends SubsystemBase {
     
   }
 
+  public boolean getBounceSensor(){
+    return !bounceSensor.get();
+  }
+
+  public double ReusablePID1(double v_P, double v_I, double v_D, double v_ActualValue, double v_TargetValue ){
+    double error;
+    double P = v_P;
+    double I = v_I;// 0.00812;
+    double D = v_D;
+    double derivative;
+    double rcw;
+    error = (v_ActualValue - v_TargetValue);
+    v_integral += (error * .02); // Integral is increased by the error*time (which is .02 seconds using normal// IterativeRobot)
+    derivative = (error - v_previousError) / .02;
+    v_previousError = error;
+    rcw = P * error + I * v_integral + D * derivative;
+    return rcw;
+  }
+  public double ReusablePID2(double v_P, double v_I, double v_D, double v_ActualValue, double v_TargetValue ){
+    double error;
+    double P = v_P;
+    double I = v_I;// 0.00812;
+    double D = v_D;
+    double derivative;
+    double rcw;
+    error = (v_ActualValue - v_TargetValue);
+    v_integral += (error * .02); // Integral is increased by the error*time (which is .02 seconds using normal// IterativeRobot)
+    derivative = (error - v_previousError) / .02;
+    v_previousError = error;
+    rcw = P * error + I * v_integral + D * derivative;
+    return rcw;
+  }
+  public void initializePID() {
+    v_integral = 0;
+    v_previousError = 0;
+  }
 
   @Override
   public void periodic() {
@@ -575,6 +606,7 @@ public class DriveSubsystem extends SubsystemBase {
     
     updateLimeLight();
     timedPrintOut();
+   
     
     //  SmartDashboard.putNumber("LimelightX", v_limeLightX);
   }
