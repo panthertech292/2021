@@ -400,22 +400,15 @@ public class DriveSubsystem extends SubsystemBase {
     differentialDrive((RobotContainer.getLeftSpeed()*v_driveSpeedMod), RobotContainer.getRightSpeed()*v_driveSpeedMod);
   }
   public void slowDrive(){
-    if (RobotContainer.getLeftSpeed() < 0 && RobotContainer.getRightSpeed() > 0) {
+    if ((RobotContainer.getLeftSpeed() < 0 && RobotContainer.getRightSpeed() > 0) || (RobotContainer.getLeftSpeed() > 0 && RobotContainer.getRightSpeed() < 0)){
       System.out.println("Going slower!");
       v_driveSpeedMod = .80;
     }
-    if (RobotContainer.getLeftSpeed() > 0 && RobotContainer.getRightSpeed() < 0){
-      System.out.println("Going slower!");
-      v_driveSpeedMod = .80;
-    }
-    if (RobotContainer.getLeftSpeed() > 0 && RobotContainer.getRightSpeed() > 0){
-      v_driveSpeedMod = .90;
-    }
-    if (RobotContainer.getLeftSpeed() < 0 && RobotContainer.getRightSpeed() < 0){
+    else{
       v_driveSpeedMod = .90;
     }
   }
-
+  
   // Changes Right Side based on Left Side
   public double LeftPID(double v_targetPower) {
     double error;
