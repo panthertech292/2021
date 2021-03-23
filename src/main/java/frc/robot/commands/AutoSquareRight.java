@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import javax.xml.namespace.QName;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -41,9 +43,10 @@ public class AutoSquareRight extends SequentialCommandGroup {
     //new AutoRight90Gyro(s_DriveSubsystem, 140, 0.65, -.65) //Gives 180 Degrees
   //new AutoTurnPID(s_DriveSubsystem, .85, .00, 78.99704244)
 //new AutoBarrel(s_DriveSubsystem)
-    new DriveToVisionTargetArea(s_DriveSubsystem, 0.65, 0.65, 2.5),
-    new VisionAll(s_DriveSubsystem, 2.75),
-    new VisionAlign(s_DriveSubsystem)
+    //new DriveToVisionTargetArea(s_DriveSubsystem, 0.65, 0.65, 2.5),
+    //new VisionAll(s_DriveSubsystem, 2.75),
+    //new VisionAlign(s_DriveSubsystem)
+    
     //new VisionAlign(s_DriveSubsystem)
    /* new AutoForward(s_DriveSubsystem, 0.25, 0.0, 0.0),
    new AutoRight90Gyro(s_DriveSubsystem, 87, 0.5, -.25
@@ -60,7 +63,18 @@ public class AutoSquareRight extends SequentialCommandGroup {
     //new AutoRight90Gyro(s_DriveSubsystem, 87, 0.5, -.25),
     new AutoForward(s_DriveSubsystem, 0.25, 0.0, 0.0) */
 
-    
+    //Brake
+   // new AutoForwardEncoder(s_DriveSubsystem, 60.0, .65, .65),
+    //new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
+   // new AutoStop(s_DriveSubsystem)
+
+
+   new AutoForwardPID(s_DriveSubsystem, -.65, -.65, 36.0),
+   new AutoRight90Gyro(s_DriveSubsystem, 180-25, .5, -.8),
+   new AutoForward(s_DriveSubsystem, 0.0, 0.0, .2),
+   new AutoRight90Gyro(s_DriveSubsystem, 180-25, -.85, .85),
+   new AutoForward(s_DriveSubsystem, 0.0, 0.0, .2),
+   new VisionAlign(s_DriveSubsystem)
 
    );
   }

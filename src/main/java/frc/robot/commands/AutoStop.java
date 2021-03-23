@@ -28,6 +28,7 @@ public class AutoStop extends CommandBase {
     v_zeroCount = 0;
     DriveSubsystem.resetTimer();
     v_returnSpot = DriveSubsystem.getLeftEncoderValue();
+    DriveSubsystem.initializePID();
 
     //DriveSubsystem.zeroDistanceSensors();
     
@@ -37,27 +38,25 @@ public class AutoStop extends CommandBase {
   @Override
   public void execute() {
     DriveSubsystem.driveModePowerSetPoint();
-    //System.out.println(v_zeroCount );
+    //System.out.println(v_zeroCount);
     v_distance = DriveSubsystem.getLeftEncoderValue() - v_returnSpot;
     System.out.println(v_distance);
     if (v_distance < 0){
       System.out.println("Running Back");
-      DriveSubsystem.changePowerSetPoints(DriveSubsystem.RightPID(-.50),DriveSubsystem.LeftPID(-.50));
+      DriveSubsystem.changePowerSetPoints(DriveSubsystem.ReusablePID1(.00055, .0003, 0.0002, DriveSubsystem.getLeftEncoderValue(), v_returnSpot,0.5),DriveSubsystem.ReusablePID2(.00055, .0003, 0.0002, DriveSubsystem.getLeftEncoderValue(), v_returnSpot,0.5));
     }
     if (v_distance > 0){
       System.out.println("Running Forward");
-      DriveSubsystem.changePowerSetPoints(DriveSubsystem.RightPID(.50),DriveSubsystem.LeftPID(.50));
+      DriveSubsystem.changePowerSetPoints(DriveSubsystem.ReusablePID1(.00055, .0003, 0.0002, DriveSubsystem.getLeftEncoderValue(), v_returnSpot,0.5),DriveSubsystem.ReusablePID2(.00055, .0003, 0.0002, DriveSubsystem.getLeftEncoderValue(), v_returnSpot,0.5));
     }
-    if (v_distance > -50){
-      if (v_distance < 50){
+    if (v_distance > -150 && v_distance < 150){
         System.out.println("Increasing count!");
         v_zeroCount = v_zeroCount + 1;
-
-      }
     }
   }
 
   // Called once the command ends or is interrupted.
+
   @Override
   public void end(boolean interrupted) {
     DriveSubsystem.changePowerSetPoints(0,0);
@@ -66,7 +65,7 @@ public class AutoStop extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return v_zeroCount > 50;
+    return v_zeroCount > 15;
     
     
     
