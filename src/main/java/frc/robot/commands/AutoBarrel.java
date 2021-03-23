@@ -25,7 +25,7 @@ public class AutoBarrel extends SequentialCommandGroup {
      //Template Commands
     //new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed),
     //new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(75), 1.0, -.35),
-     new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0-27.0), 
+     new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0-((27.0)*(5/6))), 
    //new AutoForward(s_DriveSubsystem, 0.7, 0.65, 0.1),
    new AutoRight90Gyro(s_DriveSubsystem, 90, .7, -0.34),
      new AutoRight90Gyro(s_DriveSubsystem, 90, .7, .3),
@@ -44,7 +44,7 @@ public class AutoBarrel extends SequentialCommandGroup {
    new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, 1.8),
    new VisionAll(s_DriveSubsystem, 2.462),
    new AutoRight90Gyro(s_DriveSubsystem, 85, -0.36,.7 ),
-   new AutoForwardPID(s_DriveSubsystem, .7, .65, 60.0-18.0), 
+   new AutoForwardPID(s_DriveSubsystem, .7, .65, 60.0-(18.0*(5/6))), 
    new AutoRight90Gyro(s_DriveSubsystem, 90, - 0.35,.7),
    new AutoRight90Gyro(s_DriveSubsystem, 90, - 0.3,.7),
    new VisionAlign(s_DriveSubsystem),

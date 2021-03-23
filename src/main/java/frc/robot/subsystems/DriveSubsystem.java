@@ -151,7 +151,13 @@ public class DriveSubsystem extends SubsystemBase {
     v_setPointRight = 0.0;
 
     Timer = new Timer();
-    c_encoderConversion = 4096;
+    if(RobotContainer.getRobotID() == 0){
+      c_encoderConversion = 4096*(6/5);
+    }
+    else{
+      c_encoderConversion = 4096;
+    }
+    
 
     addChild("Drive", Drive);
     addChild("Left Side", LeftSide);
@@ -285,10 +291,10 @@ public class DriveSubsystem extends SubsystemBase {
     if (v_limeLightX > 1.5) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0), -.1);
+        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.5), -.1);
       } 
       else {
-        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0), -.1);
+        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.5), -.1);
       }
       // 50 loops = 1 sec?
       if (v_loopCount >= 150) {
@@ -306,10 +312,10 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0),.1);
+        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0, 0.75),.1);
       } 
       else {
-        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0), .1);
+        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), .1);
       }
       if (v_loopCount >= 150) {
         System.out.println("Alignment Aborted");
@@ -401,7 +407,6 @@ public class DriveSubsystem extends SubsystemBase {
   }
   public void slowDrive(){
     if ((RobotContainer.getLeftSpeed() < 0 && RobotContainer.getRightSpeed() > 0) || (RobotContainer.getLeftSpeed() > 0 && RobotContainer.getRightSpeed() < 0)){
-      System.out.println("Going slower!");
       v_driveSpeedMod = .80;
     }
     else{
@@ -412,7 +417,7 @@ public class DriveSubsystem extends SubsystemBase {
   // Changes Right Side based on Left Side
   public double LeftPID(double v_targetPower) {
     double error;
-    double P = 0.0256 * 2 * 1.5;
+    double P = 0.0256 * 2 * 1.1;
     double I = // 0.00812;
         0.0;
     double D = 0.0;
@@ -431,7 +436,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double RightPID(double v_targetPower) {
     double error;
-    double P = 0.0256 * 2 * 1.5;
+    double P = 0.0256 * 2 * 1.1;
     double I = // 0.00812;
         0.0;
     double D = 0.0;
@@ -574,7 +579,7 @@ public class DriveSubsystem extends SubsystemBase {
     return !bounceSensor.get();
   }
 
-  public double ReusablePID1(double v_P, double v_I, double v_D, double v_ActualValue, double v_TargetValue ){
+  public double ReusablePID1(double v_P, double v_I, double v_D, double v_ActualValue, double v_TargetValue, double rcwLimit ){
     double error;
     double P = v_P;
     double I = v_I;// 0.00812;
@@ -586,9 +591,12 @@ public class DriveSubsystem extends SubsystemBase {
     derivative = (error - v_previousError) / .02;
     v_previousError = error;
     rcw = P * error + I * v_integral + D * derivative;
+    if(Math.abs(rcw)>Math.abs(rcwLimit)){
+      rcw = rcwLimit*(rcw/Math.abs(rcw));
+    }
     return rcw;
   }
-  public double ReusablePID2(double v_P, double v_I, double v_D, double v_ActualValue, double v_TargetValue ){
+  public double ReusablePID2(double v_P, double v_I, double v_D, double v_ActualValue, double v_TargetValue, double rcwLimit ){
     double error;
     double P = v_P;
     double I = v_I;// 0.00812;
@@ -600,6 +608,9 @@ public class DriveSubsystem extends SubsystemBase {
     derivative = (error - v_previousError) / .02;
     v_previousError = error;
     rcw = P * error + I * v_integral + D * derivative;
+    if(Math.abs(rcw)>Math.abs(rcwLimit)){
+      rcw = rcwLimit*(rcw/Math.abs(rcw));
+    }
     return rcw;
   }
   public void initializePID() {
