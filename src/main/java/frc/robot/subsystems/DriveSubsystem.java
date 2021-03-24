@@ -295,6 +295,7 @@ public class DriveSubsystem extends SubsystemBase {
       } 
       else {
         changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), -.1-ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
+
       }
       // 50 loops = 1 sec?
       if (v_loopCount >= 150) {
@@ -316,6 +317,7 @@ public class DriveSubsystem extends SubsystemBase {
       } 
       else {
         changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), .1-ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
+
       }
       if (v_loopCount >= 150) {
         System.out.println("Alignment Aborted");
@@ -579,6 +581,7 @@ public class DriveSubsystem extends SubsystemBase {
     return !bounceSensor.get();
   }
 
+
   public double ReusablePID1(double v_P, double v_I, double v_D, double v_ActualValue, double v_TargetValue, double rcwLimit ){
     double error;
     double P = v_P;
@@ -591,12 +594,14 @@ public class DriveSubsystem extends SubsystemBase {
     derivative = (error - v_previousError) / .02;
     v_previousError = error;
     rcw = P * error + I * v_integral + D * derivative;
+
     if(Math.abs(rcw)>Math.abs(rcwLimit)){
       rcw = rcwLimit*(rcw/Math.abs(rcw));
     }
     return rcw;
   }
   public double ReusablePID2(double v_P, double v_I, double v_D, double v_ActualValue, double v_TargetValue, double rcwLimit ){
+
     double error;
     double P = v_P;
     double I = v_I;// 0.00812;
@@ -608,9 +613,11 @@ public class DriveSubsystem extends SubsystemBase {
     derivative = (error - v_previousError) / .02;
     v_previousError = error;
     rcw = P * error + I * v_integral + D * derivative;
+
     if(Math.abs(rcw)>Math.abs(rcwLimit)){
       rcw = rcwLimit*(rcw/Math.abs(rcw));
     }
+
     return rcw;
   }
   public void initializePID() {
