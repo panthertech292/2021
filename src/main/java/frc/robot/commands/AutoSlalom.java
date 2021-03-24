@@ -21,13 +21,15 @@ public class AutoSlalom extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutoForward(s_DriveSubsystem, .5, 0.775, .85),
-      new AutoForward(s_DriveSubsystem, .775, 0.4, 1.1)
-    /*new AutoForwardPID(DriveSubsystem, .7, .65, 16),
+      new AutoForward(s_DriveSubsystem, .775, 0.4, 1.1),
+    new AutoForwardPID(DriveSubsystem, .7, .65, 16),
+    new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
     new AutoForward(s_DriveSubsystem, 0.2, 0.65, 0.1),
     new AutoTurnPID(s_DriveSubsystem, .2, .65, 90, 2.15789),
     new AutoForward(s_DriveSubsystem, 0.65, 0.2, 0.1),
     new AutoTurnPID(s_DriveSubsystem, .65, .2, 90, 2.15789),
     new AutoForwardPID(DriveSubsystem, .7, .65, 120),
+    new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
     new AutoForward(s_DriveSubsystem, 0.2, 0.65, 0.1),
     new AutoTurnPID(s_DriveSubsystem, .65, .2, 90, 2.15789),
     new AutoForward(s_DriveSubsystem, 0.2, 0.65, 0.1),
@@ -35,12 +37,14 @@ public class AutoSlalom extends SequentialCommandGroup {
     new AutoForward(s_DriveSubsystem, 0.2, 0.65, 0.1),
     new AutoTurnPID(s_DriveSubsystem, .65, .2, 90, 2.15789),
     new AutoForwardPID(DriveSubsystem, .7, .65, 120),
+    new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
     new AutoForward(s_DriveSubsystem, 0.65, 0.2, 0.1),
     new AutoTurnPID(s_DriveSubsystem, .65, .2, 90, 2.15789),
     new AutoForward(s_DriveSubsystem, 0.2, 0.65, 0.1),
     new AutoTurnPID(s_DriveSubsystem, .2, .65, 90, 2.15789),
     new AutoForwardPID(DriveSubsystem, .7, .65, 30),
-    new AutoDead(s_DriveSubsystem)*/
+    new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
+    new DriveUntilBounceSensor(s_DriveSubsystem, .3, .3)
 
     );
   }
