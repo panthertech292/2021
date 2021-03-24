@@ -291,11 +291,10 @@ public class DriveSubsystem extends SubsystemBase {
     if (v_limeLightX > 1.5) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-
-        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.5), -.1);
+        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), -.1 -ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
       } 
       else {
-        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.5), -.1);
+        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), -.1-ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
 
       }
       // 50 loops = 1 sec?
@@ -314,11 +313,10 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-
-        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0, 0.75),.1);
+        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0, 0.75),.1-ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
       } 
       else {
-        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), .1);
+        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), .1-ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
 
       }
       if (v_loopCount >= 150) {
