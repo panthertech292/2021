@@ -111,7 +111,7 @@ public class RobotContainer {
   private final Command z_ShooterFirePID = new ShooterFirePID(s_ShooterSubsystem, v_TargetRPM);
   private final Command z_ShooterFireBelts = new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem);
   private final Command z_TotalFireNearZone = new TotalFireNearZone(s_ShooterSubsystem, s_BeltSubsystem);
-  private final Command z_TotalFireSecondZone = new TotalFireSecondZone(s_ShooterSubsystem, s_BeltSubsystem);
+  private final Command z_TotalFireSecondZone = new TotalFireSecondZone(s_ShooterSubsystem, s_BeltSubsystem,s_DriveSubsystem);
   private final Command z_TotalFireThirdZone = new TotalFireThirdZone(s_ShooterSubsystem, s_BeltSubsystem);
   private final Command z_TotalFireFarZone = new TotalFireFarZone(s_ShooterSubsystem, s_BeltSubsystem);
   // Pickup Commands

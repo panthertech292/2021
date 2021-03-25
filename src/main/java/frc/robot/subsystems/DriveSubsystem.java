@@ -268,7 +268,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Vision
   public boolean visionFinish() {
-    if (( v_limeLightArea!=0.0&&-1.3 <= v_limeLightX && v_limeLightX <= 1.3) || v_visionOverride == 1) {
+    if (( v_limeLightArea!=0.0&&-1.5 <= v_limeLightX && v_limeLightX <= 1.5) || v_visionOverride == 1) {
       v_visionOverride = 0;
       return true;
     }
@@ -291,10 +291,10 @@ public class DriveSubsystem extends SubsystemBase {
     if (v_limeLightX > 1.5) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), -.1 -ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
+        changePowerSetPoints(.1+ReusablePID1(.13, 0.015, 0.008, v_limeLightX, 0.0,0.4), -.1 -ReusablePID2(.13, 0.015, 0.008, v_limeLightX, 0.0,0.4));
       } 
       else {
-        changePowerSetPoints(.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), -.1-ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
+        changePowerSetPoints(.1+ReusablePID1(.13, 0.015, 0.008, v_limeLightX, 0.0,0.4), -.1-ReusablePID2(.13, 0.015, 0.008, v_limeLightX, 0.0,0.4));
 
       }
       // 50 loops = 1 sec?
@@ -313,10 +313,10 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0, 0.75),.1-ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
+        changePowerSetPoints(-.1+ReusablePID1(.13, 0.015, 0.008, v_limeLightX, 0.0, 0.4),.1-ReusablePID2(.13, 0.015, 0.008, v_limeLightX, 0.0,0.4));
       } 
       else {
-        changePowerSetPoints(-.1+ReusablePID1(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75), .1-ReusablePID2(.0395, 0.01, 0.004, v_limeLightX, 0.0,0.75));
+        changePowerSetPoints(-.1+ReusablePID1(.13, 0.015, 0.008, v_limeLightX, 0.0,0.4), .1-ReusablePID2(.13, 0.015, 0.008, v_limeLightX, 0.0,0.4));
 
       }
       if (v_loopCount >= 150) {
@@ -330,18 +330,16 @@ public class DriveSubsystem extends SubsystemBase {
   public void visionDistanceArea(double v_VisionAreaTarget) {
     if (v_limeLightArea > v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-.1-.5*(v_limeLightArea-v_VisionAreaTarget),
-            -.1-.5*(v_limeLightArea-v_VisionAreaTarget));
+        changePowerSetPoints(-.1-ReusablePID1(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5),-.1-ReusablePID2(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5));
       } else {
-        changePowerSetPoints( -.1-.5*(v_limeLightArea-v_VisionAreaTarget), -.1-.5*(v_limeLightArea-v_VisionAreaTarget));
+        changePowerSetPoints( -.1-ReusablePID1(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5), -.1-ReusablePID2(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5));
       }
     }
     if (v_limeLightArea < v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(.1-.5*(v_limeLightArea-v_VisionAreaTarget),
-        .1 -.5*(v_limeLightArea-v_VisionAreaTarget));
+        changePowerSetPoints(.1-ReusablePID1(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5),.1 -ReusablePID2(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5));
       } else {
-        changePowerSetPoints( .1-.5*(v_limeLightArea-v_VisionAreaTarget), .1-.5*(v_limeLightArea-v_VisionAreaTarget));
+        changePowerSetPoints( .1-ReusablePID1(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5), .1-ReusablePID2(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5));
       }
     }
   }
@@ -572,6 +570,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void timedPrintOut(){
     if(v_printCount % 100 == 0){
     //Enter print statements here!  
+    
     }
     v_printCount = v_printCount + 1;
     
