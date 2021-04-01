@@ -17,75 +17,57 @@ public class AutoBarrel extends SequentialCommandGroup {
   public AutoBarrel(DriveSubsystem s_DriveSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-   // addCommands();
-   DriveSubsystem = s_DriveSubsystem;
-   addRequirements(s_DriveSubsystem);
+    // addCommands();
+    DriveSubsystem = s_DriveSubsystem;
+    addRequirements(s_DriveSubsystem);
 
-  double c_visionFirstAllDistance = 7.6;
-  double c_visionSecondAllDistance = 2.1;
+    double c_visionFirstAllDistance = 7.6;
+    double c_visionSecondAllDistance = 2.1;
 
-  double c_driveToFirstArea = 5.4;
-  double c_driveToSecondArea = 1.6;
-  double c_driveToThirdArea = 4.0;
+    double c_driveToFirstArea = 5.4;
+    double c_driveToSecondArea = 1.6;
+    double c_driveToThirdArea = 4.0;
 
 
-   addCommands(
-     //Template Commands
-    //new AutoForwardEncoder(s_DriveSubsystem, v_AutoDistance, v_LeftSpeed, v_RightSpeed),
-    //new AutoForwardEncoder(s_DriveSubsystem, DriveSubsystem.rotateRobot(75), 1.0, -.35),
-
-    new AutoForwardPID(s_DriveSubsystem, .7, .65, 106-10), 
-
-   //new AutoForward(s_DriveSubsystem, 0.7, 0.65, 0.1),
-   new AutoForward(s_DriveSubsystem, -0.65, -0.65, .3),
-   //  new AutoRight90Gyro(s_DriveSubsystem, 60, .7, -0.54),
-   //  new AutoForward(s_DriveSubsystem, 0.0, 0.0, 0.2),
-   new AutoRight90Gyro(s_DriveSubsystem, 175, .7, -.3),
-  new AutoForward(s_DriveSubsystem, 0.0, 0.0, 0.2),
-   new AutoRight90Gyro(s_DriveSubsystem, 180, .7, -.3),
-   //new AutoRight90Gyro(s_DriveSubsystem, 90, .7, -0.4),
-   //new AutoRight90Gyro(s_DriveSubsystem, 90, .7, 0.2),
-    //new AutoForward(s_DriveSubsystem, .7, 0.3, .75),
-    //new AutoForward(s_DriveSubsystem, .7, 0.43, 3.0),
-    //new AutoTurnPID(s_DriveSubsystem, .65, -0.3, 270.0, 2.15789),
-        new VisionAlign(s_DriveSubsystem),
-        new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, c_driveToFirstArea),
-        new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
-        new VisionAll(s_DriveSubsystem, c_visionFirstAllDistance),
-        new AutoRight90Gyro(s_DriveSubsystem, 270, -0.35, 0.7 ),
-      //new AutoRight90Gyro(s_DriveSubsystem, 100, -0.27, 0.7 ),
-   //new AutoRight90Gyro(s_DriveSubsystem, 100, -0.45, 0.7)
-   new VisionAlign(s_DriveSubsystem),
-new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, c_driveToSecondArea),
-   new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
-   new VisionAll(s_DriveSubsystem, c_visionSecondAllDistance),
-   new AutoRight90Gyro(s_DriveSubsystem, 85, -0.36,.7),
-   new AutoForwardPID(s_DriveSubsystem, .7, .65, 60.0-18), 
-   new AutoForward(s_DriveSubsystem, -.65, -.65, .3),
-
-   new AutoRight90Gyro(s_DriveSubsystem, 90, - 0.4,.7),
-   new AutoRight90Gyro(s_DriveSubsystem, 90, - 0.4,.7),
-   new VisionAlign(s_DriveSubsystem),
-   new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, c_driveToThirdArea),
-   new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
-   new DriveUntilBounceSensor(s_DriveSubsystem, .3, .3)
+    addCommands(
+      //First Straight
+      new AutoForwardPID(s_DriveSubsystem, .7, .65, 106-10),
+      //Breaks Robot 
+      new AutoForward(s_DriveSubsystem, -0.65, -0.65, .3),
+      //First Turn
+      new AutoRight90Gyro(s_DriveSubsystem, 175, .7, -.3),
+      new AutoForward(s_DriveSubsystem, 0.0, 0.0, 0.2),
+      new AutoRight90Gyro(s_DriveSubsystem, 180, .7, -.3),
+      //Go to first vision target
+      new VisionAlign(s_DriveSubsystem),
+      new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, c_driveToFirstArea),
+      new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
+      new VisionAll(s_DriveSubsystem, c_visionFirstAllDistance),
+      //Second Turn
+      new AutoRight90Gyro(s_DriveSubsystem, 270, -0.35, 0.7 ),
+      //Go to second vision target
+      new VisionAlign(s_DriveSubsystem),
+      new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, c_driveToSecondArea),
+      new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
+      new VisionAll(s_DriveSubsystem, c_visionSecondAllDistance),
+      //Third Turn
+      new AutoRight90Gyro(s_DriveSubsystem, 85, -0.36,.7),
+      //Go forward???
+      new AutoForwardPID(s_DriveSubsystem, .7, .65, 60.0-18), 
+      new AutoForward(s_DriveSubsystem, -.65, -.65, .3),
+      //Turn around
+      new AutoRight90Gyro(s_DriveSubsystem, 90, - 0.4,.7),
+      new AutoRight90Gyro(s_DriveSubsystem, 90, - 0.4,.7),
+      //Go to final target
+      new VisionAlign(s_DriveSubsystem),
+      new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, c_driveToThirdArea),
+      new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
+      new DriveUntilBounceSensor(s_DriveSubsystem, .3, .3)
 
 
 
 
-  // new VisionAlign(s_DriveSubsystem),
-  //new AutoDriveVisionCorrection(s_DriveSubsystem, 74.0, .7, .65)
-  //new AutoForward(s_DriveSubsystem, .3, 0.7, .75),
-   // new AutoForward(s_DriveSubsystem, .4, 0.7, 3.0)
-   /*new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
-   new AutoTurnPID(s_DriveSubsystem, .2, .65, 270, 2.15789),
-   new AutoDriveVisionCorrection(s_DriveSubsystem, 60.0, .7, .65),
-   new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
-   new AutoTurnPID(s_DriveSubsystem, .2, .65, 90, 2.15789),
-   new AutoForwardPID(s_DriveSubsystem, .7, .65, 90.0),
-   new AutoForward(s_DriveSubsystem, 0.1, .2, 0.65),
-   new AutoTurnPID(s_DriveSubsystem, .2, .65, 180, 2.15789),
-   new AutoDriveVisionCorrection(s_DriveSubsystem, 300.0, .7, .65), */
+  
    
    
 
