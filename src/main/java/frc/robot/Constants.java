@@ -66,7 +66,7 @@ public final class Constants {
         public static final int kAimLimitSwitch = 4;
         
         public static final double kstartingAim = 130;
-        public static final double kdeltaAimSecond = 280;
+        public static final double kdeltaAimSecond = 280+200;
         public static final double kdeltaAimThird = 350;
         public static final double kdeltaAimFar = 360;
     }

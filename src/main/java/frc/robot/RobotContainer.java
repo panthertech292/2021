@@ -147,13 +147,15 @@ public class RobotContainer {
     o_chooser.addOption("Auto Right 90 Timed", z_AutoRight90Timed);
     o_chooser.addOption("Auto Right 90 Gyro", z_AutoRight90Gyro);*/
     o_chooser.addOption("Barrel", z_AutoBarrel);
-
+    o_chooser.addOption("Slalom", z_AutoSlalom);
+    o_chooser.addOption("Bounce", z_AutoBounce);
 
     // Vision stuff
     o_chooser.addOption("Vision Right", z_VisionAlign);
     Shuffleboard.getTab("Autonomous").add(o_chooser);
     s_DriveSubsystem.setDefaultCommand(z_DriveTeleop);
     s_GateSubsystem.setDefaultCommand(z_gate1Down);
+
     
   }
 
@@ -188,6 +190,7 @@ public class RobotContainer {
     final POVButton o_dPadLeft = new POVButton(io_opercontroller, 270);
     final JoystickButton o_rBumper = new JoystickButton(io_opercontroller,Button.kBumperRight.value);
     final JoystickButton o_lBumper = new JoystickButton(io_drivercontroller,Button.kBumperLeft.value);
+    
     // Driver Button Binds6
     //d_aButton.whileHeld(z_BeltForwardAll);
     //d_bButton.whenPressed(z_AutoBarrel);
@@ -210,14 +213,15 @@ public class RobotContainer {
 
     // o_bButton.whenPressed(z_AutoForward);
     // d_xButton.whenPressed(z_AutoSquareRight);
+
     o_aButton.whenPressed(z_TotalFireNearZone);
     o_yButton.whenPressed(z_TotalFireSecondZone);
     o_xButton.whenPressed(z_TotalFireThirdZone);
-    // o_yButton.whenReleased(z_gate1Up);
     o_bButton.whenPressed(z_TotalFireFarZone);
     o_startButton.whenPressed(z_BeltForwardAll);
     o_backButton.whileHeld(z_BeltBackwardAll);
     o_rBumper.whenPressed(z_ShooterFireBelts);
+    o_lBumper.whileHeld(z_AimAdjustDown);
 
 
     

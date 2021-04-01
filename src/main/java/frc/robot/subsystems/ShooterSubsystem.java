@@ -220,6 +220,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
   // This method will be called once per scheduler run
     UpdateTargetRPM();
+    
     //ShooterMotor.set(ShooterPID.calculate(getShooterSpeed(), v_PIDSetpoint));
     if(v_RPMTarget<=50000){
      ShooterMotor.set(v_shooterSpeed/*+RobotContainer.getShooterSpeedAdjust()*/);

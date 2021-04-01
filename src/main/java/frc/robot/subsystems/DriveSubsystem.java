@@ -404,6 +404,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void driveTeleop() {
     differentialDrive((RobotContainer.getLeftSpeed()*v_driveSpeedMod), RobotContainer.getRightSpeed()*v_driveSpeedMod);
+
+    
   }
   public void slowDrive(){
     if ((RobotContainer.getLeftSpeed() < 0 && RobotContainer.getRightSpeed() > 0) || (RobotContainer.getLeftSpeed() > 0 && RobotContainer.getRightSpeed() < 0)){
