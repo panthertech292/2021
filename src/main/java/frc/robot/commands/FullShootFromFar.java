@@ -8,24 +8,31 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.BeltSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
+
+
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TotalFireNearZone extends SequentialCommandGroup {
-  /** Creates a new TotalFireNearZone. */
+public class FullShootFromFar extends SequentialCommandGroup {
+  /** Creates a new FullShootFromFar. */
   private final ShooterSubsystem ShooterSubsystem;
   private final BeltSubsystem BeltSubsystem;
-  public TotalFireNearZone(ShooterSubsystem s_ShooterSubsystem, BeltSubsystem s_BeltSubsystem) {
+  private final DriveSubsystem DriveSubsystem;
+  public FullShootFromFar(ShooterSubsystem s_ShooterSubsystem, BeltSubsystem s_BeltSubsystem, DriveSubsystem s_DriveSubsystem) {
     ShooterSubsystem = s_ShooterSubsystem;
     BeltSubsystem = s_BeltSubsystem;
+    DriveSubsystem = s_DriveSubsystem;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AimAdjustStartingPosition(s_ShooterSubsystem),
-      new AimAdjustNearZone(s_ShooterSubsystem),
-      new BeltForwardAll(s_BeltSubsystem),
-      new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem)
+    new AimAdjustStartingPosition(s_ShooterSubsystem),
+    new ShootFromFarSetup(s_ShooterSubsystem, s_BeltSubsystem, s_DriveSubsystem)
+
+
+
     );
   }
 }

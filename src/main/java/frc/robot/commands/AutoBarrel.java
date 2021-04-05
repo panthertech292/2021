@@ -29,6 +29,33 @@ public class AutoBarrel extends SequentialCommandGroup {
     double c_driveToThirdArea = 4.0;
 
 
+   //new AutoForward(s_DriveSubsystem, 0.7, 0.65, 0.1),
+   new AutoForward(s_DriveSubsystem, -0.65, -0.65, .3),
+ //  new AutoRight90Gyro(s_DriveSubsystem, 60, .7, -0.54),
+ //  new AutoForward(s_DriveSubsystem, 0.0, 0.0, 0.2),
+   new AutoRight90Gyro(s_DriveSubsystem, 180, .7, -.3),
+   new AutoForward(s_DriveSubsystem, 0.0, 0.0, 0.2),
+   new AutoRight90Gyro(s_DriveSubsystem, 180, .7, -.4)
+   /*new AutoRight90Gyro(s_DriveSubsystem, 90, .7,s -0.4),
+   new AutoRight90Gyro(s_DriveSubsystem, 90, .7, 0.2),
+    //new AutoForward(s_DriveSubsystem, .7, 0.3, .75),
+    //new AutoForward(s_DriveSubsystem, .7, 0.43, 3.0),
+    //new AutoTurnPID(s_DriveSubsystem, .65, -0.3, 270.0, 2.15789),
+        new VisionAlign(s_DriveSubsystem),
+        new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, 5.0),
+        new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
+        new VisionAll(s_DriveSubsystem, 7.0),
+        new AutoRight90Gyro(s_DriveSubsystem, 100, -0.25, 0.7 ),
+      new AutoRight90Gyro(s_DriveSubsystem, 100, -0.27, 0.7 ),
+   new AutoRight90Gyro(s_DriveSubsystem, 100, -0.45, 0.7),
+   new VisionAlign(s_DriveSubsystem),
+new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, 1.45),
+   new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
+   new VisionAll(s_DriveSubsystem, 1.88),
+   new AutoRight90Gyro(s_DriveSubsystem, 85, -0.36,.7),
+   new AutoForwardPID(s_DriveSubsystem, .7, .65, 60.0-(48.0*(5/6))), 
+
+
     addCommands(
       //First Straight
       new AutoForwardPID(s_DriveSubsystem, .7, .65, 106-10),

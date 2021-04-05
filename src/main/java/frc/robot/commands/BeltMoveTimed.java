@@ -29,7 +29,7 @@ public class BeltMoveTimed extends CommandBase {
   @Override
   public void execute() {
   
-    BeltSubsystem.DriveBelts(BeltConstants.kBeltForwardSpeed+0.2, BeltConstants.kBeltForwardSpeed*0.0, BeltConstants.kBeltForwardSpeed+.0125);
+    BeltSubsystem.DriveBelts(BeltConstants.kBeltForwardSpeed+0.2, BeltConstants.kBeltForwardSpeed*0.4, BeltConstants.kBeltForwardSpeed+.0125);
   }
 
   // Called once the command ends or is interrupted.
