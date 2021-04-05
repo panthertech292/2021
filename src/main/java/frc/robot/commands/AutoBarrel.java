@@ -35,7 +35,7 @@ public class AutoBarrel extends SequentialCommandGroup {
    new AutoRight90Gyro(s_DriveSubsystem, 180, .7, -.3),
    new AutoForward(s_DriveSubsystem, 0.0, 0.0, 0.2),
    new AutoRight90Gyro(s_DriveSubsystem, 180, .7, -.4)
-   /*new AutoRight90Gyro(s_DriveSubsystem, 90, .7, -0.4),
+   /*new AutoRight90Gyro(s_DriveSubsystem, 90, .7,s -0.4),
    new AutoRight90Gyro(s_DriveSubsystem, 90, .7, 0.2),
     //new AutoForward(s_DriveSubsystem, .7, 0.3, .75),
     //new AutoForward(s_DriveSubsystem, .7, 0.43, 3.0),

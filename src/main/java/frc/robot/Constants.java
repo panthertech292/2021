@@ -65,8 +65,8 @@ public final class Constants {
         //DIO
         public static final int kAimLimitSwitch = 4;
         
-        public static final double kstartingAim = 130;
-        public static final double kdeltaAimSecond = 280;
+        public static final double kstartingAim = 145;
+        public static final double kdeltaAimSecond = 475;
         public static final double kdeltaAimThird = 350;
         public static final double kdeltaAimFar = 360;
     }

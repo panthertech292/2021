@@ -100,8 +100,8 @@ public class Robot extends TimedRobot {
     if (z_AutonomousCommand != null) {
       z_AutonomousCommand.cancel();
     }
-  //z_InitialAim = s_RobotContainer.getInitialAimCommand();
-  //z_InitialAim.schedule();
+  z_InitialAim = s_RobotContainer.getInitialAimCommand();
+  z_InitialAim.schedule();
     }
 
   /**
