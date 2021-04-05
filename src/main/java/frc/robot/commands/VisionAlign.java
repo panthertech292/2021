@@ -41,6 +41,7 @@ public class VisionAlign extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    v_aligning = false;
     System.out.println("Running the move command");
     DriveSubsystem.driveModePowerSetPoint();
     if(DriveSubsystem.visionTargetSensor()>=1.0){
@@ -54,6 +55,7 @@ public class VisionAlign extends CommandBase {
     DriveSubsystem.visionAlignRight();
     System.out.println("Seeing a target!!!!!!!!");
     }
+    
     else{
       if(v_aligning == false){
       if(DriveSubsystem.getTimerValue()<1.0 && DriveSubsystem.getTimerValue()>0.0){
