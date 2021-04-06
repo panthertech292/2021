@@ -24,7 +24,7 @@ public class TotalFireThirdZone extends SequentialCommandGroup {
     addCommands(
       new AimAdjustStartingPosition(s_ShooterSubsystem),
       new AimAdjustThirdZone(s_ShooterSubsystem),
-      new BeltForwardAll(s_BeltSubsystem, s_ShooterSubsystem, ShooterConstants.kShooterFull+0.065),
+      new BeltForwardAll(s_BeltSubsystem),
       new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem)
     );
   }

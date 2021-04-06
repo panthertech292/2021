@@ -28,7 +28,7 @@ public class TotalFireSecondZone extends SequentialCommandGroup {
       new AimAdjustStartingPosition(s_ShooterSubsystem),
       new VisionAll(s_DriveSubsystem, 1.647),
       new AimAdjustSecondZone(s_ShooterSubsystem),
-      new BeltForwardAll(s_BeltSubsystem, s_ShooterSubsystem, ShooterConstants.kShooterFull+0.065),
+      new BeltForwardAll(s_BeltSubsystem),
       new ShooterFireBelts(s_ShooterSubsystem, s_BeltSubsystem)
     );
   }

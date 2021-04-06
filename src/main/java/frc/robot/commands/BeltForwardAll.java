@@ -12,13 +12,13 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class BeltForwardAll extends CommandBase {
   /** Creates a new BeltForwardAll. */
   private final BeltSubsystem BeltSubsystem;
-  private final ShooterSubsystem ShooterSubsystem;
-  private double shooterSpeed;
-  public BeltForwardAll(BeltSubsystem s_BeltSubsystem, ShooterSubsystem s_ShooterSubsystem, double v_shooterSpeed) {
+  
+ 
+  public BeltForwardAll(BeltSubsystem s_BeltSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     BeltSubsystem = s_BeltSubsystem;
-    shooterSpeed = v_shooterSpeed;
-    ShooterSubsystem = s_ShooterSubsystem;
+    
+    
     addRequirements(s_BeltSubsystem);
   }
 
@@ -31,8 +31,8 @@ public class BeltForwardAll extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ShooterSubsystem.changeSetSpeed(shooterSpeed);
-    BeltSubsystem.DriveBelts(BeltConstants.kBeltForwardSpeed, BeltConstants.kBeltForwardSpeed, BeltConstants.kBeltForwardSpeed);
+    
+    BeltSubsystem.DriveBelts(BeltConstants.kBeltForwardSpeed, BeltConstants.kBeltForwardSpeed, BeltConstants.kBeltForwardSpeed-.15);
   }
 
   // Called once the command ends or is interrupted.
