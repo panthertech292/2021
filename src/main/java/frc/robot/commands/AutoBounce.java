@@ -23,7 +23,7 @@ public class AutoBounce extends SequentialCommandGroup {
    // super();
    DriveSubsystem = s_DriveSubsystem;
 
-   double c_visionFirstAllDistance = 6.85;
+   double c_visionFirstAllDistance = 6.7;
    double c_driveToFirstBackupArea = 5.84;
 
    double c_driveToFirstArea = 0.81;
@@ -62,7 +62,8 @@ public class AutoBounce extends SequentialCommandGroup {
      //First S-Turn (Reversing)
      new AutoRight90Gyro(s_DriveSubsystem, 45, -.7, .35),
      new AutoForward(s_DriveSubsystem, 0.65, 0.65, .2),
-     new AutoForwardPID(s_DriveSubsystem, -.7, -.65, 12),
+     new AutoForwardPID(s_DriveSubsystem, -.5, -.45, 12)
+    /* new AutoForward(s_DriveSubsystem, 0.65, 0.65, .2),
      new AutoRight90Gyro(s_DriveSubsystem, 45, .35, -.7),
 
 

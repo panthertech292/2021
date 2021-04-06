@@ -28,7 +28,7 @@ public class AutoBarrel extends SequentialCommandGroup {
     double c_driveToSecondArea = 1.6;
     double c_driveToThirdArea = 4.0;
 
-
+addCommands(
    //new AutoForward(s_DriveSubsystem, 0.7, 0.65, 0.1),
    new AutoForward(s_DriveSubsystem, -0.65, -0.65, .3),
  //  new AutoRight90Gyro(s_DriveSubsystem, 60, .7, -0.54),
@@ -99,7 +99,7 @@ new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, 1.45),
    
 
    /*////SECTION FOR BAD BOT
-   new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0-33.0), //RECONNECT THE ENCODERS!!!!!!!
+   /*new AutoForwardPID(s_DriveSubsystem, .7, .65, 106.0-33.0), //RECONNECT THE ENCODERS!!!!!!!
    //new AutoForward(s_DriveSubsystem, 0.7, 0.65, 0.1),
     new AutoRight90Gyro(s_DriveSubsystem, 360, .7, -0.4),
     //new AutoForward(s_DriveSubsystem, .7, 0.3, .75),

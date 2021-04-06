@@ -65,6 +65,7 @@ public class DriveSubsystem extends SubsystemBase {
   private int c_modeTeleop = 0;
   private int c_modeSetPoint = 1;
   private int v_driveMode = c_modeTeleop;
+  private int v_popMode = 0;
 
   private double v_limeLightX;
   private double v_limeLightY;
@@ -268,9 +269,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Vision
   public boolean visionFinish() {
-
     if (( v_limeLightArea!=0.0&&-.6 <= v_limeLightX && v_limeLightX <= .6) || v_visionOverride == 1) {
-
       v_visionOverride = 0;
       return true;
     }
@@ -293,12 +292,10 @@ public class DriveSubsystem extends SubsystemBase {
     if (v_limeLightX > 1.5) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-
-        changePowerSetPoints(.1+ReusablePID1(.1595, 0.09, 0.004, v_limeLightX, 0.12,0.6), -.1 -ReusablePID2(.1595, 0.09, 0.004, v_limeLightX, 0.12,0.6));
+        changePowerSetPoints(.1+ReusablePID1(.072,.004, 0.004, v_limeLightX, 0.12,0.6), -.1 -ReusablePID2(.072,.004, 0.004, v_limeLightX, 0.12,0.6));
       } 
       else {
-        changePowerSetPoints(.1+ReusablePID1(.1595, 0.09, 0.004, v_limeLightX, 0.12,0.6), -.1-ReusablePID2(.1595, 0.09, 0.004, v_limeLightX, 0.12,0.6));
-
+        changePowerSetPoints(.1+ReusablePID1(.072,.004, 0.004, v_limeLightX, 0.12,0.6), -.1-ReusablePID2(.072,.004, 0.004, v_limeLightX, 0.12,0.6));
 
       }
       // 50 loops = 1 sec?
@@ -317,12 +314,10 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-
-        changePowerSetPoints(-.1+ReusablePID1(.1595, 0.09, 0.004, v_limeLightX, 0.12, 0.6),.1-ReusablePID2(.1595, 0.09, 0.004, v_limeLightX, 0.12,0.6));
+        changePowerSetPoints(-.1+ReusablePID1(.072,.004, 0.004, v_limeLightX, 0.12, 0.6),.1-ReusablePID2(.072,.004, 0.004, v_limeLightX, 0.12,0.6));
       } 
       else {
-        changePowerSetPoints(-.1+ReusablePID1(.1595, 0.09, 0.004, v_limeLightX, 0.12,0.6), .1-ReusablePID2(.1595, 0.09, 0.004, v_limeLightX, 0.12,0.6));
-
+        changePowerSetPoints(-.1+ReusablePID1(.072,.004, 0.004, v_limeLightX, 0.12,0.6), .1-ReusablePID2(.072,.004, 0.004, v_limeLightX, 0.12,0.6));
 
       }
       if (v_loopCount >= 150) {
@@ -412,8 +407,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void driveTeleop() {
     differentialDrive((RobotContainer.getLeftSpeed()*v_driveSpeedMod), RobotContainer.getRightSpeed()*v_driveSpeedMod);
-
-    
   }
   public void slowDrive(){
     if ((RobotContainer.getLeftSpeed() < 0 && RobotContainer.getRightSpeed() > 0) || (RobotContainer.getLeftSpeed() > 0 && RobotContainer.getRightSpeed() < 0)){
@@ -580,7 +573,6 @@ public class DriveSubsystem extends SubsystemBase {
   public void timedPrintOut(){
     if(v_printCount % 100 == 0){
     //Enter print statements here!  
-    
     }
     v_printCount = v_printCount + 1;
     
@@ -640,6 +632,20 @@ public class DriveSubsystem extends SubsystemBase {
     else{
       return false;
     }
+  }
+
+  public void resetPop(){
+    v_popMode = 0;
+  }
+
+  public double Pop(double v_rcw, double v_max){
+    double v_return = 0;
+    int v_pulseWidth = 5; //Periodic = .02sec. 5 cycles = .1sec
+    if(v_rcw>=(v_popMode%v_pulseWidth)){
+      v_return = v_max;
+    }
+    v_popMode = v_popMode+1;
+    return v_return;
   }
 
   @Override
