@@ -14,8 +14,8 @@ public class AutoTurnAdjustableGyro extends CommandBase {
   private double AutoAngle;
   private double FastSpeed;
   private double SlowSpeed;
-  Private char Forward;
-  Privare char Right;
+  private char Forward;
+  private char Right;
   /**
    * Creates a new AutoTurnAdjustableGyro.
    */
@@ -38,8 +38,8 @@ public class AutoTurnAdjustableGyro extends CommandBase {
   @Override
   public void execute() {
     DriveSubsystem.driveModePowerSetPoint();
-	if(Forward = 'F') {
-		if(Right = 'R') { 
+	if(Forward == 'F') {
+		if(Right == 'R') { 
 		    // Forward Right
             DriveSubsystem.changePowerSetPoints(FastSpeed,SlowSpeed); // (Left, Right)
 		} else { 
@@ -47,12 +47,12 @@ public class AutoTurnAdjustableGyro extends CommandBase {
  			DriveSubsystem.changePowerSetPoints(SlowSpeed,FastSpeed); // (Left, Right)
 		}
     } else {	
-        if(Right = 'R') {
+        if(Right == 'R') {
             // Reverse Right (Right if going forward - full speed on left)
             DriveSubsystem.changePowerSetPoints(-1.0*FastSpeed,-1.0*SlowSpeed); // (Left, Right)
 		} else { 
 		    // Reverse Left (Left if going forward - full speed on right)
- 			DriveSubsystem.changePowerSetPoints(-1.0*SlowSpeed,-1,0*FastSpeed); // (Left, Right)
+ 			DriveSubsystem.changePowerSetPoints(-1.0*SlowSpeed,-1.0*FastSpeed); // (Left, Right)
 		}   
     }		
   }
