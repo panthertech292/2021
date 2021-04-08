@@ -23,8 +23,9 @@ public class AutoBounce extends SequentialCommandGroup {
    // super();
    DriveSubsystem = s_DriveSubsystem;
 
-   double c_visionFirstAllDistance = 6.7;
+   double c_visionFirstAllDistance = 3.210;
    double c_driveToFirstBackupArea = 5.84;
+
 
    double c_driveToFirstArea = 2.2;
 
@@ -37,6 +38,7 @@ public class AutoBounce extends SequentialCommandGroup {
    double c_driveToThirdTarget = 1.77;
    double c_visionThirdCloseDistance = 2.8;
 
+
    double c_driveToThirdBackupTarget = 0.93;
    double c_visionThirdBackupDistance = 1.53;
 
@@ -45,7 +47,9 @@ public class AutoBounce extends SequentialCommandGroup {
 
    addCommands(
      //Inital Straight
+
   /*   new AutoForwardPID(s_DriveSubsystem, .7, .65, 11),
+
      new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
 
      //First Left to get us to first target
@@ -56,6 +60,7 @@ public class AutoBounce extends SequentialCommandGroup {
 
      //Backup from Target after contact
      //new DriveToVisionTargetArea(s_DriveSubsystem, -.65, -.65, c_driveToFirstBackupArea),
+
      //new AutoForwardPID(s_DriveSubsystem, -.7, -.65, 12),
      new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
 
@@ -68,6 +73,7 @@ public class AutoBounce extends SequentialCommandGroup {
 
 
      //Backup After S-Turn and get to position for second target
+
      new AutoForward(s_DriveSubsystem, -.55, -.55, 1.42),
      new AutoForward(s_DriveSubsystem, 0.85, 0.85, .4),
      new AutoRight90Gyro(s_DriveSubsystem, 75, .75, -.75),*/
@@ -82,6 +88,7 @@ public class AutoBounce extends SequentialCommandGroup {
      //Turn and align to second target
      new AutoRight90Gyro(s_DriveSubsystem, 85, -.45, .7),
      new AutoForward(s_DriveSubsystem, 0.0, 0.0, 0.3),
+
      new VisionAlign(s_DriveSubsystem),
      new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, c_driveToSecondTarget),
      new AutoForward(s_DriveSubsystem, -0.65, -0.65, .4),
@@ -91,6 +98,7 @@ public class AutoBounce extends SequentialCommandGroup {
     new VisionAlign(s_DriveSubsystem),
     
      //Backup
+
      new DriveToVisionTargetArea(s_DriveSubsystem, -.65, -.65, c_driveToSecondBackupTarget),
      new AutoForward(s_DriveSubsystem, 0.75, 0.75, .4),
      new DriveToVisionTargetArea(s_DriveSubsystem, -.65, -.65, c_visionSecondBackupDistance),
@@ -98,6 +106,7 @@ public class AutoBounce extends SequentialCommandGroup {
      new AutoForward(s_DriveSubsystem, 0.0,0.0,.5),
      //Go forward to final target area
      new AutoRight90Gyro(s_DriveSubsystem, 90, .65, -.65),
+
      new VisionAlign(s_DriveSubsystem),
      new DriveToVisionTargetArea(s_DriveSubsystem, .65, .65, c_driveToThirdArea),
      new AutoForward(s_DriveSubsystem, -0.65, -0.65, .2),
@@ -110,6 +119,7 @@ public class AutoBounce extends SequentialCommandGroup {
      new VisionAll(s_DriveSubsystem, c_visionThirdCloseDistance),
 
      //Backup after contact with third target
+
     // new DriveToVisionTargetArea(s_DriveSubsystem, -.65, -.65, c_driveToThirdBackupTarget),
     // new AutoForward(s_DriveSubsystem, 0.65, 0.65, .2),
    //  new VisionAll(s_DriveSubsystem, c_visionThirdBackupDistance),
@@ -120,6 +130,7 @@ public class AutoBounce extends SequentialCommandGroup {
     //// new AutoForwardPID(s_DriveSubsystem, .7, .65, 18),
     // new DriveUntilBounceSensor(s_DriveSubsystem, .3, .3)
      
+
    );
   }
 }

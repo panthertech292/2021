@@ -269,7 +269,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Vision
   public boolean visionFinish() {
+
     if (( v_limeLightArea!=0.0&&-.8 <= v_limeLightX && v_limeLightX <= .8) || v_visionOverride == 1) {
+
       v_visionOverride = 0;
       return true;
     }
@@ -296,10 +298,12 @@ public class DriveSubsystem extends SubsystemBase {
     if (v_limeLightX > 1.5) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
+
         changePowerSetPoints(.1+Pop(26*ReusablePID1(P,I, D, v_limeLightX, 0.0,.6),max), -.1-Pop(26*ReusablePID2(P,I, D, v_limeLightX, 0.0,.6),max));
       } 
       else {
         changePowerSetPoints(.1+ReusablePID1(P,I, D, v_limeLightX, 0.0,max), -.1-ReusablePID2(P,I, D, v_limeLightX, 0.0,.75));
+
 
       }
       // 50 loops = 1 sec?
@@ -322,10 +326,12 @@ public class DriveSubsystem extends SubsystemBase {
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
+
         changePowerSetPoints(-.14+Pop(26*ReusablePID1(P,I, D, v_limeLightX, 0.0, .6),max),.14-Pop(26*ReusablePID2(P,I, D, v_limeLightX, 0.0,.6),max));
       } 
       else {
         changePowerSetPoints(-.1+Pop(26*ReusablePID1(P,I, D, v_limeLightX, 0.0,max),max), .1-Pop(26*ReusablePID2(P,I, D, v_limeLightX, 0.0,max),max));
+
 
       }
       if (v_loopCount >= 150) {
@@ -339,17 +345,21 @@ public class DriveSubsystem extends SubsystemBase {
   public void visionDistanceArea(double v_VisionAreaTarget) {
     if (v_limeLightArea > v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
+
         changePowerSetPoints(-.1-Pop(26*ReusablePID1(.55, 0.08, 0.00, v_limeLightArea, v_VisionAreaTarget, .6),.6),-.1-Pop(26*ReusablePID2(.55, 0.08, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.6));
       } else {
         changePowerSetPoints( -.1-Pop(26*ReusablePID1(.55, 0.05, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.5), -.1-Pop(26*ReusablePID2(.55, 0.05, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.5));
+
 
       }
     }
     if (v_limeLightArea < v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
+
         changePowerSetPoints(.1-Pop(26*ReusablePID1(.55, 0.08, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.6),.1 -Pop(26*ReusablePID2(.55, 0.08, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.6));
       } else {
         changePowerSetPoints( .1-Pop(26*ReusablePID1(.55, 0.05, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.5), .1-Pop(26*ReusablePID2(.55, 0.05, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.5));
+
 
       }
     }
