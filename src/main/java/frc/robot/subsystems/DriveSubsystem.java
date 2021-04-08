@@ -269,7 +269,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Vision
   public boolean visionFinish() {
-    if (( v_limeLightArea!=0.0&&-.6 <= v_limeLightX && v_limeLightX <= .6) || v_visionOverride == 1) {
+    if (( v_limeLightArea!=0.0&&-.8 <= v_limeLightX && v_limeLightX <= .8) || v_visionOverride == 1) {
       v_visionOverride = 0;
       return true;
     }
@@ -280,7 +280,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public boolean visionFinishDistance(double v_VisionAreaTarget) {
-    if (v_VisionAreaTarget - 0.3 <= v_limeLightArea && v_VisionAreaTarget + 0.3 >= v_limeLightArea) {
+    if (v_VisionAreaTarget - 0.2 <= v_limeLightArea && v_VisionAreaTarget + 0.2 >= v_limeLightArea) {
       return true;
     } else {
       return false;
@@ -289,13 +289,17 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Actually turns robot right, aimed too far left
   public void visionAlignLeft() {
+    double P = .1;
+   double I = 0.05;
+   double D = .001;
+   double max = .6;
     if (v_limeLightX > 1.5) {
       v_loopCount = v_loopCount + 1;
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(.1+ReusablePID1(.072,.004, 0.004, v_limeLightX, 0.12,0.6), -.1 -ReusablePID2(.072,.004, 0.004, v_limeLightX, 0.12,0.6));
+        changePowerSetPoints(.1+Pop(26*ReusablePID1(P,I, D, v_limeLightX, 0.0,.6),max), -.1-Pop(26*ReusablePID2(P,I, D, v_limeLightX, 0.0,.6),max));
       } 
       else {
-        changePowerSetPoints(.1+ReusablePID1(.072,.004, 0.004, v_limeLightX, 0.12,0.6), -.1-ReusablePID2(.072,.004, 0.004, v_limeLightX, 0.12,0.6));
+        changePowerSetPoints(.1+ReusablePID1(P,I, D, v_limeLightX, 0.0,max), -.1-ReusablePID2(P,I, D, v_limeLightX, 0.0,.75));
 
       }
       // 50 loops = 1 sec?
@@ -309,15 +313,19 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Actually turns robot left, aimed too far right
   public void visionAlignRight() {
+   double P = .1;
+   double I = 0.05;
+   double D = .001;
+   double max = .6;
     if (v_limeLightX < -1.5) {
       v_loopCount = v_loopCount + 1;
       System.out.println(v_loopCount);
       System.out.println("Trying to align right!");
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-.1+ReusablePID1(.072,.004, 0.004, v_limeLightX, 0.12, 0.6),.1-ReusablePID2(.072,.004, 0.004, v_limeLightX, 0.12,0.6));
+        changePowerSetPoints(-.14+Pop(26*ReusablePID1(P,I, D, v_limeLightX, 0.0, .6),max),.14-Pop(26*ReusablePID2(P,I, D, v_limeLightX, 0.0,.6),max));
       } 
       else {
-        changePowerSetPoints(-.1+ReusablePID1(.072,.004, 0.004, v_limeLightX, 0.12,0.6), .1-ReusablePID2(.072,.004, 0.004, v_limeLightX, 0.12,0.6));
+        changePowerSetPoints(-.1+Pop(26*ReusablePID1(P,I, D, v_limeLightX, 0.0,max),max), .1-Pop(26*ReusablePID2(P,I, D, v_limeLightX, 0.0,max),max));
 
       }
       if (v_loopCount >= 150) {
@@ -331,17 +339,17 @@ public class DriveSubsystem extends SubsystemBase {
   public void visionDistanceArea(double v_VisionAreaTarget) {
     if (v_limeLightArea > v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(-.1-ReusablePID1(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5),-.1-ReusablePID2(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5));
+        changePowerSetPoints(-.1-Pop(26*ReusablePID1(.55, 0.08, 0.00, v_limeLightArea, v_VisionAreaTarget, .6),.6),-.1-Pop(26*ReusablePID2(.55, 0.08, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.6));
       } else {
-        changePowerSetPoints( -.1-ReusablePID1(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5), -.1-ReusablePID2(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5));
+        changePowerSetPoints( -.1-Pop(26*ReusablePID1(.55, 0.05, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.5), -.1-Pop(26*ReusablePID2(.55, 0.05, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.5));
 
       }
     }
     if (v_limeLightArea < v_VisionAreaTarget) {
       if (RobotContainer.getRobotID() == Constants.kProductionBotID) {
-        changePowerSetPoints(.1-ReusablePID1(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5),.1 -ReusablePID2(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5));
+        changePowerSetPoints(.1-Pop(26*ReusablePID1(.55, 0.08, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.6),.1 -Pop(26*ReusablePID2(.55, 0.08, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.6));
       } else {
-        changePowerSetPoints( .1-ReusablePID1(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5), .1-ReusablePID2(.25, 0.015, 0.008, v_limeLightArea, v_VisionAreaTarget, .5));
+        changePowerSetPoints( .1-Pop(26*ReusablePID1(.55, 0.05, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.5), .1-Pop(26*ReusablePID2(.55, 0.05, 0.00, v_limeLightArea, v_VisionAreaTarget, .5),.5));
 
       }
     }
@@ -640,11 +648,18 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double Pop(double v_rcw, double v_max){
     double v_return = 0;
-    int v_pulseWidth = 5; //Periodic = .02sec. 5 cycles = .1sec
-    if(v_rcw>=(v_popMode%v_pulseWidth)){
-      v_return = v_max;
+    int v_pulseWidth = 20; //Periodic = .02sec. 5 cycles = .1sec
+    if(Math.abs(v_rcw)>=(v_popMode%v_pulseWidth)){
+      v_return = v_max*(Math.abs(v_rcw)/v_rcw);
+      System.out.println("Working!!!");
     }
     v_popMode = v_popMode+1;
+    if(v_popMode >=20){
+      v_popMode = 0;
+    }
+    System.out.println("Pop RCW =  "+ v_rcw);
+
+   
     return v_return;
   }
 

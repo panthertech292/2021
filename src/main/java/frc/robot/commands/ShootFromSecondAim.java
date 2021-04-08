@@ -13,19 +13,19 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootFromFarAim extends ParallelCommandGroup {
-  /** Creates a new ShootFromFarAim. */
+public class ShootFromSecondAim extends ParallelCommandGroup {
+  /** Creates a new ShootFromSecondAim. */
   private final ShooterSubsystem ShooterSubsystem;
   private final BeltSubsystem BeltSubsystem;
   private final DriveSubsystem DriveSubsystem;
-  public ShootFromFarAim(ShooterSubsystem s_ShooterSubsystem, BeltSubsystem s_BeltSubsystem, DriveSubsystem s_DriveSubsystem) {
+  public ShootFromSecondAim(ShooterSubsystem s_ShooterSubsystem, BeltSubsystem s_BeltSubsystem, DriveSubsystem s_DriveSubsystem) {
     ShooterSubsystem = s_ShooterSubsystem;
     BeltSubsystem = s_BeltSubsystem;
     DriveSubsystem = s_DriveSubsystem;
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AimAdjustFarZone(s_ShooterSubsystem), //Change to Far
-      new VisionAll(s_DriveSubsystem, 1.64), ////Change to Far
+      new AimAdjustSecondZone(s_ShooterSubsystem), //Change to Second
+      new VisionAll(s_DriveSubsystem, 1.6), ////Change to Second
       new BeltForwardAll(s_BeltSubsystem)
     );
   }
