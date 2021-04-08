@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.BeltSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -13,20 +13,20 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootFromFarAim extends ParallelCommandGroup {
-  /** Creates a new ShootFromFarAim. */
+public class ShootFromNearAdjustments extends SequentialCommandGroup {
   private final ShooterSubsystem ShooterSubsystem;
   private final BeltSubsystem BeltSubsystem;
   private final DriveSubsystem DriveSubsystem;
-  public ShootFromFarAim(ShooterSubsystem s_ShooterSubsystem, BeltSubsystem s_BeltSubsystem, DriveSubsystem s_DriveSubsystem) {
+  public ShootFromNearAdjustments(ShooterSubsystem s_ShooterSubsystem, BeltSubsystem s_BeltSubsystem, DriveSubsystem s_DriveSubsystem) {
     ShooterSubsystem = s_ShooterSubsystem;
     BeltSubsystem = s_BeltSubsystem;
     DriveSubsystem = s_DriveSubsystem;
+    // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AimAdjustFarZone(s_ShooterSubsystem), //Change to Far
-      new VisionAll(s_DriveSubsystem, 1.64), ////Change to Far
-      new BeltForwardAll(s_BeltSubsystem)
+    new ShootFromNearAim(s_ShooterSubsystem, s_BeltSubsystem, s_DriveSubsystem),
+    new ShootFromNearFire(s_ShooterSubsystem, s_BeltSubsystem, s_DriveSubsystem)
+
     );
   }
 }

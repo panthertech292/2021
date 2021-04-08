@@ -33,6 +33,7 @@ public class VisionAlign extends CommandBase {
     DriveSubsystem.changePowerSetPoints(0,0);
     DriveSubsystem.zeroDistanceSensors();
     DriveSubsystem.initializePID();
+    DriveSubsystem.resetPop();
     System.out.println("Starting Adjustment");
     v_timeout = false;
     v_aligning = false;
@@ -42,44 +43,27 @@ public class VisionAlign extends CommandBase {
   @Override
   public void execute() {
     v_aligning = false;
-    System.out.println("Running the move command");
+    System.out.println("Running the align command");
     DriveSubsystem.driveModePowerSetPoint();
     if(DriveSubsystem.visionTargetSensor()>=1.0){
-    DriveSubsystem.resetTimer();
     v_aligning = true;
     DriveSubsystem.visionAlignLeft();
     DriveSubsystem.visionAlignRight();
-    DriveSubsystem.visionAlignLeft();
+    /*DriveSubsystem.visionAlignLeft();
     DriveSubsystem.visionAlignRight();
     DriveSubsystem.visionAlignLeft();
     DriveSubsystem.visionAlignRight();
-    System.out.println("Seeing a target!!!!!!!!");
+  */
     }
     
-    else{
-      if(v_aligning == false){
-      if(DriveSubsystem.getTimerValue()<1.0 && DriveSubsystem.getTimerValue()>0.0){
-        System.out.println("No Target!!!!!!!!");
-      DriveSubsystem.changePowerSetPoints(-0.5, 0.5); //Adjust values!!!
-      }
-      if(DriveSubsystem.getTimerValue()>1.0 && DriveSubsystem.getTimerValue()<2.5){
-        DriveSubsystem.changePowerSetPoints(-0.0, 0.0);
-      }
-      if(DriveSubsystem.getTimerValue()>2.5 && DriveSubsystem.getTimerValue()<4.0){
-        System.out.println("No Target2!!!!!!!!");
-        DriveSubsystem.changePowerSetPoints(0.5, -0.5); //Adjust Values!!!
-        }
-        if(DriveSubsystem.getTimerValue()>4.0 && DriveSubsystem.getTimerValue()<5.5){
-          DriveSubsystem.changePowerSetPoints(-0.0, 0.0);
-        }
-        if(DriveSubsystem.getTimerValue()>5.5){
+        if(DriveSubsystem.getTimerValue()>1.5){
           System.out.println("No Target3!!!!!!!!");
           System.out.println(v_timeout);
           v_timeout = true;
         }
       }
-    }
-    }
+    
+    
 
   // Called once the command ends or is interrupted.
   @Override
@@ -95,6 +79,6 @@ public class VisionAlign extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (DriveSubsystem.visionFinish()&& DriveSubsystem.getRightEncoderVelocity() == 0.0) || v_timeout;
+    return (DriveSubsystem.visionFinish()&& DriveSubsystem.getRightEncoderVelocity() == 0.1) || v_timeout;
   }
 }
